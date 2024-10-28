@@ -5,12 +5,12 @@ namespace BevoBnB.Models
 {
     public enum CustomerState
     {
-        Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, Florida, Georgia,
-        Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts,
-        Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, NewHampshire, NewJersey,
-        NewMexico, NewYork, NorthCarolina, NorthDakota, Ohio, Oklahoma, Oregon, Pennsylvania, RhodeIsland,
-        SouthCarolina, SouthDakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, WestVirginia,
-        Wisconsin, Wyoming, Other
+        AL, AK, AZ, AR, CA, CO, CT, DE, FL, GA,
+        HI, ID, IL, IN, IA, KS, KY, LA, ME, MD,
+        MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ,
+        NM, NY, NC, ND, OH, OK, OR, PA, RI, SC,
+        SD, TN, TX, UT, VT, VA, WA, WV, WI, WY,
+        OT
     }
 
     public class AppUser : IdentityUser
@@ -20,39 +20,53 @@ namespace BevoBnB.Models
         [StringLength(50, ErrorMessage = "First name cannot exceed 50 characters.")]
         public String FirstName { get; set; }
 
-        [Display(Name = "Middle Initial:")]
-        [StringLength(1, ErrorMessage = "Middle initial must be a single character.")]
-        public String? MiddleInitial { get; set; }
-
         [Required(ErrorMessage = "A last name is required.")]
         [Display(Name = "Last Name:")]
         [StringLength(50, ErrorMessage = "Last name cannot exceed 50 characters.")]
         public String LastName { get; set; }
 
         [Required(ErrorMessage = "A date of birth is required.")]
-        [Display(Name = "Date of Birth:")]
+        [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DOB { get; set; }
 
-        [Display(Name = "Street Address:")]
+        [Display(Name = "Line Address 1")]
         [StringLength(100, ErrorMessage = "Street address cannot exceed 100 characters.")]
-        public String StreetAddress { get; set; }
+        public String LineAddress1 { get; set; }
+
+        [Display(Name = "Line address 2")]
+        [StringLength(100, ErrorMessage = "Line address 2 cannot exceed 100 characters.")]
+        public String? LineAddress2 { get; set; }
 
         [Required(ErrorMessage = "A city is required.")]
-        [Display(Name = "City:")]
+        [Display(Name = "City")]
         [StringLength(50, ErrorMessage = "City cannot exceed 50 characters.")]
         public String City { get; set; }
 
         [Required(ErrorMessage = "A state is required.")]
-        [Display(Name = "State:")]
+        [Display(Name = "State")]
         public CustomerState State { get; set; }
 
         [Required(ErrorMessage = "A postal code is required.")]
-        [Display(Name = "Postal Code:")]
+        [Display(Name = "Postal Code")]
         [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid postal code format. Use 12345 or 12345-6789.")]
         public String PostalCode { get; set; }
 
+        public bool IsMinimumAge(DateTime birthdate)
+        {
+            Int32 requiredAge = 21;
 
+            Int32 currentAge = DateTime.Today.Year - birthdate.Year;
+
+            // If the birthday has not occurred yet this year, subtract one year from the age
+            if (birthdate.Date > DateTime.Today.AddYears(-currentAge))
+            {
+                currentAge = currentAge - 1;
+            }
+
+            // Returns true or false based on greater than or equal to logic
+            return currentAge >= requiredAge;
+        }
     }
 }
