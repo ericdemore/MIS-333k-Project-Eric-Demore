@@ -58,6 +58,11 @@ namespace BevoBnB.Models
 
         public HireStatus? HireStatus { get; set; }
 
+        public String FullName { get
+            {
+                return FirstName + LastName;
+            } }
+
         public bool IsMinimumAge(DateTime DOB)
         {
             Int32 requiredAge = 21;
