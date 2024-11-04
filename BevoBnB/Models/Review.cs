@@ -1,4 +1,8 @@
-﻿namespace BevoBnB.Models
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BevoBnB.Models
 {
     public class Review
     {
@@ -32,10 +36,11 @@
         public virtual Property Property { get; set; }
     }
 
+    // Define the DisputeStatus enum here
     public enum DisputeStatus
     {
         None,
-        Disputed,    
+        Disputed,
         Resolved
     }
 }
