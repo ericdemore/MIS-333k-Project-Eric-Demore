@@ -3,9 +3,9 @@
     public class Property
     {
         public Int32 PropertyID { get; set; }
-
+        //test comment
         public Int32 PropertyNumber { get; set; }
-
+        //test comment 2
         public String LineAddress1 { get; set; }
 
         public String LineAddress2 { get; set; }
