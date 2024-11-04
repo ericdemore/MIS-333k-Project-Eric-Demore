@@ -40,6 +40,7 @@ namespace BevoBnB.Models
     {
         None,
         Disputed,    
-        Resolved     
+        Resolved
+
     }
 }
