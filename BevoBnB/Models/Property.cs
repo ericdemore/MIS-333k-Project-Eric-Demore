@@ -3,7 +3,7 @@
     public class Property
     {
         public Int32 PropertyID { get; set; }
-
+        //test comment
         public Int32 PropertyNumber { get; set; }
 
         public String LineAddress1 { get; set; }
