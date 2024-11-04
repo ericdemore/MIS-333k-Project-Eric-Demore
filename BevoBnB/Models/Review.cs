@@ -1,8 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BevoBnB.Models
+﻿namespace BevoBnB.Models
 {
     public class Review
     {
@@ -41,6 +37,5 @@ namespace BevoBnB.Models
         None,
         Disputed,    
         Resolved
-
     }
 }
