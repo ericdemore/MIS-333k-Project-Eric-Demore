@@ -2,5 +2,6 @@
 {
     public class Reservation
     {
+        public string userID { get; set; }
     }
 }
