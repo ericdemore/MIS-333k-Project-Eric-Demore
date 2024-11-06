@@ -40,13 +40,14 @@ namespace BevoBnB.Models
 
         public Property()
         {
-            if (Reviews == null) 
-            { 
-                Reviews = new List<Review>(); 
+            if (Reviews == null)
+            {
+                Reviews = new List<Review>();
             }
-            if (Reservations == null) 
-            { 
-                Reservations = new List<Reservation>(); 
+            if (Reservations == null)
+            {
+                Reservations = new List<Reservation>();
             }
+        }
     }
 }
