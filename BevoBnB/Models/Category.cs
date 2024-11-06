@@ -6,15 +6,22 @@ namespace BevoBnB.Models
     public class Category
     {
         [Key]
-        // primary key
-        public int CategoryID { get; set; }
+        [Display(Name = "Category ID")]
+        public Int32 CategoryID { get; set; }
 
+        [Display(Name = "Category Name")]
         [Required(ErrorMessage = "Category name is required.")]
         [StringLength(50, ErrorMessage = "Category name cannot exceed 50 characters.")]
-        // name of the category (e.g., apartment, cabin, condo, etc.)
         public string CategoryName { get; set; }
 
-        // Navigation property for related properties
-        public virtual ICollection<Property> Properties { get; set; }
+        public List<Property> Properties { get; set; }
+
+        public Category() 
+        { 
+            if (Properties == null) 
+            {  
+                Properties = new List<Property>(); 
+            }
+        }
     }
 }

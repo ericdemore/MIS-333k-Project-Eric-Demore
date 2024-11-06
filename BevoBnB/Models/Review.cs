@@ -4,43 +4,32 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BevoBnB.Models
 {
+    public enum DisputeStatus { Disputed, Resolved }
+
     public class Review
     {
         [Key]
-        // primary key
+        [Display(Name = "Review ID")]
         public int ReviewID { get; set; }
 
-        [ForeignKey("AppUser")]
-        public string UserID { get; set; }
+        [Required(ErrorMessage = "Rating is required.")]
+        [Range(0.0, 5.0, ErrorMessage = "Rating must be between 1.0 and 5.0.")]
+        [Display(Name = "Rating")]
+        public decimal Rating { get; set; }
 
-        [ForeignKey("Property")]
-        public int PropertyID { get; set; }
-
-        [Range(1, 5)]
-        // rating scale 1-5
-        public int Rating { get; set; }
-
-        [MaxLength(280)]
-        // optional review up to 280 characters
+        [Display(Name = "Review Text")]
+        [StringLength(1000, ErrorMessage = "Review text cannot exceed 1000 characters.")]
         public string ReviewText { get; set; }
 
-        // host comments on the review
+        [Display(Name = "Host Comments")]
+        [StringLength(1000, ErrorMessage = "Host comments cannot exceed 500 characters.")]
         public string HostComments { get; set; }
 
-        [EnumDataType(typeof(DisputeStatus))]
-        // status of review dispute
-        public DisputeStatus DisputeStatus { get; set; }
+        [Display(Name = "Dispute Status")]
+        public DisputeStatus? DisputeStatus { get; set; }
 
-        // Navigation properties for relationships
-        public virtual AppUser AppUser { get; set; }
-        public virtual Property Property { get; set; }
-    }
-
-    // Define the DisputeStatus enum here
-    public enum DisputeStatus
-    {
-        None,
-        Disputed,
-        Resolved
+        // FK relationships
+        public AppUser User { get; set; }
+        public Property Property { get; set; }
     }
 }

@@ -9,8 +9,7 @@ namespace BevoBnB.Models
         HI, ID, IL, IN, IA, KS, KY, LA, ME, MD,
         MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ,
         NM, NY, NC, ND, OH, OK, OR, PA, RI, SC,
-        SD, TN, TX, UT, VT, VA, WA, WV, WI, WY,
-        OT
+        SD, TN, TX, UT, VT, VA, WA, WV, WI, WY
     }
 
     public enum HireStatus { Employed, Terminated }
@@ -30,7 +29,7 @@ namespace BevoBnB.Models
         [Required(ErrorMessage = "Date of birth is required.")]
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DOB { get; set; }
 
         [Required(ErrorMessage = "Line address 1 is required.")]
@@ -56,13 +55,35 @@ namespace BevoBnB.Models
         [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid postal code format. Use 12345 or 12345-6789.")]
         public String PostalCode { get; set; }
 
+        [Display(Name = "Hire Status")]
         public HireStatus? HireStatus { get; set; }
 
-        public String FullName { get
-            {
-                return FirstName + LastName;
-            } }
 
+        // navigational properties for many relationships
+        public List<Reservation> Reservations { get; set; }
+        public List<Property> Properties { get; set; }
+        public List<Review> Reviews { get; set; }
+
+        // constructor to create new list to prevent nullreference errors
+        public AppUser()
+        {
+            if (Reservations == null)
+            { 
+                Reservations = new List<Reservation>(); 
+            }
+
+            if (Properties == null) 
+            { 
+                Properties = new List<Property>(); 
+            }
+
+            if (Reviews == null) 
+            { 
+                Reviews = new List<Review>(); 
+            }
+        }
+
+        // method to determine if someone making a reservation is above 21
         public bool IsMinimumAge(DateTime DOB)
         {
             Int32 requiredAge = 21;
