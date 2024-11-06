@@ -51,7 +51,7 @@ namespace BevoBnB.Models
         public States State { get; set; }
 
         [Required(ErrorMessage = "A postal code is required.")]
-        [Display(Name = "Postal Code")]
+        [Display(Name = "Zip Code")]
         [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid postal code format. Use 12345 or 12345-6789.")]
         public String PostalCode { get; set; }
 

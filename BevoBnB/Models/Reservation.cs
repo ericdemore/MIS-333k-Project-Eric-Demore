@@ -24,16 +24,18 @@ namespace BevoBnB.Models
         public DateTime CheckOut { get; set; }
 
         [Required(ErrorMessage = "Number of guests is required.")]
-        [Range(1, int.MaxValue, ErrorMessage = "Number of guests must be be a positive number.")]
+        [Range(1, 999999999, ErrorMessage = "Number of guests must be be a positive number.")]
         [Display(Name = "Number of Guests (including person making reservation)")] //Note: Need to ask jawad about this
         public Int32 NumOfGuests { get; set; }
 
         [Required(ErrorMessage = "Weekday price is required.")]
         [Display(Name = "Weekday Price")]
+        [DisplayFormat(DataFormatString = "{0:C3}")]
         public Decimal WeekdayPrice { get; set; }
 
         [Required(ErrorMessage = "Weekend price is required.")]
         [Display(Name = "Weekend Price")]
+        [DisplayFormat(DataFormatString = "{0:C3}")]
         public Decimal WeekendPrice { get; set; }
 
         [Display(Name = "Discount Rate")]
@@ -41,10 +43,11 @@ namespace BevoBnB.Models
         public Decimal DiscountRate { get; set; }
 
         [Display(Name = "Tax Amount")]
+        [DisplayFormat(DataFormatString = "{0:C3}")]
         public Decimal Tax { get; set; }
 
         [Display(Name = "Confirmation Number")]
-        public Int32 ConfirmationNumber { get; set; }
+        public Int32 ConfirmationNumber { get; set; } //TODO: Add a method to make it automatically add it up
 
         [Required]
         [Display(Name = "Reservation Status")]

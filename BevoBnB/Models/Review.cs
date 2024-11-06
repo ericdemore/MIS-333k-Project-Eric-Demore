@@ -18,11 +18,9 @@ namespace BevoBnB.Models
         public decimal Rating { get; set; }
 
         [Display(Name = "Review Text")]
-        [StringLength(1000, ErrorMessage = "Review text cannot exceed 1000 characters.")]
         public string ReviewText { get; set; }
 
         [Display(Name = "Host Comments")]
-        [StringLength(1000, ErrorMessage = "Host comments cannot exceed 500 characters.")]
         public string HostComments { get; set; }
 
         [Display(Name = "Dispute Status")]
