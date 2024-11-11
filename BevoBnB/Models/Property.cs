@@ -11,8 +11,7 @@ namespace BevoBnB.Models
         [Display(Name = "Property ID")]
         public Int32 PropertyID { get; set; }
 
-        [Required(ErrorMessage = "Property Number is required.")] // TODO: add a method in utilities to make generate a new number. This should not be automatic with EF
-        [Display(Name = "Property Number")]
+        [Required(ErrorMessage = "Property Number is required.")]
         public Int32 PropertyNumber { get; set; }
 
         [Required(ErrorMessage = "Address Line 1 is required.")]
@@ -80,10 +79,11 @@ namespace BevoBnB.Models
         [Display(Name = "Minimum Nights for Discount")]
         public Int32 MinNightsforDiscount { get; set; }
 
+        //NOTE: we will be using a list object for datetimes that are no good
         [Required(ErrorMessage = "Unavailable Dates are required.")]
         [DataType(DataType.Date)]
         [Display(Name = "Unavailable Dates")]
-        public DateTime UnavailableDates { get; set; }
+        public List<DateTime> UnavailableDates { get; set; }
 
         [Required(ErrorMessage = "Property Status is required.")]
         [Display(Name = "Property Status")]
@@ -108,6 +108,13 @@ namespace BevoBnB.Models
             {
                 Reservations = new List<Reservation>();
             }
+        }
+
+
+        //TODO: add method to check whether the property is reserved
+        public Boolean IsReserved(Property property)
+        {
+            return true;
         }
     }
 }
