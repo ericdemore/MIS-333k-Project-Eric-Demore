@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System;
 
-//TODO: Change this namespace to match your project
+
 namespace BevoBnB.Models
 {
     //NOTE: This is the view model used to allow the user to login

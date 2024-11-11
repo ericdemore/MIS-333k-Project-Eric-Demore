@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-//TODO: Change these using statements to match your project
+
 using BevoBnB.DAL;
 using BevoBnB.Models;
 using BevoBnB.Utilities;
 using System;
 
-//TODO: Change this namespace to match your project
+
 namespace BevoBnB.Controllers
 {
     [Authorize]

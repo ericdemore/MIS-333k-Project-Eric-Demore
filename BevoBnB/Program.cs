@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 
-//TODO: Update these namespaces to match your project name 
+
 //Be sure to remove the []
 using BevoBnB.DAL;
 using BevoBnB.Models;

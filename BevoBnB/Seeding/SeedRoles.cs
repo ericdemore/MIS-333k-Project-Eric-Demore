@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 
-//TODO: Upddate this namespace to match your project name
+
 namespace BevoBnB.Seeding
 {
     public class SeedRoles

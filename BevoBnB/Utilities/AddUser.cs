@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Text;
 
-//TODO: Update these using statements to include your project name
+
 using BevoBnB.DAL;
 using BevoBnB.Models;
 
-//TODO: Upddate this namespace to match your project name
+
 namespace BevoBnB.Utilities
 {
     public static class AddUser

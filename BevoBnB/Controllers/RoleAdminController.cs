@@ -3,10 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-//TODO: Change these using statements to match your project
+
 using BevoBnB.Models;
 
-//TODO: Change this namespace to match your project
 namespace BevoBnB.Controllers
 {
     //TODO: Uncomment this line once you have roles working correctly

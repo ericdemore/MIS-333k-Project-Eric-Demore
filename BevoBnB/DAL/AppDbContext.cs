@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 
-//TODO: Update this using statement to include your project name
+
 using BevoBnB.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-//TODO: Make this namespace match your project name
+
 namespace BevoBnB.DAL
 {
     //NOTE: This class definition references the user class for this project.  

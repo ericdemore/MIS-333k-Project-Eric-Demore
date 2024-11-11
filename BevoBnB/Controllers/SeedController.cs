@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 
 
-//TODO: Update this using statement to include your project name
+
 using BevoBnB.Models;
 using BevoBnB.DAL;
 using System;
 
-//TODO: Upddate this namespace to match your project name
+
 namespace BevoBnB.Controllers
 {
     public class SeedController : Controller
