@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Identity;
 using BevoBnB.Utilities;
 using BevoBnB.DAL;
