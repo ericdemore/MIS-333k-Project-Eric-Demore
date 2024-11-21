@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using BevoBnB.Models;
 using BevoBnB.DAL;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace BevoBnB.Controllers
@@ -160,16 +161,58 @@ namespace BevoBnB.Controllers
         {
             try
             {
-                // Call the method to seed the reservations
-                Seeding.SeedReservations.SeedAllReservations(_context);
+                // Create a list to hold all reservations
+                List<Reservation> AllReservations = new List<Reservation>();
+                /*
+                // Example reservation data
+                var property = _context.Properties.FirstOrDefault(p => p.PropertyNumber == 3010);
+                if (property == null)
+                {
+                    throw new Exception("Property with PropertyNumber 3010 not found.");
+                }
+
+                var user = _context.Users.FirstOrDefault(u => u.Email == "example@domain.com");
+                if (user == null)
+                {
+                    throw new Exception("User with email 'example@domain.com' not found.");
+                }
+                
+                AllReservations.Add(new Reservation
+                {
+                    CheckIn = DateTime.Parse("2024-11-01"),
+                    CheckOut = DateTime.Parse("2024-11-03"),
+                    NumOfGuests = 2,
+                    WeekdayPrice = 150.00m,
+                    WeekendPrice = 200.00m,
+                    DiscountRate = 0.1m,
+                    Tax = 20.00m,
+                    ConfirmationNumber = 21900,
+                    ReservationStatus = ReservationStatus.Valid,
+                    Property = property,
+                    User = user
+                });
+                */
+                // Iterate through the list and add each reservation
+                foreach (var reservation in AllReservations)
+                {
+                    // Check if the reservation already exists
+                    var dbReservation = await _context.Reservations
+                        .FirstOrDefaultAsync(r => r.ConfirmationNumber == reservation.ConfirmationNumber);
+
+                    if (dbReservation == null)
+                    {
+                        await _context.Reservations.AddAsync(reservation);
+                        await _context.SaveChangesAsync();
+                    }
+                }
             }
             catch (Exception ex)
             {
                 // Add the error messages to a list of strings
-                List<String> errorList = new List<String>();
-
-                // Add the outer message
-                errorList.Add(ex.Message);
+                List<string> errorList = new List<string>
+        {
+            ex.Message
+        };
 
                 if (ex.InnerException != null)
                 {
@@ -187,9 +230,13 @@ namespace BevoBnB.Controllers
                 return View("Error", errorList);
             }
 
-            // This is the happy path - seeding worked!
+            // If successful, return the confirmation view
             return View("Confirm");
         }
 
+
     }
+
+
 }
+
