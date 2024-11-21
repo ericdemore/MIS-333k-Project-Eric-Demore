@@ -30,6 +30,6 @@ namespace BevoBnB.Models
 
         // FK relationships
         public AppUser User { get; set; }
-        public List<Property> Properties { get; set; }
+        public Property Property { get; set; }
     }
 }
