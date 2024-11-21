@@ -53,14 +53,20 @@ namespace BevoBnB.Models
 
         // scalar properties for relationships
         public AppUser User { get; set; }
-        public Property Property { get; set; }
+        public List<Property> Properties { get; set; }
 
 
         // private constants
         private const Decimal TAX_RATE = 0.0825m;
 
 
-        // read only properties (not in db schema)
+        public Reservation()
+        {
+            if (Properties == null)
+            {
+                Properties = new List<Property>();
+            }
+        }
     }
 }
 
