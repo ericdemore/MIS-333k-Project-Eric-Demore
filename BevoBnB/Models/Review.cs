@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BevoBnB.Models
 {
-    public enum DisputeStatus { Disputed, Resolved }
+    public enum DisputeStatus { NoDispute, Disputed, InvalidDispute }
 
     public class Review
     {
@@ -13,15 +13,17 @@ namespace BevoBnB.Models
         public int ReviewID { get; set; }
 
         [Required(ErrorMessage = "Rating is required.")]
-        [Range(0.0, 5.0, ErrorMessage = "Rating must be between 1.0 and 5.0.")]
+        [Range(1, 5, ErrorMessage = "Rating must be between 1 and 5.")]
         [Display(Name = "Rating")]
-        public decimal Rating { get; set; }
+        public int Rating { get; set; }
 
+        [Required(ErrorMessage = "Review text is required.")]
+        [StringLength(280, ErrorMessage = "Review cannot exceed 180 characters.")]
         [Display(Name = "Review Text")]
-        public string ReviewText { get; set; }
+        public string? ReviewText { get; set; }
 
         [Display(Name = "Host Comments")]
-        public string HostComments { get; set; }
+        public string? HostComments { get; set; }
 
         [Display(Name = "Dispute Status")]
         public DisputeStatus? DisputeStatus { get; set; }

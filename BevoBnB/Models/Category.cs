@@ -11,11 +11,14 @@ namespace BevoBnB.Models
 
         [Display(Name = "Category Name")]
         [Required(ErrorMessage = "Category name is required.")]
-        [StringLength(50, ErrorMessage = "Category name cannot exceed 50 characters.")]
         public string CategoryName { get; set; }
 
+        
+        // navigational properties for the foreign key relationships
         public List<Property> Properties { get; set; }
 
+
+        // constructor to prevent any null references 
         public Category() 
         { 
             if (Properties == null) 
