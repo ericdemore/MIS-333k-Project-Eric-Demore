@@ -92,5 +92,34 @@ namespace BevoBnB.Controllers
             //this is the happy path - seeding worked!
             return View("Confirm");
         }
+        public async Task<IActionResult> SeedReviews()
+        {
+            try
+            {
+                // Call the method to seed the reviews
+                await Seeding.SeedReviews.SeedAllReviews(_context);
+            }
+            catch (Exception ex)
+            {
+                // Collect error messages
+                List<string> errorList = new List<string> { ex.Message };
+
+                if (ex.InnerException != null)
+                {
+                    errorList.Add(ex.InnerException.Message);
+
+                    if (ex.InnerException.InnerException != null)
+                    {
+                        errorList.Add(ex.InnerException.InnerException.Message);
+                    }
+                }
+
+                return View("Error", errorList);
+            }
+
+            // Successful seeding
+            return View("Confirm");
+        }
+
     }
 }
