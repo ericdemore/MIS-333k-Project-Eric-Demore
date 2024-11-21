@@ -9,7 +9,8 @@ namespace BevoBnB.Models
         AK, CT, ID, KY, MI, NE, NY, OR, TN, WA,
         AZ, DE, IL, LA, MN, NV, NC, PA, TX, WV,
         AR, FL, IN, ME, MS, NH, ND, RI, UT, WI,
-        CA, GA, IA, MD, MO, NJ, OH, SC, VT, WY
+        CA, GA, IA, MD, MO, NJ, OH, SC, VT, WY,
+        DC
     }
     public enum PropertyStatus { Approved, Unapproved }
 
