@@ -23,12 +23,7 @@ namespace BevoBnB.Models
 
         [Required(ErrorMessage = "Address is required.")]
         [Display(Name = "Address")]
-        public string LineAddress1 { get; set; }
-
-        [Required(ErrorMessage = "A postal code is required.")]
-        [Display(Name = "Zip Code")]
-        [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid postal code format. Use 12345 or 12345-6789.")]
-        public string? PostalCode { get; set; }
+        public string LineAddress { get; set; }
 
         [Display(Name = "Hire Status")]
         public HireStatus? HireStatus { get; set; }

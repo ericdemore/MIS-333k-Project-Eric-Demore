@@ -47,6 +47,12 @@ namespace BevoBnB.Models
         [Display(Name = "First Name")]
         public String FirstName { get; set; }
 
+        public String LastName { get; set; }
+
+        public DateTime DOB { get; set; }
+
+        public String LineAddress { get; set; }
+
 
         //NOTE: Here is the logic for putting in a password
         [Required]

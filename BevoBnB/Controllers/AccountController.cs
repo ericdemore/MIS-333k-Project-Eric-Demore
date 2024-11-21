@@ -59,6 +59,9 @@ namespace BevoBnB.Controllers
                 //TODO: Add the rest of the custom user fields here
                 //FirstName is included as an example
                 FirstName = rvm.FirstName,
+                LastName = rvm.LastName,
+                LineAddress = rvm.LineAddress,
+                DOB = rvm.DOB
 
             };
 
@@ -100,7 +103,7 @@ namespace BevoBnB.Controllers
 
         // GET: /Account/Login
         [AllowAnonymous]
-        public IActionResult Login(string returnUrl)
+        public IActionResult Login(string? returnUrl)
         {
             if (User.Identity.IsAuthenticated) //user has been redirected here from a page they're not authorized to see
             {
@@ -115,7 +118,7 @@ namespace BevoBnB.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel lvm, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel lvm, string? returnUrl)
         {
             //if user forgot to include user name or password,
             //send them back to the login page to try again
