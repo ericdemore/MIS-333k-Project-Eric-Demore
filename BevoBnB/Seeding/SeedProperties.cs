@@ -27,19 +27,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 6,
                 GuestsAllowed = 9,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 152.68m,
                 WeekendPricing = 171.57m,
                 CleaningFee = 8.88m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3002,
@@ -50,19 +50,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 8,
                 GuestsAllowed = 8,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 120.81m,
                 WeekendPricing = 148.15m,
                 CleaningFee = 8.02m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 4.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.14m,
+                MinNightsforDiscount = 4,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3003,
@@ -73,19 +73,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 7,
                 GuestsAllowed = 8,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 127.96m,
                 WeekendPricing = 132.99m,
                 CleaningFee = 13.37m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Unapproved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3004,
@@ -96,19 +96,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 3,
                 GuestsAllowed = 14,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 80.20m,
                 WeekendPricing = 185.35m,
                 CleaningFee = 5.57m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3005,
@@ -119,19 +119,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 3,
                 GuestsAllowed = 12,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 170.25m,
                 WeekendPricing = 100.37m,
                 CleaningFee = 18.64m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3006,
@@ -142,19 +142,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 9,
                 GuestsAllowed = 2,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 220.24m,
                 WeekendPricing = 162.60m,
                 CleaningFee = 10.83m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 10.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.24m,
+                MinNightsforDiscount = 10,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3007,
@@ -165,19 +165,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 2,
                 GuestsAllowed = 9,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 213.37m,
                 WeekendPricing = 204.87m,
                 CleaningFee = 25.04m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3008,
@@ -188,19 +188,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 3,
                 GuestsAllowed = 8,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 159.69m,
                 WeekendPricing = 140.89m,
                 CleaningFee = 27.13m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 7.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.05m,
+                MinNightsforDiscount = 7,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3009,
@@ -211,19 +211,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 3,
                 GuestsAllowed = 4,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 200.73m,
                 WeekendPricing = 295.39m,
                 CleaningFee = 14.91m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
-                UnavailableDates = new List<DateTime> { DateTime.Parse("2024-12-04 00:00:00"), DateTime.Parse("2024-12-05 00:00:00") }
+                UnavailableDates = new List<DateTime> { DateTime.Parse("2024-12-04"), DateTime.Parse("2024-12-05") }
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3010,
@@ -234,19 +234,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 6,
                 GuestsAllowed = 3,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 170.39m,
                 WeekendPricing = 110.80m,
                 CleaningFee = 8.67m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3011,
@@ -257,19 +257,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 3,
                 GuestsAllowed = 14,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 217.15m,
                 WeekendPricing = 126.29m,
                 CleaningFee = 26.48m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3012,
@@ -280,19 +280,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 5,
                 GuestsAllowed = 8,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 205.21m,
                 WeekendPricing = 293.26m,
                 CleaningFee = 28.74m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3013,
@@ -303,19 +303,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 7,
                 GuestsAllowed = 4,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 123.13m,
                 WeekendPricing = 126.99m,
                 CleaningFee = 18.73m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3014,
@@ -326,19 +326,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 5,
                 GuestsAllowed = 14,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 89.19m,
                 WeekendPricing = 188.81m,
                 CleaningFee = 11.98m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Unapproved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3015,
@@ -349,19 +349,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 3,
                 GuestsAllowed = 11,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 198.30m,
                 WeekendPricing = 132.96m,
                 CleaningFee = 13.96m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3016,
@@ -372,19 +372,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 6,
                 GuestsAllowed = 10,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 181.50m,
                 WeekendPricing = 297.31m,
                 CleaningFee = 10.09m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 22.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.13m,
+                MinNightsforDiscount = 22,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3017,
@@ -395,19 +395,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 3,
                 GuestsAllowed = 1,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 134.09m,
                 WeekendPricing = 139.22m,
                 CleaningFee = 9.75m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3018,
@@ -418,19 +418,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 5,
                 GuestsAllowed = 9,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 187.65m,
                 WeekendPricing = 160.61m,
                 CleaningFee = 7.50m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 30.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.11m,
+                MinNightsforDiscount = 30,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3019,
@@ -441,19 +441,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 3,
                 GuestsAllowed = 5,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 206.95m,
                 WeekendPricing = 133.25m,
                 CleaningFee = 14.04m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3020,
@@ -464,19 +464,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 4,
                 GuestsAllowed = 12,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 99.54m,
                 WeekendPricing = 242.89m,
                 CleaningFee = 6.61m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3021,
@@ -487,19 +487,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 7,
                 GuestsAllowed = 12,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 112.62m,
                 WeekendPricing = 165.32m,
                 CleaningFee = 24.26m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3022,
@@ -510,19 +510,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 4,
                 GuestsAllowed = 2,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 199.21m,
                 WeekendPricing = 119.02m,
                 CleaningFee = 11.63m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 21.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.13m,
+                MinNightsforDiscount = 21,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3023,
@@ -533,19 +533,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 6,
                 GuestsAllowed = 11,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 179.05m,
                 WeekendPricing = 244.93m,
                 CleaningFee = 21.78m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3024,
@@ -556,19 +556,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 3,
                 GuestsAllowed = 6,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 207.24m,
                 WeekendPricing = 227.35m,
                 CleaningFee = 5.50m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3025,
@@ -579,19 +579,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 4,
                 GuestsAllowed = 11,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 116.01m,
                 WeekendPricing = 278.36m,
                 CleaningFee = 24.73m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3026,
@@ -602,19 +602,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 7,
                 GuestsAllowed = 7,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 225.14m,
                 WeekendPricing = 293.42m,
                 CleaningFee = 10.42m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 28.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.06m,
+                MinNightsforDiscount = 28,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3027,
@@ -625,19 +625,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 2,
                 GuestsAllowed = 4,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 70.24m,
                 WeekendPricing = 126.45m,
                 CleaningFee = 18.69m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 3.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.08m,
+                MinNightsforDiscount = 3,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3028,
@@ -648,19 +648,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 3,
                 GuestsAllowed = 3,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 186.38m,
                 WeekendPricing = 224.07m,
                 CleaningFee = 28.24m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 20.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.06m,
+                MinNightsforDiscount = 20,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3029,
@@ -671,19 +671,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 7,
                 GuestsAllowed = 9,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 112.47m,
                 WeekendPricing = 120.93m,
                 CleaningFee = 23.28m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3030,
@@ -694,19 +694,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 9,
                 GuestsAllowed = 1,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 214.81m,
                 WeekendPricing = 100.02m,
                 CleaningFee = 17.78m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3031,
@@ -717,19 +717,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 2,
                 GuestsAllowed = 11,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 159.87m,
                 WeekendPricing = 161.60m,
                 CleaningFee = 10.34m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3032,
@@ -740,19 +740,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 6,
                 GuestsAllowed = 4,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 70.55m,
                 WeekendPricing = 203.60m,
                 CleaningFee = 5.09m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 30.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.23m,
+                MinNightsforDiscount = 30,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3033,
@@ -763,19 +763,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 3,
                 GuestsAllowed = 2,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 176.37m,
                 WeekendPricing = 299.34m,
                 CleaningFee = 17.38m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3034,
@@ -786,19 +786,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 6,
                 GuestsAllowed = 14,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 172.83m,
                 WeekendPricing = 229.98m,
                 CleaningFee = 23.55m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3035,
@@ -809,19 +809,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 1,
                 GuestsAllowed = 5,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 177.08m,
                 WeekendPricing = 143.71m,
                 CleaningFee = 19.21m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 42.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.13m,
+                MinNightsforDiscount = 42,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3036,
@@ -832,19 +832,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 4,
                 GuestsAllowed = 10,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 76.66m,
                 WeekendPricing = 113.86m,
                 CleaningFee = 27.87m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 7.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.11m,
+                MinNightsforDiscount = 7,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3037,
@@ -855,19 +855,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 8,
                 GuestsAllowed = 6,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 177.37m,
                 WeekendPricing = 299.09m,
                 CleaningFee = 23.78m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 19.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.09m,
+                MinNightsforDiscount = 19,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3038,
@@ -878,19 +878,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 2,
                 GuestsAllowed = 5,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 104.05m,
                 WeekendPricing = 158.42m,
                 CleaningFee = 5.36m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 30.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.23m,
+                MinNightsforDiscount = 30,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3039,
@@ -901,19 +901,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 2,
                 GuestsAllowed = 1,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 199.37m,
                 WeekendPricing = 210.59m,
                 CleaningFee = 8.83m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3040,
@@ -924,19 +924,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 5,
                 GuestsAllowed = 9,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 94.48m,
                 WeekendPricing = 153.69m,
                 CleaningFee = 16.85m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3041,
@@ -947,19 +947,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 3,
                 GuestsAllowed = 14,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 88.82m,
                 WeekendPricing = 196.14m,
                 CleaningFee = 6.97m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3042,
@@ -970,19 +970,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 5,
                 GuestsAllowed = 2,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 119.58m,
                 WeekendPricing = 123.22m,
                 CleaningFee = 18.45m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3043,
@@ -993,19 +993,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 2,
                 GuestsAllowed = 2,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 218.87m,
                 WeekendPricing = 283.77m,
                 CleaningFee = 19.07m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 4.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.09m,
+                MinNightsforDiscount = 4,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3044,
@@ -1016,19 +1016,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 4,
                 GuestsAllowed = 13,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 76.19m,
                 WeekendPricing = 239.76m,
                 CleaningFee = 11.37m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3045,
@@ -1039,19 +1039,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 7,
                 GuestsAllowed = 7,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 161.17m,
                 WeekendPricing = 229.04m,
                 CleaningFee = 25.01m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3046,
@@ -1062,19 +1062,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 4,
                 GuestsAllowed = 6,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 106.06m,
                 WeekendPricing = 220.69m,
                 CleaningFee = 11.82m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3047,
@@ -1085,19 +1085,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 7,
                 GuestsAllowed = 10,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 151.44m,
                 WeekendPricing = 138.96m,
                 CleaningFee = 6.72m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 2.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.18m,
+                MinNightsforDiscount = 2,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3048,
@@ -1108,19 +1108,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 5,
                 GuestsAllowed = 2,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 102.43m,
                 WeekendPricing = 134.28m,
                 CleaningFee = 19.81m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 1.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.15m,
+                MinNightsforDiscount = 1,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3049,
@@ -1131,19 +1131,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 7,
                 GuestsAllowed = 11,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 94.31m,
                 WeekendPricing = 259.87m,
                 CleaningFee = 22.33m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3050,
@@ -1154,19 +1154,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 5,
                 GuestsAllowed = 1,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 151.69m,
                 WeekendPricing = 263.32m,
                 CleaningFee = 13.27m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3051,
@@ -1177,19 +1177,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 8,
                 GuestsAllowed = 10,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 204.04m,
                 WeekendPricing = 204.28m,
                 CleaningFee = 11.07m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3052,
@@ -1200,19 +1200,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 1,
                 GuestsAllowed = 9,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 165.51m,
                 WeekendPricing = 224.19m,
                 CleaningFee = 24.26m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 5.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.12m,
+                MinNightsforDiscount = 5,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3053,
@@ -1223,19 +1223,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 9,
                 GuestsAllowed = 6,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 106.87m,
                 WeekendPricing = 121.74m,
                 CleaningFee = 5.62m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 5.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.06m,
+                MinNightsforDiscount = 5,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3054,
@@ -1246,19 +1246,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 7,
                 GuestsAllowed = 9,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 212.32m,
                 WeekendPricing = 148.76m,
                 CleaningFee = 20.20m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 41.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.12m,
+                MinNightsforDiscount = 41,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3055,
@@ -1269,19 +1269,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 6,
                 GuestsAllowed = 12,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 164.02m,
                 WeekendPricing = 111.01m,
                 CleaningFee = 26.21m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Unapproved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3056,
@@ -1292,19 +1292,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 9,
                 GuestsAllowed = 10,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 117.45m,
                 WeekendPricing = 167.53m,
                 CleaningFee = 24.75m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 8.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.17m,
+                MinNightsforDiscount = 8,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3057,
@@ -1315,19 +1315,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 5,
                 GuestsAllowed = 12,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 209.47m,
                 WeekendPricing = 176.53m,
                 CleaningFee = 5.83m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 3.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.05m,
+                MinNightsforDiscount = 3,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3058,
@@ -1338,19 +1338,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 2,
                 GuestsAllowed = 14,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 153.04m,
                 WeekendPricing = 199.10m,
                 CleaningFee = 18.62m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 19.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.13m,
+                MinNightsforDiscount = 19,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3059,
@@ -1361,19 +1361,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 1,
                 GuestsAllowed = 11,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 196.56m,
                 WeekendPricing = 199.22m,
                 CleaningFee = 20.71m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 4.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.14m,
+                MinNightsforDiscount = 4,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3060,
@@ -1384,19 +1384,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 6,
                 GuestsAllowed = 3,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 117.03m,
                 WeekendPricing = 178.29m,
                 CleaningFee = 6.47m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 4.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.05m,
+                MinNightsforDiscount = 4,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3061,
@@ -1407,19 +1407,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 4,
                 GuestsAllowed = 1,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 133.35m,
                 WeekendPricing = 252.79m,
                 CleaningFee = 9.15m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3062,
@@ -1430,19 +1430,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 3,
                 GuestsAllowed = 9,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 171.15m,
                 WeekendPricing = 296.05m,
                 CleaningFee = 18.26m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 4.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.21m,
+                MinNightsforDiscount = 4,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3063,
@@ -1453,19 +1453,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 7,
                 GuestsAllowed = 10,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 132.81m,
                 WeekendPricing = 163.88m,
                 CleaningFee = 7.46m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 6.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.17m,
+                MinNightsforDiscount = 6,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3064,
@@ -1476,19 +1476,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 7,
                 GuestsAllowed = 7,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 228.84m,
                 WeekendPricing = 140.73m,
                 CleaningFee = 17.13m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 22.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.23m,
+                MinNightsforDiscount = 22,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3065,
@@ -1499,19 +1499,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 5,
                 GuestsAllowed = 13,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 155.03m,
                 WeekendPricing = 139.83m,
                 CleaningFee = 21.05m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 21.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.09m,
+                MinNightsforDiscount = 21,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3066,
@@ -1522,19 +1522,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 5,
                 GuestsAllowed = 1,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 128.41m,
                 WeekendPricing = 249.24m,
                 CleaningFee = 6.63m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 8.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.07m,
+                MinNightsforDiscount = 8,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3067,
@@ -1545,19 +1545,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 8,
                 GuestsAllowed = 9,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 163.68m,
                 WeekendPricing = 286.53m,
                 CleaningFee = 25.57m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3068,
@@ -1568,19 +1568,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 3,
                 GuestsAllowed = 2,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 93.86m,
                 WeekendPricing = 137.17m,
                 CleaningFee = 28.18m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3069,
@@ -1591,19 +1591,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 5,
                 GuestsAllowed = 13,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 86.25m,
                 WeekendPricing = 120.61m,
                 CleaningFee = 11.39m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 10.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.17m,
+                MinNightsforDiscount = 10,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3070,
@@ -1614,19 +1614,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 7,
                 GuestsAllowed = 2,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 182.46m,
                 WeekendPricing = 241.25m,
                 CleaningFee = 18.29m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3071,
@@ -1637,19 +1637,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 3,
                 GuestsAllowed = 1,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 89.88m,
                 WeekendPricing = 123.04m,
                 CleaningFee = 19.14m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3072,
@@ -1660,19 +1660,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 5,
                 GuestsAllowed = 12,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 81.55m,
                 WeekendPricing = 219.86m,
                 CleaningFee = 13.38m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 2.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.22m,
+                MinNightsforDiscount = 2,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3073,
@@ -1683,19 +1683,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 7,
                 GuestsAllowed = 3,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 130.47m,
                 WeekendPricing = 196.09m,
                 CleaningFee = 14.53m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3074,
@@ -1706,19 +1706,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 1,
                 GuestsAllowed = 4,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 148.10m,
                 WeekendPricing = 136.82m,
                 CleaningFee = 15.57m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 22.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.22m,
+                MinNightsforDiscount = 22,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3075,
@@ -1729,19 +1729,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 7,
                 GuestsAllowed = 3,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 147.55m,
                 WeekendPricing = 209.77m,
                 CleaningFee = 27.65m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 6.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.09m,
+                MinNightsforDiscount = 6,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3076,
@@ -1752,19 +1752,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 4,
                 GuestsAllowed = 3,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 86.80m,
                 WeekendPricing = 126.47m,
                 CleaningFee = 17.60m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 21.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.06m,
+                MinNightsforDiscount = 21,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3077,
@@ -1775,19 +1775,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 4,
                 GuestsAllowed = 7,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 121.75m,
                 WeekendPricing = 173.01m,
                 CleaningFee = 12.53m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3078,
@@ -1798,19 +1798,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 7,
                 GuestsAllowed = 5,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 160.23m,
                 WeekendPricing = 198.10m,
                 CleaningFee = 10.82m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3079,
@@ -1821,19 +1821,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 2,
                 GuestsAllowed = 7,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 110.64m,
                 WeekendPricing = 127.70m,
                 CleaningFee = 26.67m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3080,
@@ -1844,19 +1844,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 5,
                 GuestsAllowed = 2,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 227.60m,
                 WeekendPricing = 236.71m,
                 CleaningFee = 20.22m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3081,
@@ -1867,19 +1867,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 6,
                 GuestsAllowed = 13,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 115.37m,
                 WeekendPricing = 135.59m,
                 CleaningFee = 29.80m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3082,
@@ -1890,19 +1890,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 4,
                 GuestsAllowed = 5,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 93.35m,
                 WeekendPricing = 271.49m,
                 CleaningFee = 8.54m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 6.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.18m,
+                MinNightsforDiscount = 6,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3083,
@@ -1913,19 +1913,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 3,
                 GuestsAllowed = 5,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 171.37m,
                 WeekendPricing = 247.15m,
                 CleaningFee = 17.22m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 8.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.21m,
+                MinNightsforDiscount = 8,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3084,
@@ -1936,19 +1936,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 3,
                 GuestsAllowed = 8,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 95.59m,
                 WeekendPricing = 299.60m,
                 CleaningFee = 24.30m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3085,
@@ -1959,19 +1959,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 2,
                 GuestsAllowed = 11,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 194.84m,
                 WeekendPricing = 278.17m,
                 CleaningFee = 5.88m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3086,
@@ -1982,19 +1982,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 8,
                 GuestsAllowed = 8,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 112.03m,
                 WeekendPricing = 100.08m,
                 CleaningFee = 28.82m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3087,
@@ -2005,19 +2005,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 4,
                 GuestsAllowed = 1,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 127.97m,
                 WeekendPricing = 182.77m,
                 CleaningFee = 13.02m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 37.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.17m,
+                MinNightsforDiscount = 37,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3088,
@@ -2028,19 +2028,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 7,
                 GuestsAllowed = 13,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 120.07m,
                 WeekendPricing = 186.01m,
                 CleaningFee = 26.71m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3089,
@@ -2051,19 +2051,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 2,
                 GuestsAllowed = 9,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 137.96m,
                 WeekendPricing = 122.31m,
                 CleaningFee = 26.29m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 29.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.10m,
+                MinNightsforDiscount = 29,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3090,
@@ -2074,19 +2074,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 5,
                 GuestsAllowed = 6,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 226.57m,
                 WeekendPricing = 234.61m,
                 CleaningFee = 16.41m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3091,
@@ -2097,19 +2097,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 6,
                 GuestsAllowed = 10,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 95.73m,
                 WeekendPricing = 145.15m,
                 CleaningFee = 9.93m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3092,
@@ -2120,19 +2120,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 8,
                 GuestsAllowed = 4,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 161.68m,
                 WeekendPricing = 145.72m,
                 CleaningFee = 24.36m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3093,
@@ -2143,19 +2143,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 5,
                 GuestsAllowed = 3,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 183.81m,
                 WeekendPricing = 260.18m,
                 CleaningFee = 7.46m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Unapproved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3094,
@@ -2166,19 +2166,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 3,
                 GuestsAllowed = 14,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 215.38m,
                 WeekendPricing = 117.17m,
                 CleaningFee = 24.31m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3095,
@@ -2189,19 +2189,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 5,
                 GuestsAllowed = 11,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 145.51m,
                 WeekendPricing = 242.21m,
                 CleaningFee = 11.89m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 41.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.10m,
+                MinNightsforDiscount = 41,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3096,
@@ -2212,19 +2212,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 6,
                 GuestsAllowed = 7,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 142.76m,
                 WeekendPricing = 161.21m,
                 CleaningFee = 20.92m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3097,
@@ -2235,19 +2235,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 7,
                 GuestsAllowed = 13,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 170.07m,
                 WeekendPricing = 176.37m,
                 CleaningFee = 8.54m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 17.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.09m,
+                MinNightsforDiscount = 17,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3098,
@@ -2258,19 +2258,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 8,
                 GuestsAllowed = 10,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 145.08m,
                 WeekendPricing = 234.81m,
                 CleaningFee = 26.14m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3099,
@@ -2281,19 +2281,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 1,
                 GuestsAllowed = 1,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 111.73m,
                 WeekendPricing = 260.62m,
                 CleaningFee = 15.89m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 9.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.24m,
+                MinNightsforDiscount = 9,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
-                UnavailableDates = new List<DateTime> { DateTime.Parse("2024-12-29 00:00:00"), DateTime.Parse("2024-12-30 00:00:00"), DateTime.Parse("2024-12-31 00:00:00"), DateTime.Parse("2025-01-01 00:00:00") }
+                UnavailableDates = new List<DateTime> { DateTime.Parse("2024-12-29"), DateTime.Parse("2024-12-30"), DateTime.Parse("2024-12-31"), DateTime.Parse("2025-01-01") }
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3100,
@@ -2304,19 +2304,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 1,
                 GuestsAllowed = 13,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 70.63m,
                 WeekendPricing = 214.62m,
                 CleaningFee = 5.29m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
-                UnavailableDates = new List<DateTime> { DateTime.Parse("2024-12-31 00:00:00") }
+                UnavailableDates = new List<DateTime> { DateTime.Parse("2024-12-31") }
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3101,
@@ -2327,19 +2327,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 4,
                 GuestsAllowed = 6,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 229.03m,
                 WeekendPricing = 172.79m,
                 CleaningFee = 14.05m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 12.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.14m,
+                MinNightsforDiscount = 12,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3102,
@@ -2350,19 +2350,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 5,
                 GuestsAllowed = 6,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 169.34m,
                 WeekendPricing = 133.53m,
                 CleaningFee = 18.06m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 28.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.25m,
+                MinNightsforDiscount = 28,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3103,
@@ -2373,19 +2373,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 3,
                 GuestsAllowed = 4,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 155.52m,
                 WeekendPricing = 109.44m,
                 CleaningFee = 8.28m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3104,
@@ -2396,19 +2396,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 7,
                 GuestsAllowed = 5,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 180.20m,
                 WeekendPricing = 182.33m,
                 CleaningFee = 17.78m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 13.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.13m,
+                MinNightsforDiscount = 13,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3105,
@@ -2419,19 +2419,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 2,
                 GuestsAllowed = 1,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 212.86m,
                 WeekendPricing = 212.70m,
                 CleaningFee = 6.82m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3106,
@@ -2442,19 +2442,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 6,
                 GuestsAllowed = 8,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 188.71m,
                 WeekendPricing = 262.30m,
                 CleaningFee = 21.88m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3107,
@@ -2465,19 +2465,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 4,
                 GuestsAllowed = 8,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 83.34m,
                 WeekendPricing = 128.05m,
                 CleaningFee = 11.29m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 8.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.21m,
+                MinNightsforDiscount = 8,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3108,
@@ -2488,19 +2488,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 1,
                 GuestsAllowed = 4,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 204.02m,
                 WeekendPricing = 125.27m,
                 CleaningFee = 21.15m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3109,
@@ -2511,19 +2511,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 3,
                 GuestsAllowed = 9,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 90.98m,
                 WeekendPricing = 172.10m,
                 CleaningFee = 18.09m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 11.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.22m,
+                MinNightsforDiscount = 11,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3110,
@@ -2534,19 +2534,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 7,
                 GuestsAllowed = 9,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 158.64m,
                 WeekendPricing = 299.91m,
                 CleaningFee = 23.09m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 22.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.12m,
+                MinNightsforDiscount = 22,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3111,
@@ -2557,19 +2557,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 4,
                 GuestsAllowed = 4,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 107.97m,
                 WeekendPricing = 189.30m,
                 CleaningFee = 9.05m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3112,
@@ -2580,19 +2580,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 3,
                 GuestsAllowed = 2,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 214.14m,
                 WeekendPricing = 193.24m,
                 CleaningFee = 26.10m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 21.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.06m,
+                MinNightsforDiscount = 21,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3113,
@@ -2603,19 +2603,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 7,
                 GuestsAllowed = 4,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 106.30m,
                 WeekendPricing = 192.46m,
                 CleaningFee = 17.59m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
-                UnavailableDates = new List<DateTime> { DateTime.Parse("2024-12-05 00:00:00"), DateTime.Parse("2024-12-06 00:00:00"), DateTime.Parse("2024-12-07 00:00:00") }
+                UnavailableDates = new List<DateTime> { DateTime.Parse("2024-12-05"), DateTime.Parse("2024-12-06"), DateTime.Parse("2024-12-07") }
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3114,
@@ -2626,19 +2626,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 6,
                 GuestsAllowed = 6,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 116.99m,
                 WeekendPricing = 257.37m,
                 CleaningFee = 5.63m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3115,
@@ -2649,19 +2649,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 1,
                 GuestsAllowed = 3,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 203.03m,
                 WeekendPricing = 108.28m,
                 CleaningFee = 11.35m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 4.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.10m,
+                MinNightsforDiscount = 4,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3116,
@@ -2672,19 +2672,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 2,
                 GuestsAllowed = 14,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 163.30m,
                 WeekendPricing = 262.77m,
                 CleaningFee = 13.74m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 12.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.16m,
+                MinNightsforDiscount = 12,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3117,
@@ -2695,19 +2695,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 2,
                 GuestsAllowed = 4,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 156.25m,
                 WeekendPricing = 108.52m,
                 CleaningFee = 23.66m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3118,
@@ -2718,19 +2718,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 6,
                 GuestsAllowed = 12,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 178.27m,
                 WeekendPricing = 153.42m,
                 CleaningFee = 24.69m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 23.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.06m,
+                MinNightsforDiscount = 23,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3119,
@@ -2741,19 +2741,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 8,
                 GuestsAllowed = 13,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 92.51m,
                 WeekendPricing = 184.92m,
                 CleaningFee = 12.82m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 3.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.12m,
+                MinNightsforDiscount = 3,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3120,
@@ -2764,19 +2764,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 6,
                 GuestsAllowed = 6,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 224.62m,
                 WeekendPricing = 225.85m,
                 CleaningFee = 17.90m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3121,
@@ -2787,19 +2787,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 2,
                 GuestsAllowed = 10,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 112.61m,
                 WeekendPricing = 174.02m,
                 CleaningFee = 17.48m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 5.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.08m,
+                MinNightsforDiscount = 5,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3122,
@@ -2810,19 +2810,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 5,
                 GuestsAllowed = 1,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 189.98m,
                 WeekendPricing = 119.06m,
                 CleaningFee = 25.11m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3123,
@@ -2833,19 +2833,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 1,
                 GuestsAllowed = 6,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 72.03m,
                 WeekendPricing = 114.73m,
                 CleaningFee = 18.38m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3124,
@@ -2856,19 +2856,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 4,
                 GuestsAllowed = 3,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 216.21m,
                 WeekendPricing = 144.51m,
                 CleaningFee = 10.81m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3125,
@@ -2879,19 +2879,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 7,
                 GuestsAllowed = 13,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 132.69m,
                 WeekendPricing = 233.90m,
                 CleaningFee = 15.80m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3126,
@@ -2902,19 +2902,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 1,
                 GuestsAllowed = 9,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 220.97m,
                 WeekendPricing = 285.05m,
                 CleaningFee = 20.98m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3127,
@@ -2925,19 +2925,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 6,
                 GuestsAllowed = 12,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 224.98m,
                 WeekendPricing = 180.86m,
                 CleaningFee = 11.91m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3128,
@@ -2948,19 +2948,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 7,
                 GuestsAllowed = 12,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 221.98m,
                 WeekendPricing = 239.97m,
                 CleaningFee = 9.24m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3129,
@@ -2971,19 +2971,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 3,
                 GuestsAllowed = 1,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 76.56m,
                 WeekendPricing = 297.25m,
                 CleaningFee = 20.42m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3130,
@@ -2994,19 +2994,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 3,
                 GuestsAllowed = 3,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 128.71m,
                 WeekendPricing = 129.36m,
                 CleaningFee = 23.76m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 3.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.08m,
+                MinNightsforDiscount = 3,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3131,
@@ -3017,19 +3017,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 2,
                 GuestsAllowed = 9,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 114.21m,
                 WeekendPricing = 210.63m,
                 CleaningFee = 21.08m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 42.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.21m,
+                MinNightsforDiscount = 42,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3132,
@@ -3040,19 +3040,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 6,
                 GuestsAllowed = 11,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 146.82m,
                 WeekendPricing = 280.37m,
                 CleaningFee = 26.78m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3133,
@@ -3063,19 +3063,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 3,
                 GuestsAllowed = 1,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 134.72m,
                 WeekendPricing = 249.39m,
                 CleaningFee = 19.19m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3134,
@@ -3086,19 +3086,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 8,
                 GuestsAllowed = 7,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 111.60m,
                 WeekendPricing = 111.23m,
                 CleaningFee = 13.48m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 5.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.21m,
+                MinNightsforDiscount = 5,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3135,
@@ -3109,19 +3109,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 6,
                 GuestsAllowed = 3,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 89.00m,
                 WeekendPricing = 168.47m,
                 CleaningFee = 14.93m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 36.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.21m,
+                MinNightsforDiscount = 36,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3136,
@@ -3132,19 +3132,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 5,
                 GuestsAllowed = 6,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 208.64m,
                 WeekendPricing = 208.35m,
                 CleaningFee = 7.09m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3137,
@@ -3155,19 +3155,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 7,
                 GuestsAllowed = 3,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 172.51m,
                 WeekendPricing = 195.41m,
                 CleaningFee = 21.53m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3138,
@@ -3178,19 +3178,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 3,
                 GuestsAllowed = 8,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 163.15m,
                 WeekendPricing = 146.12m,
                 CleaningFee = 18.98m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3139,
@@ -3201,19 +3201,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 7,
                 GuestsAllowed = 9,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 81.50m,
                 WeekendPricing = 161.49m,
                 CleaningFee = 16.41m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3140,
@@ -3224,19 +3224,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 7,
                 GuestsAllowed = 13,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 177.94m,
                 WeekendPricing = 120.73m,
                 CleaningFee = 9.50m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3141,
@@ -3247,19 +3247,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 4,
                 GuestsAllowed = 6,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 121.01m,
                 WeekendPricing = 187.08m,
                 CleaningFee = 16.48m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3142,
@@ -3270,19 +3270,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 4,
                 GuestsAllowed = 6,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 199.68m,
                 WeekendPricing = 241.45m,
                 CleaningFee = 25.94m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3143,
@@ -3293,19 +3293,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 2,
                 GuestsAllowed = 9,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 162.01m,
                 WeekendPricing = 111.91m,
                 CleaningFee = 14.35m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 29.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.10m,
+                MinNightsforDiscount = 29,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3144,
@@ -3316,19 +3316,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 3,
                 GuestsAllowed = 12,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 173.36m,
                 WeekendPricing = 163.73m,
                 CleaningFee = 25.35m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 32.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.06m,
+                MinNightsforDiscount = 32,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3145,
@@ -3339,19 +3339,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 3,
                 GuestsAllowed = 8,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 216.10m,
                 WeekendPricing = 287.28m,
                 CleaningFee = 22.20m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3146,
@@ -3362,19 +3362,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 3,
                 GuestsAllowed = 7,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 211.51m,
                 WeekendPricing = 247.34m,
                 CleaningFee = 11.73m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 6.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.13m,
+                MinNightsforDiscount = 6,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3147,
@@ -3385,19 +3385,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 6,
                 GuestsAllowed = 2,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 111.40m,
                 WeekendPricing = 189.08m,
                 CleaningFee = 19.58m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 9.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.07m,
+                MinNightsforDiscount = 9,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3148,
@@ -3408,19 +3408,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 9,
                 GuestsAllowed = 7,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 150.69m,
                 WeekendPricing = 109.87m,
                 CleaningFee = 13.30m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3149,
@@ -3431,19 +3431,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 7,
                 GuestsAllowed = 10,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 184.21m,
                 WeekendPricing = 227.55m,
                 CleaningFee = 19.52m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3150,
@@ -3454,19 +3454,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 1,
                 GuestsAllowed = 2,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 204.67m,
                 WeekendPricing = 207.51m,
                 CleaningFee = 26.36m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 44.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.22m,
+                MinNightsforDiscount = 44,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3151,
@@ -3477,19 +3477,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 5,
                 GuestsAllowed = 11,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 129.14m,
                 WeekendPricing = 213.84m,
                 CleaningFee = 12.81m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3152,
@@ -3500,19 +3500,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 5,
                 GuestsAllowed = 3,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 77.06m,
                 WeekendPricing = 254.37m,
                 CleaningFee = 6.03m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3153,
@@ -3523,19 +3523,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 5,
                 GuestsAllowed = 9,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 179.91m,
                 WeekendPricing = 233.17m,
                 CleaningFee = 11.04m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 32.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.18m,
+                MinNightsforDiscount = 32,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3154,
@@ -3546,19 +3546,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 5,
                 GuestsAllowed = 14,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 90.54m,
                 WeekendPricing = 153.38m,
                 CleaningFee = 6.91m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 30.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.18m,
+                MinNightsforDiscount = 30,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3155,
@@ -3569,19 +3569,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 6,
                 GuestsAllowed = 2,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 225.59m,
                 WeekendPricing = 226.89m,
                 CleaningFee = 28.99m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 15.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.12m,
+                MinNightsforDiscount = 15,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3156,
@@ -3592,19 +3592,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 4,
                 GuestsAllowed = 13,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 203.25m,
                 WeekendPricing = 157.15m,
                 CleaningFee = 15.68m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 9.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.23m,
+                MinNightsforDiscount = 9,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3157,
@@ -3615,19 +3615,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 9,
                 GuestsAllowed = 9,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 223.27m,
                 WeekendPricing = 269.55m,
                 CleaningFee = 11.35m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3158,
@@ -3638,19 +3638,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 8,
                 GuestsAllowed = 14,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 173.63m,
                 WeekendPricing = 112.64m,
                 CleaningFee = 6.38m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 13.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.06m,
+                MinNightsforDiscount = 13,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3159,
@@ -3661,19 +3661,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 9,
                 GuestsAllowed = 9,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 176.23m,
                 WeekendPricing = 163.20m,
                 CleaningFee = 14.77m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3160,
@@ -3684,19 +3684,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 6,
                 GuestsAllowed = 9,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 219.53m,
                 WeekendPricing = 209.33m,
                 CleaningFee = 24.51m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 16.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.10m,
+                MinNightsforDiscount = 16,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3161,
@@ -3707,19 +3707,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 2,
                 GuestsAllowed = 10,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 126.25m,
                 WeekendPricing = 269.63m,
                 CleaningFee = 8.27m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 8.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.16m,
+                MinNightsforDiscount = 8,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3162,
@@ -3730,19 +3730,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 5,
                 Bathrooms = 6,
                 GuestsAllowed = 14,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 143.98m,
                 WeekendPricing = 286.86m,
                 CleaningFee = 20.48m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3163,
@@ -3753,19 +3753,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 2,
                 GuestsAllowed = 10,
-                PetsAllowed = no,
-                FreeParking = yes,
+                PetsAllowed = false,
+                FreeParking = true,
                 WeekdayPricing = 121.91m,
                 WeekendPricing = 144.60m,
                 CleaningFee = 10.12m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 8.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.22m,
+                MinNightsforDiscount = 8,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3164,
@@ -3776,19 +3776,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 9,
                 GuestsAllowed = 1,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 137.80m,
                 WeekendPricing = 114.46m,
                 CleaningFee = 17.74m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3165,
@@ -3799,19 +3799,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 4,
                 GuestsAllowed = 11,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 128.63m,
                 WeekendPricing = 155.10m,
                 CleaningFee = 23.05m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3166,
@@ -3822,19 +3822,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 5,
                 GuestsAllowed = 4,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 209.11m,
                 WeekendPricing = 284.39m,
                 CleaningFee = 6.25m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 6.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.14m,
+                MinNightsforDiscount = 6,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3167,
@@ -3845,19 +3845,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 1,
                 GuestsAllowed = 7,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 128.59m,
                 WeekendPricing = 121.00m,
                 CleaningFee = 19.36m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3168,
@@ -3868,19 +3868,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 3,
                 GuestsAllowed = 14,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 122.88m,
                 WeekendPricing = 104.47m,
                 CleaningFee = 25.31m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3169,
@@ -3891,19 +3891,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 3,
                 GuestsAllowed = 9,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 211.24m,
                 WeekendPricing = 275.50m,
                 CleaningFee = 15.74m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3170,
@@ -3914,19 +3914,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 1,
                 GuestsAllowed = 9,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 124.65m,
                 WeekendPricing = 126.24m,
                 CleaningFee = 24.30m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3171,
@@ -3937,19 +3937,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 6,
                 GuestsAllowed = 3,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 70.11m,
                 WeekendPricing = 112.05m,
                 CleaningFee = 27.45m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3172,
@@ -3960,19 +3960,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 2,
                 GuestsAllowed = 11,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 174.87m,
                 WeekendPricing = 152.09m,
                 CleaningFee = 18.44m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 8.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.08m,
+                MinNightsforDiscount = 8,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
                 User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
-                UnavailableDates = new List<DateTime> { DateTime.Parse("2024-12-30 00:00:00"), DateTime.Parse("2024-12-31 00:00:00"), DateTime.Parse("2025-01-01 00:00:00") }
+                UnavailableDates = new List<DateTime> { DateTime.Parse("2024-12-30"), DateTime.Parse("2024-12-31"), DateTime.Parse("2025-01-01") }
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3173,
@@ -3983,19 +3983,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 4,
                 GuestsAllowed = 10,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 96.80m,
                 WeekendPricing = 174.06m,
                 CleaningFee = 28.15m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 21.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.10m,
+                MinNightsforDiscount = 21,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3174,
@@ -4006,19 +4006,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 1,
                 GuestsAllowed = 10,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 205.01m,
                 WeekendPricing = 108.24m,
                 CleaningFee = 6.56m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
                 User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3175,
@@ -4029,19 +4029,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 6,
                 GuestsAllowed = 7,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 197.52m,
                 WeekendPricing = 148.39m,
                 CleaningFee = 20.55m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 27.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.14m,
+                MinNightsforDiscount = 27,
                 PropertyStatus = PropertyStatus.Unapproved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3176,
@@ -4052,19 +4052,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 3,
                 GuestsAllowed = 9,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 219.69m,
                 WeekendPricing = 286.13m,
                 CleaningFee = 10.64m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3177,
@@ -4075,19 +4075,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 1,
                 Bathrooms = 2,
                 GuestsAllowed = 7,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 91.26m,
                 WeekendPricing = 123.93m,
                 CleaningFee = 19.36m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 19.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.23m,
+                MinNightsforDiscount = 19,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3178,
@@ -4098,19 +4098,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 6,
                 Bathrooms = 8,
                 GuestsAllowed = 7,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 132.54m,
                 WeekendPricing = 254.38m,
                 CleaningFee = 14.83m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3179,
@@ -4121,19 +4121,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 2,
                 Bathrooms = 4,
                 GuestsAllowed = 1,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 227.96m,
                 WeekendPricing = 228.04m,
                 CleaningFee = 6.99m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3180,
@@ -4144,19 +4144,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 4,
                 Bathrooms = 4,
                 GuestsAllowed = 3,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 140.93m,
                 WeekendPricing = 228.81m,
                 CleaningFee = 29.74m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 21.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.15m,
+                MinNightsforDiscount = 21,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3181,
@@ -4167,19 +4167,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 6,
                 GuestsAllowed = 6,
-                PetsAllowed = yes,
-                FreeParking = yes,
+                PetsAllowed = true,
+                FreeParking = true,
                 WeekdayPricing = 137.35m,
                 WeekendPricing = 255.43m,
                 CleaningFee = 16.62m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 21.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.14m,
+                MinNightsforDiscount = 21,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3182,
@@ -4190,19 +4190,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 7,
                 Bathrooms = 6,
                 GuestsAllowed = 4,
-                PetsAllowed = yes,
-                FreeParking = no,
+                PetsAllowed = true,
+                FreeParking = false,
                 WeekdayPricing = 172.99m,
                 WeekendPricing = 146.75m,
                 CleaningFee = 26.24m,
-                DiscountRate = 0.00m if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = 6.0 if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.23m,
+                MinNightsforDiscount = 6,
                 PropertyStatus = PropertyStatus.Unapproved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             AllProperties.Add(new Property
             {
                 PropertyNumber = 3183,
@@ -4213,19 +4213,19 @@ namespace BevoBnB.Seeding
                 Bedrooms = 3,
                 Bathrooms = 5,
                 GuestsAllowed = 1,
-                PetsAllowed = no,
-                FreeParking = no,
+                PetsAllowed = false,
+                FreeParking = false,
                 WeekdayPricing = 188.53m,
                 WeekendPricing = 157.96m,
                 CleaningFee = 6.69m,
-                DiscountRate = nanm if not pd.isnull(property_row['Discount %']) else 0.0m,
-                MinNightsforDiscount = nan if not pd.isnull(property_row['MinNightForDiscount']) else 0,
+                DiscountRate = 0.00m,
+                MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
                 User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
                 UnavailableDates = new List<DateTime>()
             });
-    
+
             // Save each property to the database
             foreach (Property seedProperty in AllProperties)
             {

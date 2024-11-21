@@ -234,6 +234,40 @@ namespace BevoBnB.Controllers
             return View("Confirm");
         }
 
+        public async Task<IActionResult> SeedCategories()
+        {
+            try
+            {
+                // Call the method to seed the categories
+                Seeding.SeedCategories.SeedAllCategories(_context);
+            }
+            catch (Exception ex)
+            {
+                // Add the error messages to a list of strings
+                List<String> errorList = new List<String>();
+
+                // Add the outer message
+                errorList.Add(ex.Message);
+
+                if (ex.InnerException != null)
+                {
+                    // Add the message from the inner exception
+                    errorList.Add(ex.InnerException.Message);
+
+                    // Add additional inner exception messages, if there are any
+                    if (ex.InnerException.InnerException != null)
+                    {
+                        errorList.Add(ex.InnerException.InnerException.Message);
+                    }
+                }
+
+                // Return the Error view with the list of error messages
+                return View("Error", errorList);
+            }
+
+            // This is the happy path - seeding worked!
+            return View("Confirm");
+        }
 
     }
 
