@@ -36,7 +36,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -58,7 +59,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 4,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -80,7 +82,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Unapproved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -102,7 +105,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -124,7 +128,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -146,7 +151,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 10,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -168,7 +174,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -190,7 +197,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 7,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -212,7 +220,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime> { DateTime.Parse("2024-12-04"), DateTime.Parse("2024-12-05") }
             });
 
             AllProperties.Add(new Property
@@ -234,7 +243,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -256,7 +266,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -278,7 +289,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -300,7 +312,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -322,7 +335,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Unapproved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -344,7 +358,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -366,7 +381,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 22,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -388,7 +404,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -410,7 +427,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 30,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -432,7 +450,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -454,7 +473,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -476,7 +496,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -498,7 +519,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 21,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -520,7 +542,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -542,7 +565,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -564,7 +588,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -586,7 +611,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 28,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -608,7 +634,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 3,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -630,7 +657,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 20,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -652,7 +680,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -674,7 +703,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -696,7 +726,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -718,7 +749,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 30,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -740,7 +772,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -762,7 +795,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -784,7 +818,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 42,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -806,7 +841,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 7,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -828,7 +864,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 19,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -850,7 +887,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 30,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -872,7 +910,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -894,7 +933,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -916,7 +956,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -938,7 +979,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -960,7 +1002,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 4,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -982,7 +1025,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1004,7 +1048,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1026,7 +1071,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1048,7 +1094,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 2,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1070,7 +1117,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 1,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1092,7 +1140,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1114,7 +1163,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1136,7 +1186,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1158,7 +1209,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 5,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1180,7 +1232,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 5,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1202,7 +1255,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 41,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1224,7 +1278,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Unapproved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1246,7 +1301,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 8,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1268,7 +1324,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 3,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1290,7 +1347,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 19,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1312,7 +1370,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 4,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1334,7 +1393,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 4,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1356,7 +1416,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1378,7 +1439,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 4,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1400,7 +1462,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 6,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1422,7 +1485,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 22,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1444,7 +1508,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 21,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1466,7 +1531,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 8,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1488,7 +1554,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1510,7 +1577,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1532,7 +1600,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 10,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1554,7 +1623,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1576,7 +1646,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1598,7 +1669,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 2,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1620,7 +1692,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1642,7 +1715,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 22,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1664,7 +1738,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 6,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1686,7 +1761,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 21,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1708,7 +1784,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1730,7 +1807,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1752,7 +1830,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1774,7 +1853,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1796,7 +1876,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1818,7 +1899,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 6,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1840,7 +1922,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 8,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1862,7 +1945,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1884,7 +1968,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1906,7 +1991,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1928,7 +2014,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 37,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1950,7 +2037,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1972,7 +2060,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 29,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -1994,7 +2083,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2016,7 +2106,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2038,7 +2129,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2060,7 +2152,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Unapproved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2082,7 +2175,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2104,7 +2198,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 41,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2126,7 +2221,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2148,7 +2244,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 17,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2170,7 +2267,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2192,7 +2290,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 9,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime> { DateTime.Parse("2024-12-29"), DateTime.Parse("2024-12-30"), DateTime.Parse("2024-12-31"), DateTime.Parse("2025-01-01") }
             });
 
             AllProperties.Add(new Property
@@ -2214,7 +2313,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime> { DateTime.Parse("2024-12-31") }
             });
 
             AllProperties.Add(new Property
@@ -2236,7 +2336,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 12,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2258,7 +2359,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 28,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2280,7 +2382,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2302,7 +2405,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 13,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2324,7 +2428,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2346,7 +2451,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2368,7 +2474,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 8,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2390,7 +2497,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2412,7 +2520,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 11,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2434,7 +2543,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 22,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2456,7 +2566,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2478,7 +2589,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 21,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2500,7 +2612,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
+                UnavailableDates = new List<DateTime> { DateTime.Parse("2024-12-05"), DateTime.Parse("2024-12-06"), DateTime.Parse("2024-12-07") }
             });
 
             AllProperties.Add(new Property
@@ -2522,7 +2635,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2544,7 +2658,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 4,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2566,7 +2681,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 12,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2588,7 +2704,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2610,7 +2727,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 23,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2632,7 +2750,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 3,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2654,7 +2773,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2676,7 +2796,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 5,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2698,7 +2819,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2720,7 +2842,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2742,7 +2865,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2764,7 +2888,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2786,7 +2911,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2808,7 +2934,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2830,7 +2957,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2852,7 +2980,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2874,7 +3003,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 3,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2896,7 +3026,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 42,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2918,7 +3049,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2940,7 +3072,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2962,7 +3095,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 5,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -2984,7 +3118,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 36,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3006,7 +3141,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3028,7 +3164,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3050,7 +3187,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3072,7 +3210,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3094,7 +3233,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Hotel"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3116,7 +3256,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3138,7 +3279,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3160,7 +3302,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 29,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "morales@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3182,7 +3325,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 32,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3204,7 +3348,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3226,7 +3371,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 6,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3248,7 +3394,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 9,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3270,7 +3417,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3292,7 +3440,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3314,7 +3463,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 44,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3336,7 +3486,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3358,7 +3509,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3380,7 +3532,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 32,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3402,7 +3555,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 30,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3424,7 +3578,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 15,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3446,7 +3601,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 9,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rankin@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3468,7 +3624,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3490,7 +3647,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 13,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3512,7 +3670,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3534,7 +3693,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 16,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3556,7 +3716,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 8,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3578,7 +3739,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3600,7 +3762,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 8,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3622,7 +3785,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3644,7 +3808,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3666,7 +3831,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 6,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3688,7 +3854,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3710,7 +3877,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3732,7 +3900,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3754,7 +3923,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "rice@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3776,7 +3946,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3798,7 +3969,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 8,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Apartment"),
-                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "ingram@gmail.com"),
+                UnavailableDates = new List<DateTime> { DateTime.Parse("2024-12-30"), DateTime.Parse("2024-12-31"), DateTime.Parse("2025-01-01") }
             });
 
             AllProperties.Add(new Property
@@ -3820,7 +3992,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 21,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3842,7 +4015,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Condo"),
-                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "jacobs@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3864,7 +4038,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 27,
                 PropertyStatus = PropertyStatus.Unapproved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "gonzalez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3886,7 +4061,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3908,7 +4084,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 19,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3930,7 +4107,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "martinez@aol.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3952,7 +4130,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3974,7 +4153,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 21,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "loter@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -3996,7 +4176,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 21,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "House"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -4018,7 +4199,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 6,
                 PropertyStatus = PropertyStatus.Unapproved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com")
+                User = db.Users.FirstOrDefault(u => u.Email == "chung@yahoo.com"),
+                UnavailableDates = new List<DateTime>()
             });
 
             AllProperties.Add(new Property
@@ -4040,7 +4222,8 @@ namespace BevoBnB.Seeding
                 MinNightsforDiscount = 0,
                 PropertyStatus = PropertyStatus.Approved,
                 Category = db.Categories.FirstOrDefault(c => c.CategoryName == "Cabin"),
-                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu")
+                User = db.Users.FirstOrDefault(u => u.Email == "tanner@utexas.edu"),
+                UnavailableDates = new List<DateTime>()
             });
 
             // Save each property to the database
