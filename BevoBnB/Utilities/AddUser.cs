@@ -63,6 +63,10 @@ namespace BevoBnB.Utilities
                 //TODO: Update any fields that you added to appuser
                 //FirstName is included as an example
                 dbUser.FirstName = aum.User.FirstName;
+                dbUser.LastName = aum.User.LastName;
+                dbUser.DOB = aum.User.DOB;
+                dbUser.LineAddress = aum.User.LineAddress;
+
 
                 //update the database
                 _context.Update(dbUser);
