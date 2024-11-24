@@ -36,7 +36,7 @@ namespace BevoBnB.Models
 
         [Display(Name = "Cleaning Fee")]
         [DisplayFormat(DataFormatString = "{0:C}")]
-        public decimal? CleaningFee { get; set; }
+        public decimal CleaningFee { get; set; }
 
         [Display(Name = "Discount Rate")]
         public decimal? DiscountRate { get; set; }
@@ -59,6 +59,84 @@ namespace BevoBnB.Models
 
         // private constants
         private const Decimal TAX_RATE = 0.07m;
+
+
+        // read only properties
+        [Display(Name = "Weekday Totals")]
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        public decimal WeekdayTotals
+        {
+            get { return CalculateWeekdayTotals(); }
+        }
+
+        [Display(Name = "Weekend Totals")]
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        public decimal WeekendTotals
+        {
+            get { return CalculateWeekendTotals(); }
+        }
+
+        public decimal SalesTax
+        {
+            get { return ((WeekdayTotals + WeekendTotals + CleaningFee) * TAX_RATE); }
+        }
+
+
+        // methods for reservations
+        private decimal CalculateWeekdayTotals()
+        {
+            decimal weekdayTotal = 0.00m;
+            DateTime currentDate = CheckIn;
+
+            if (ReservationStatus == ReservationStatus.Cancelled) 
+            {
+                return weekdayTotal;
+            }
+
+            while (currentDate < CheckOut)
+            {
+                if (currentDate.DayOfWeek != DayOfWeek.Friday && currentDate.DayOfWeek != DayOfWeek.Saturday)
+                {
+                    weekdayTotal += WeekdayPrice;
+                }
+
+                currentDate = currentDate.AddDays(1);
+            }
+
+            return weekdayTotal;
+        }
+
+        private decimal CalculateWeekendTotals()
+        {
+            decimal weekendTotal = 0.00m;
+            DateTime currentDate = CheckIn;
+
+            if (ReservationStatus == ReservationStatus.Cancelled)
+            {
+                return weekendTotal;
+            }
+
+            while (currentDate < CheckOut)
+            {
+                if (currentDate.DayOfWeek == DayOfWeek.Friday || currentDate.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    weekendTotal += WeekendPrice;
+                }
+
+                currentDate = currentDate.AddDays(1);
+            }
+
+            return weekendTotal;
+        }
+
+        private decimal CalculateSalesTax()
+        {
+            decimal cleaningFeeAmount = CleaningFee == null ? 0.00m : CleaningFee;
+
+            return 0.00m ;
+
+        }
+
     }
 }
 
