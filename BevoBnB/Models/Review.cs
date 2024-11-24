@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BevoBnB.Models
 {
-    public enum DisputeStatus { NoDispute, Disputed, InvalidDispute }
+    public enum DisputeStatus { NoDispute, Disputed, ValidDispute, InvalidDispute }
 
     public class Review
     {

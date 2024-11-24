@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BevoBnB.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241123223831_Setup")]
+    [Migration("20241124064035_Setup")]
     partial class Setup
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace BevoBnB.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -179,7 +179,7 @@ namespace BevoBnB.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UnavailableDates")
+                    b.PrimitiveCollection<string>("UnavailableDates")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -219,10 +219,13 @@ namespace BevoBnB.Migrations
                     b.Property<DateTime>("CheckOut")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal?>("CleaningFee")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("ConfirmationNumber")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("DiscountRate")
+                    b.Property<decimal?>("DiscountRate")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("NumOfGuests")
@@ -276,7 +279,6 @@ namespace BevoBnB.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ReviewText")
-                        .IsRequired()
                         .HasMaxLength(280)
                         .HasColumnType("nvarchar(280)");
 

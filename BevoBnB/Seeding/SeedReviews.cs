@@ -20,7 +20,7 @@ namespace BevoBnB.Seeding
                 new Review
                 {
                     Rating = 4,
-                    ReviewText = " ",
+                    ReviewText = null,
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
@@ -47,7 +47,7 @@ namespace BevoBnB.Seeding
                 new Review
                 {
                     Rating = 2,
-                    ReviewText = " ",
+                    ReviewText = null,
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
@@ -76,14 +76,14 @@ namespace BevoBnB.Seeding
                     Rating = 1,
                     ReviewText = "Worst. Stay. Ever. Never using BevoBnB again",
                     HostComments = "BevoBnB is the best",
-                    DisputeStatus = DisputeStatus.InvalidDispute,
+                    DisputeStatus = DisputeStatus.ValidDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
                     Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
                 },
                 new Review
                 {
                     Rating = 5,
-                    ReviewText = " ",
+                    ReviewText = null,
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
@@ -92,7 +92,7 @@ namespace BevoBnB.Seeding
                 new Review
                 {
                     Rating = 2,
-                    ReviewText = " ",
+                    ReviewText = null,
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
@@ -110,7 +110,7 @@ namespace BevoBnB.Seeding
                 new Review
                 {
                     Rating = 4,
-                    ReviewText = " ",
+                    ReviewText = null,
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
@@ -128,16 +128,16 @@ namespace BevoBnB.Seeding
                 new Review
                 {
                     Rating = 4,
-                    ReviewText = " ",
+                    ReviewText = null,
                     HostComments = "I do not understand this.",
-                    DisputeStatus = DisputeStatus.InvalidDispute,
+                    DisputeStatus = DisputeStatus.ValidDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
                     Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
                 },
                 new Review
                 {
                     Rating = 4,
-                    ReviewText = " ",
+                    ReviewText = null,
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
@@ -155,7 +155,7 @@ namespace BevoBnB.Seeding
                 new Review
                 {
                     Rating = 1,
-                    ReviewText = " ",
+                    ReviewText = null,
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
@@ -173,7 +173,7 @@ namespace BevoBnB.Seeding
                 new Review
                 {
                     Rating = 5,
-                    ReviewText = " ",
+                    ReviewText = null,
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
@@ -191,7 +191,7 @@ namespace BevoBnB.Seeding
                 new Review
                 {
                     Rating = 2,
-                    ReviewText = " ",
+                    ReviewText = null,
                     HostComments = "Why??",
                     DisputeStatus = DisputeStatus.InvalidDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),

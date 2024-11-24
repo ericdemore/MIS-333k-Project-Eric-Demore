@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - BevoBnB</title>
     <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" 
+          integrity="sha-long-hash_code" crossorigin="anonymous" />
 </head>
 <body>
     <div>
@@ -21,12 +23,15 @@
                         <a asp-controller="Home" asp-action="Index" class="nav-link">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a asp-controller="Products" asp-action="Index" class="nav-link">Products</a>
+                        <a asp-controller="Properties" asp-action="Index" class="nav-link">Products</a>
                     </li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         @if (User.IsInRole("Admin"))
                         {
+                            <li>
+                                <a asp-controller="Categories" asp-action="Index" class="nav-link">Categories</a>
+                            </li>
                             <li>
                                 <a asp-controller="RoleAdmin" asp-action="Index" class="nav-link">Manage Users</a>
                             </li>

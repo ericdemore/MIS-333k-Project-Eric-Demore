@@ -1,57 +1,172 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
 <body>
-    <div class="container mt-4">
+    <div class="container mt-5">
         <!-- Welcome Section -->
-        <div class="row text-center mb-4">
+        <div class="row text-center mb-5">
             <div class="col">
-                <h1>Welcome to BevoBnB</h1>
-                <p class="lead">Your trusted platform for finding the perfect stay near campus.</p>
+                <h1 class="display-4 fw-bold">Welcome to BevoBnB</h1>
+                <p class="lead text-muted">Your trusted platform for finding the perfect stay anywhere in the U.S.</p>
             </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="d-flex justify-content-center mb-4">
+            <a asp-action="Index" asp-controller="Properties" class="btn btn-primary btn-lg me-2">
+                <i class="fas fa-home"></i> Properties
+            </a>
+            <a asp-action="Index" asp-controller="Reservations" class="btn btn-secondary btn-lg me-2">
+                <i class="fas fa-calendar-alt"></i> Reservations
+            </a>
+            <a asp-action="Index" asp-controller="Categories" class="btn btn-success btn-lg me-2">
+                <i class="fas fa-tags"></i> Categories
+            </a>
+            <a asp-action="Index" asp-controller="Reviews" class="btn btn-info btn-lg">
+                <i class="fas fa-star"></i> Reviews
+            </a>
         </div>
 
         <!-- About Section -->
-        <div class="row mb-4">
-            <div class="col-md-6">
-                <h2>About Us</h2>
-                <p>
-                    BevoBnB is a locally-focused platform designed to connect students and visitors
-                    with quality housing options near campus. With our user-friendly tools and commitment
-                    to excellent service, we make the search for accommodations simple and stress-free.
+        <div class="row mb-5">
+            <div class="col">
+                <h2 class="fw-semibold">About Us</h2>
+                <p class="text-justify">
+                    BevoBnB is more than just a lodging marketplace—it's your gateway to personalized stays, flexible accommodations, and seamless management for hosts and guests alike. Our mission is to connect travelers, students, and families with properties that suit their needs, while providing hosts with the tools to efficiently manage their listings.
                 </p>
-            </div>
-            <div class="col-md-6">
-                <img src="about-image.jpg" class="img-fluid rounded shadow" alt="About BevoBnB">
+                <p class="text-justify">
+                    Whether you're booking a weekend getaway or managing multiple properties as a host, BevoBnB offers a secure and intuitive platform designed to make every interaction smooth and rewarding.
+                </p>
             </div>
         </div>
 
-        <!-- Mission Section -->
-        <div class="row text-center mb-4">
+        <!-- Core Features -->
+        <div class="row text-center mb-5">
             <div class="col">
-                <h2>Our Mission</h2>
-                <p>
-                    At BevoBnB, our mission is to create a seamless experience for students and visitors
-                    seeking housing near the University of Texas at Austin. We prioritize trust,
-                    convenience, and community in everything we do.
+                <h2 class="fw-semibold">Our Core Features</h2>
+            </div>
+        </div>
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="bg-light p-4 rounded shadow">
+                    <h4 class="fw-bold">Advanced Search</h4>
+                    <p>Search properties by city, price, ratings, amenities, and more. Find stays tailored to your exact needs.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="bg-light p-4 rounded shadow">
+                    <h4 class="fw-bold">Property Reviews</h4>
+                    <p>Read and leave verified reviews to ensure every stay meets your expectations.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="bg-light p-4 rounded shadow">
+                    <h4 class="fw-bold">Custom Profiles</h4>
+                    <p>Create detailed profiles as a customer or host. Manage bookings, reservations, and more with ease.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="bg-light p-4 rounded shadow">
+                    <h4 class="fw-bold">Flexible Management</h4>
+                    <p>Hosts can adjust pricing, availability, and policies, ensuring total control over their properties.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="row text-center mb-5">
+            <div class="col">
+                <h2 class="fw-semibold">How It Works</h2>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-4">
+                <div class="bg-light p-4 rounded shadow">
+                    <h4 class="fw-bold">For Customers</h4>
+                    <ul>
+                        <li>Create a profile and explore properties.</li>
+                        <li>Search using filters like price, location, and ratings.</li>
+                        <li>Book stays, manage reservations, and leave reviews.</li>
+                        <li>Access a complete reservation history.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="bg-light p-4 rounded shadow">
+                    <h4 class="fw-bold">For Hosts</h4>
+                    <ul>
+                        <li>List properties with detailed amenities and pricing.</li>
+                        <li>Manage bookings, availability, and customer reviews.</li>
+                        <li>Generate revenue reports and set custom discounts.</li>
+                        <li>Temporarily disable or permanently mark properties as inactive.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="bg-light p-4 rounded shadow">
+                    <h4 class="fw-bold">For Administrators</h4>
+                    <ul>
+                        <li>Approve new properties and resolve review disputes.</li>
+                        <li>Generate platform reports on revenue and activity.</li>
+                        <li>Manage user profiles for customers and hosts.</li>
+                        <li>Oversee platform operations and ensure quality standards.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Explore Properties Section -->
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <h2 class="fw-semibold">Explore Properties</h2>
+                <p class="text-justify">
+                    Whether you're traveling solo, as a family, or in a group, BevoBnB offers thousands of properties across the U.S. Search for pet-friendly stays, properties with free parking, or luxury accommodations that meet your exact requirements.
                 </p>
+            </div>
+            <div class="col-md-6">
+                <div class="bg-light p-4 rounded">
+                    <h4>Top Destinations</h4>
+                    <ul class="list-unstyled">
+                        <li>&#8226; Austin, TX</li>
+                        <li>&#8226; Denver, CO</li>
+                        <li>&#8226; Seattle, WA</li>
+                        <li>&#8226; Miami, FL</li>
+                        <li>&#8226; New York City, NY</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonials Section -->
+        <div class="row text-center mb-5">
+            <div class="col">
+                <h2 class="fw-semibold">What Our Users Say</h2>
+            </div>
+        </div>
+        <div class="row g-4 mb-5">
+            <div class="col-md-6">
+                <blockquote class="blockquote bg-light p-4 rounded shadow">
+                    <p class="mb-2 fst-italic">"BevoBnB’s tools made managing my properties a breeze. I’ve hosted over 20 guests without a hitch!"</p>
+                    <footer class="blockquote-footer">Laura H., Host</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-6">
+                <blockquote class="blockquote bg-light p-4 rounded shadow">
+                    <p class="mb-2 fst-italic">"The reviews and detailed property listings helped me find the perfect stay during my trip to Austin."</p>
+                    <footer class="blockquote-footer">Mark T., Customer</footer>
+                </blockquote>
             </div>
         </div>
 
         <!-- Contact Section -->
-        <div class="row text-center">
-            <div class="col">
-                <h2>Contact Us</h2>
-                <p>
-                    Have questions or need support? We're here to help!
-                    Reach out to us at <a href="mailto:support@bevobnb.com">support@bevobnb.com</a>.
-                </p>
-                <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+        <div class="row mb-5">
+            <div class="col text-center">
+                <h2 class="fw-semibold">Contact Us</h2>
+                <p>Have questions or need help? Reach out to us at <a href="mailto:support@bevobnb.com" class="text-primary text-decoration-none">support@bevobnb.com</a>.</p>
+                <a href="contact.html" class="btn btn-primary btn-lg">Get in Touch</a>
             </div>
         </div>
     </div>
 </body>
+

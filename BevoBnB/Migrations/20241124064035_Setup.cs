@@ -230,7 +230,8 @@ namespace BevoBnB.Migrations
                     NumOfGuests = table.Column<int>(type: "int", nullable: false),
                     WeekdayPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     WeekendPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DiscountRate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CleaningFee = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    DiscountRate = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Tax = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ConfirmationNumber = table.Column<int>(type: "int", nullable: false),
                     ReservationStatus = table.Column<int>(type: "int", nullable: false),
@@ -260,7 +261,7 @@ namespace BevoBnB.Migrations
                     ReviewID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Rating = table.Column<int>(type: "int", nullable: false),
-                    ReviewText = table.Column<string>(type: "nvarchar(280)", maxLength: 280, nullable: false),
+                    ReviewText = table.Column<string>(type: "nvarchar(280)", maxLength: 280, nullable: true),
                     HostComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DisputeStatus = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
