@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BevoBnB.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241121040003_Setup")]
+    [Migration("20241123223831_Setup")]
     partial class Setup
     {
         /// <inheritdoc />
@@ -151,7 +151,7 @@ namespace BevoBnB.Migrations
                     b.Property<decimal>("CleaningFee")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("DiscountRate")
+                    b.Property<decimal?>("DiscountRate")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("FreeParking")
@@ -160,14 +160,7 @@ namespace BevoBnB.Migrations
                     b.Property<int>("GuestsAllowed")
                         .HasColumnType("int");
 
-                    b.Property<string>("LineAddress1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LineAddress2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MinNightsforDiscount")
+                    b.Property<int?>("MinNightsforDiscount")
                         .HasColumnType("int");
 
                     b.Property<bool>("PetsAllowed")
@@ -181,6 +174,10 @@ namespace BevoBnB.Migrations
 
                     b.Property<int>("State")
                         .HasColumnType("int");
+
+                    b.Property<string>("StreetAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UnavailableDates")
                         .IsRequired()

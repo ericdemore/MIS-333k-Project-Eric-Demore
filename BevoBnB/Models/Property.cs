@@ -25,10 +25,7 @@ namespace BevoBnB.Models
 
         [Required(ErrorMessage = "Address Line 1 must be provided.")]
         [Display(Name = "Primary Address Line")]
-        public string LineAddress1 { get; set; }
-
-        [Display(Name = "Secondary Address Line (Optional)")]
-        public string? LineAddress2 { get; set; }
+        public string StreetAddress { get; set; }
 
         [Required(ErrorMessage = "City is required. Please enter the city name.")]
         [Display(Name = "City Name")]
@@ -85,10 +82,11 @@ namespace BevoBnB.Models
         [Range(0, 1, ErrorMessage = "The discount rate must be between 0 (0%) and 1 (100%).")]
         [Display(Name = "Discount Rate (%)")]
         [DisplayFormat(DataFormatString = "{0:P0}")]
-        public decimal DiscountRate { get; set; }
+        public decimal? DiscountRate { get; set; }
 
         [Display(Name = "Minimum Nights Required for Discount")]
-        public int MinNightsforDiscount { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "The mininum number of nights for a discount must be greater than 1")]
+        public int? MinNightsforDiscount { get; set; }
 
         [Required(ErrorMessage = "A list of unavailable dates is required.")]
         [DataType(DataType.Date)]
@@ -118,13 +116,6 @@ namespace BevoBnB.Models
             {
                 Reservations = new List<Reservation>();
             }
-        }
-
-
-        //TODO: add method to check whether the property is reserved
-        public Boolean IsReserved(Property property)
-        {
-            return true;
         }
     }
 }

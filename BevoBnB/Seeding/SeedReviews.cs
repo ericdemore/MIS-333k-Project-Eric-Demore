@@ -173,7 +173,6 @@ namespace BevoBnB.Seeding
         ,
             new Review
             {
-                ReviewID = 18,  // Assuming Unnamed: 0 is ReviewID
                 Rating = 5,
                 ReviewText = " ",
                 HostComments = null,
@@ -182,7 +181,6 @@ namespace BevoBnB.Seeding
         ,
             new Review
             {
-                ReviewID = 19,  // Assuming Unnamed: 0 is ReviewID
                 Rating = 5,
                 ReviewText = "My stay was amazing! Saved my marriage",
                 HostComments = null,
@@ -191,7 +189,6 @@ namespace BevoBnB.Seeding
         ,
             new Review
             {
-                ReviewID = 20,  // Assuming Unnamed: 0 is ReviewID
                 Rating = 2,
                 ReviewText = " ",
                 HostComments = "Why??",
@@ -200,7 +197,6 @@ namespace BevoBnB.Seeding
         ,
             new Review
             {
-                ReviewID = 21,  // Assuming Unnamed: 0 is ReviewID
                 Rating = 2,
                 ReviewText = "My wife's attitude was the only thing rougher than the sand at the nearby beaches",
                 HostComments = null,

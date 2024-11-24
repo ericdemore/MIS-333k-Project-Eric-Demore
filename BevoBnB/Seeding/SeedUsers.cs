@@ -973,7 +973,8 @@ namespace BevoBnB.Seeding
                 FirstName = "Albert",
                 LastName = "Taylor",
                 LineAddress = "467 Nueces St.",
-                DOB = DateTime.ParseExact("08/14/1954", "MM/dd/yyyy", null)
+                DOB = DateTime.ParseExact("08/14/1954", "MM/dd/yyyy", null),
+                HireStatus = HireStatus.Employed
             },
             Password = "TRY563",
             RoleName = "Admin"
@@ -989,7 +990,8 @@ namespace BevoBnB.Seeding
                 FirstName = "Molly",
                 LastName = "Sheffield",
                 LineAddress = "3886 Avenue A",
-                DOB = DateTime.ParseExact("08/27/1986", "MM/dd/yyyy", null)
+                DOB = DateTime.ParseExact("08/27/1986", "MM/dd/yyyy", null),
+                HireStatus = HireStatus.Employed
             },
             Password = "longsnores",
             RoleName = "Admin"
@@ -1005,7 +1007,8 @@ namespace BevoBnB.Seeding
                 FirstName = "Jenny",
                 LastName = "MacLeod",
                 LineAddress = "2504 Far West Blvd.",
-                DOB = DateTime.ParseExact("12/05/1984", "MM/dd/yyyy", null)
+                DOB = DateTime.ParseExact("12/05/1984", "MM/dd/yyyy", null),
+                HireStatus = HireStatus.Employed
             },
             Password = "kittys",
             RoleName = "Admin"
@@ -1021,7 +1024,8 @@ namespace BevoBnB.Seeding
                 FirstName = "Michelle",
                 LastName = "Rhodes",
                 LineAddress = "4587 Enfield Rd.",
-                DOB = DateTime.ParseExact("07/02/1972", "MM/dd/yyyy", null)
+                DOB = DateTime.ParseExact("07/02/1972", "MM/dd/yyyy", null),
+                HireStatus = HireStatus.Employed
             },
             Password = "puppies",
             RoleName = "Admin"
@@ -1037,7 +1041,8 @@ namespace BevoBnB.Seeding
                 FirstName = "Evan",
                 LastName = "Stuart",
                 LineAddress = "5576 Toro Ring",
-                DOB = DateTime.ParseExact("04/17/1984", "MM/dd/yyyy", null)
+                DOB = DateTime.ParseExact("04/17/1984", "MM/dd/yyyy", null),
+                HireStatus = HireStatus.Employed
             },
             Password = "coolboi",
             RoleName = "Admin"
@@ -1053,7 +1058,8 @@ namespace BevoBnB.Seeding
                 FirstName = "Ron",
                 LastName = "Swanson",
                 LineAddress = "245 River Rd",
-                DOB = DateTime.ParseExact("07/25/1991", "MM/dd/yyyy", null)
+                DOB = DateTime.ParseExact("07/25/1991", "MM/dd/yyyy", null),
+                HireStatus = HireStatus.Employed
             },
             Password = "swanbong",
             RoleName = "Admin"
@@ -1069,7 +1075,8 @@ namespace BevoBnB.Seeding
                 FirstName = "Jabriel",
                 LastName = "White",
                 LineAddress = "12 Valley View",
-                DOB = DateTime.ParseExact("03/17/1986", "MM/dd/yyyy", null)
+                DOB = DateTime.ParseExact("03/17/1986", "MM/dd/yyyy", null),
+                HireStatus = HireStatus.Employed
             },
             Password = "456789",
             RoleName = "Admin"
@@ -1085,7 +1092,8 @@ namespace BevoBnB.Seeding
                 FirstName = "Washington",
                 LastName = "Montgomery",
                 LineAddress = "210 Blanco Dr",
-                DOB = DateTime.ParseExact("05/04/1961", "MM/dd/yyyy", null)
+                DOB = DateTime.ParseExact("05/04/1961", "MM/dd/yyyy", null),
+                HireStatus = HireStatus.Employed
             },
             Password = "python4",
             RoleName = "Admin"
@@ -1101,7 +1109,8 @@ namespace BevoBnB.Seeding
                 FirstName = "Lisa",
                 LastName = "Walker",
                 LineAddress = "9 Bison Circle",
-                DOB = DateTime.ParseExact("04/18/2003", "MM/dd/yyyy", null)
+                DOB = DateTime.ParseExact("04/18/2003", "MM/dd/yyyy", null),
+                HireStatus = HireStatus.Employed
             },
             Password = "walkameter",
             RoleName = "Admin"
@@ -1117,7 +1126,8 @@ namespace BevoBnB.Seeding
                 FirstName = "Gregory",
                 LastName = "Chang",
                 LineAddress = "9003 Joshua St",
-                DOB = DateTime.ParseExact("04/26/1958", "MM/dd/yyyy", null)
+                DOB = DateTime.ParseExact("04/26/1958", "MM/dd/yyyy", null),
+                HireStatus = HireStatus.Employed
             },
             Password = "pupgang",
             RoleName = "Admin"
@@ -1133,7 +1143,8 @@ namespace BevoBnB.Seeding
                 FirstName = "Derek",
                 LastName = "Dreibrodt",
                 LineAddress = "4 Privet Dr",
-                DOB = DateTime.ParseExact("01/01/2001", "MM/dd/yyyy", null)
+                DOB = DateTime.ParseExact("01/01/2001", "MM/dd/yyyy", null),
+                HireStatus = HireStatus.Employed
             },
             Password = "2cool4u",
             RoleName = "Admin"
@@ -1149,7 +1160,8 @@ namespace BevoBnB.Seeding
                 FirstName = "Amy",
                 LastName = "Rester",
                 LineAddress = "2110 Speedway",
-                DOB = DateTime.ParseExact("01/01/2000", "MM/dd/yyyy", null)
+                DOB = DateTime.ParseExact("01/01/2000", "MM/dd/yyyy", null),
+                HireStatus = HireStatus.Employed
             },
             Password = "KIzGreat",
             RoleName = "Admin"
