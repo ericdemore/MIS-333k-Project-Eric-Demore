@@ -97,28 +97,34 @@ namespace BevoBnB.Controllers
         {
             try
             {
-                // Call the method to seed the reviews
-                await Seeding.SeedReviews.SeedAllReviews(_context);
+                // Call the SeedAllReservations method in SeedReviews.cs
+                await BevoBnB.Seeding.SeedReviews.SeedAllReviews(_context);
             }
             catch (Exception ex)
             {
                 // Collect error messages
-                List<string> errorList = new List<string> { ex.Message };
+                List<string> errorList = new List<string>
+                {
+                    ex.Message
+                };
 
                 if (ex.InnerException != null)
                 {
+                    // Add the message from the inner exception
                     errorList.Add(ex.InnerException.Message);
 
+                    // Add additional inner exception messages, if there are any
                     if (ex.InnerException.InnerException != null)
                     {
                         errorList.Add(ex.InnerException.InnerException.Message);
                     }
                 }
 
+                // Return the Error view with the error messages
                 return View("Error", errorList);
             }
 
-            // Successful seeding
+            // Return the confirmation view upon successful seeding
             return View("Confirm");
         }
 

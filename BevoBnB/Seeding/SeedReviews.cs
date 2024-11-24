@@ -1,7 +1,7 @@
-using System.Linq;
-using System.Threading.Tasks;
 using BevoBnB.DAL;
 using BevoBnB.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace BevoBnB.Seeding
 {
@@ -9,203 +9,209 @@ namespace BevoBnB.Seeding
     {
         public static async Task SeedAllReviews(AppDbContext context)
         {
-            // Check if the table already contains data
-            if (context.Reviews.Any())
+            // Check if reservations already exist
+            if (await context.Reviews.AnyAsync())
             {
-                return; // Exit if the table already has data
+                throw new Exception("Reservations have already been seeded.");
             }
 
-            // Seed data
-            var reviews = new[]
+            List<Review> Reviews = new List<Review>()
             {
-            new Review
-            {
-                ReviewID = 1,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 4,
-                ReviewText = " ",
-                HostComments = null,
-                DisputeStatus = DisputeStatus.NoDispute
-            }
-        ,
-            new Review
-            {
-                ReviewID = 2,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 3,
-                ReviewText = "It was meh, ya know? It was really close to the coast, but the beaches were kinda trashed. The apartment was nice, but there wasn't an elevator.",
-                HostComments = null,
-                DisputeStatus = DisputeStatus.NoDispute
-            }
-        ,
-            new Review
-            {
-                ReviewID = 3,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 4,
-                ReviewText = null,
-                HostComments = "The customer did not provide a valid reason for this rating.",
-                DisputeStatus = DisputeStatus.Disputed
-            }
-        ,
-            new Review
-            {
-                ReviewID = 4,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 2,
-                ReviewText = " ",
-                HostComments = null,
-                DisputeStatus = DisputeStatus.NoDispute
-            }
-        ,
-            new Review
-            {
-                ReviewID = 5,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 3,
-                ReviewText = "Nebraska was... interesting",
-                HostComments = null,
-                DisputeStatus = DisputeStatus.NoDispute
-            }
-        ,
-            new Review
-            {
-                ReviewID = 6,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 1,
-                ReviewText = "There was corn EVERYWHERE! I looked left and BAM, CORN. Looked right, BAM, CORN",
-                HostComments = "It is not my fault there was corn. It was not my corn!",
-                DisputeStatus = DisputeStatus.Disputed
-            }
-        ,
-            new Review
-            {
-                ReviewID = 7,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 1,
-                ReviewText = "Worst. Stay. Ever. Never using BevoBnB again",
-                HostComments = "BevoBnB is the best",
-                DisputeStatus = null
-            }
-        ,
-            new Review
-            {
-                ReviewID = 8,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 5,
-                ReviewText = " ",
-                HostComments = null,
-                DisputeStatus = DisputeStatus.NoDispute
-            }
-        ,
-            new Review
-            {
-                ReviewID = 9,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 2,
-                ReviewText = " ",
-                HostComments = null,
-                DisputeStatus = DisputeStatus.NoDispute
-            }
-        ,
-            new Review
-            {
-                ReviewID = 10,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 1,
-                ReviewText = "It was SO hard to book this place. Who coded this site anyway? ;)",
-                HostComments = "The website was coded by students so the owner should not be penalized!",
-                DisputeStatus = DisputeStatus.InvalidDispute
-            }
-        ,
-            new Review
-            {
-                ReviewID = 11,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 4,
-                ReviewText = " ",
-                HostComments = null,
-                DisputeStatus = DisputeStatus.NoDispute
-            }
-        ,
-            new Review
-            {
-                ReviewID = 12,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 5,
-                ReviewText = "This place rocked!",
-                HostComments = null,
-                DisputeStatus = DisputeStatus.NoDispute
-            }
-        ,
-            new Review
-            {
-                ReviewID = 13,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 4,
-                ReviewText = " ",
-                HostComments = "I do not understand this.",
-                DisputeStatus = null
-            }
-        ,
-            new Review
-            {
-                ReviewID = 14,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 4,
-                ReviewText = " ",
-                HostComments = null,
-                DisputeStatus = DisputeStatus.NoDispute
-            }
-        ,
-            new Review
-            {
-                ReviewID = 15,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 1,
-                ReviewText = "There were 1...5...22 roaches? I lost count.",
-                HostComments = null,
-                DisputeStatus = DisputeStatus.NoDispute
-            }
-        ,
-            new Review
-            {
-                ReviewID = 16,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 1,
-                ReviewText = " ",
-                HostComments = null,
-                DisputeStatus = DisputeStatus.NoDispute
-            }
-        ,
-            new Review
-            {
-                ReviewID = 17,  // Assuming Unnamed: 0 is ReviewID
-                Rating = 4,
-                ReviewText = "I LOVED the place! Had a nice view of the mountains",
-                HostComments = null,
-                DisputeStatus = DisputeStatus.NoDispute
-            }
-        ,
-            new Review
-            {
-                Rating = 5,
-                ReviewText = " ",
-                HostComments = null,
-                DisputeStatus = DisputeStatus.NoDispute
-            }
-        ,
-            new Review
-            {
-                Rating = 5,
-                ReviewText = "My stay was amazing! Saved my marriage",
-                HostComments = null,
-                DisputeStatus = DisputeStatus.NoDispute
-            }
-        ,
-            new Review
-            {
-                Rating = 2,
-                ReviewText = " ",
-                HostComments = "Why??",
-                DisputeStatus = DisputeStatus.InvalidDispute
-            }
-        ,
-            new Review
-            {
-                Rating = 2,
-                ReviewText = "My wife's attitude was the only thing rougher than the sand at the nearby beaches",
-                HostComments = null,
-                DisputeStatus = DisputeStatus.NoDispute
-            }
-         };
+                new Review
+                {
+                    Rating = 4,
+                    ReviewText = " ",
+                    HostComments = null,
+                    DisputeStatus = DisputeStatus.NoDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
+                },
+                new Review
+                {
+                    Rating = 3,
+                    ReviewText = "It was meh, ya know? It was really close to the coast, but the beaches were kinda trashed. The apartment was nice, but there wasn't an elevator.",
+                    HostComments = null,
+                    DisputeStatus = DisputeStatus.NoDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3002)
+                },
+                new Review
+                {
+                    Rating = 4,
+                    ReviewText = null,
+                    HostComments = "The customer did not provide a valid reason for this rating.",
+                    DisputeStatus = DisputeStatus.Disputed,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3003)
+                },
+                new Review
+                {
+                    Rating = 2,
+                    ReviewText = " ",
+                    HostComments = null,
+                    DisputeStatus = DisputeStatus.NoDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
+                },
+                new Review
+                {
+                    Rating = 3,
+                    ReviewText = "Nebraska was... interesting",
+                    HostComments = null,
+                    DisputeStatus = DisputeStatus.NoDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3002)
+                },
+                new Review
+                {
+                    Rating = 1,
+                    ReviewText = "There was corn EVERYWHERE! I looked left and BAM, CORN. Looked right, BAM, CORN",
+                    HostComments = "It is not my fault there was corn. It was not my corn!",
+                    DisputeStatus = DisputeStatus.Disputed,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3003)
+                },
+                new Review
+                {
+                    Rating = 1,
+                    ReviewText = "Worst. Stay. Ever. Never using BevoBnB again",
+                    HostComments = "BevoBnB is the best",
+                    DisputeStatus = DisputeStatus.InvalidDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
+                },
+                new Review
+                {
+                    Rating = 5,
+                    ReviewText = " ",
+                    HostComments = null,
+                    DisputeStatus = DisputeStatus.NoDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3002)
+                },
+                new Review
+                {
+                    Rating = 2,
+                    ReviewText = " ",
+                    HostComments = null,
+                    DisputeStatus = DisputeStatus.NoDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3003)
+                },
+                new Review
+                {
+                    Rating = 1,
+                    ReviewText = "It was SO hard to book this place. Who coded this site anyway? ;)",
+                    HostComments = "The website was coded by students so the owner should not be penalized!",
+                    DisputeStatus = DisputeStatus.InvalidDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
+                },
+                new Review
+                {
+                    Rating = 4,
+                    ReviewText = " ",
+                    HostComments = null,
+                    DisputeStatus = DisputeStatus.NoDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3002)
+                },
+                new Review
+                {
+                    Rating = 5,
+                    ReviewText = "This place rocked!",
+                    HostComments = null,
+                    DisputeStatus = DisputeStatus.NoDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3003)
+                },
+                new Review
+                {
+                    Rating = 4,
+                    ReviewText = " ",
+                    HostComments = "I do not understand this.",
+                    DisputeStatus = DisputeStatus.InvalidDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
+                },
+                new Review
+                {
+                    Rating = 4,
+                    ReviewText = " ",
+                    HostComments = null,
+                    DisputeStatus = DisputeStatus.NoDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3002)
+                },
+                new Review
+                {
+                    Rating = 1,
+                    ReviewText = "There were 1...5...22 roaches? I lost count.",
+                    HostComments = null,
+                    DisputeStatus = DisputeStatus.NoDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3003)
+                },
+                new Review
+                {
+                    Rating = 1,
+                    ReviewText = " ",
+                    HostComments = null,
+                    DisputeStatus = DisputeStatus.NoDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
+                },
+                new Review
+                {
+                    Rating = 4,
+                    ReviewText = "I LOVED the place! Had a nice view of the mountains",
+                    HostComments = null,
+                    DisputeStatus = DisputeStatus.NoDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3002)
+                },
+                new Review
+                {
+                    Rating = 5,
+                    ReviewText = " ",
+                    HostComments = null,
+                    DisputeStatus = DisputeStatus.NoDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3003)
+                },
+                new Review
+                {
+                    Rating = 5,
+                    ReviewText = "My stay was amazing! Saved my marriage",
+                    HostComments = null,
+                    DisputeStatus = DisputeStatus.NoDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
+                },
+                new Review
+                {
+                    Rating = 2,
+                    ReviewText = " ",
+                    HostComments = "Why??",
+                    DisputeStatus = DisputeStatus.InvalidDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3002)
+                },
+                new Review
+                {
+                    Rating = 2,
+                    ReviewText = "My wife's attitude was the only thing rougher than the sand at the nearby beaches",
+                    HostComments = null,
+                    DisputeStatus = DisputeStatus.NoDispute,
+                    User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3003)
+                }
+            };
 
-            // Add and save
-            await context.Reviews.AddRangeAsync(reviews);
+            // Add the reviews to the database
+            await context.Reviews.AddRangeAsync(Reviews);
+
+            // Save changes to the database
             await context.SaveChangesAsync();
         }
     }
