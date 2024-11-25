@@ -47,10 +47,17 @@ namespace BevoBnB.Models
         [Display(Name = "First Name")]
         public String FirstName { get; set; }
 
+        [Required(ErrorMessage = "Last name is required.")]
+        [Display(Name = "Last Name")]
         public String LastName { get; set; }
 
+        [Required(ErrorMessage = "Date of Birth is required")]
+        [Display(Name = "Date of Birth")]
+        [DataType(DataType.Date)]
         public DateTime DOB { get; set; }
 
+        [Required(ErrorMessage = "Full Address")]
+        [Display(Name = "Full Address")]
         public String LineAddress { get; set; }
 
 

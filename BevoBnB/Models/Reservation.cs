@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BevoBnB.Models
 {
-    public enum ReservationStatus { Valid, Cancelled }
+    public enum ReservationStatus { Valid, Cancelled, Pending }
 
     public class Reservation
     {
@@ -11,17 +11,14 @@ namespace BevoBnB.Models
         [Display(Name = "Reservation ID")]
         public int ReservationID { get; set; }
 
-        [Required(ErrorMessage = "Please provide the check-in date.")]
         [Display(Name = "Check-In Date")]
         [DataType(DataType.Date)]
         public DateTime CheckIn { get; set; }
 
-        [Required(ErrorMessage = "Please provide the check-out date.")]
         [Display(Name = "Check-Out Date")]
         [DataType(DataType.Date)]
         public DateTime CheckOut { get; set; }
 
-        [Required(ErrorMessage = "The total number of guests must be specified.")]
         [Range(1, int.MaxValue, ErrorMessage = "The number of guests must be at least 1.")]
         [Display(Name = "Number of Guests (including person making reservation)")]
         public int NumOfGuests { get; set; }
@@ -44,10 +41,10 @@ namespace BevoBnB.Models
 
         [Display(Name = "Tax Amount")]
         [DisplayFormat(DataFormatString = "{0:C}")]
-        public decimal Tax { get; set; }
+        public decimal? Tax { get; set; }
 
         [Display(Name = "Confirmation Number")]
-        public int ConfirmationNumber { get; set; }
+        public int? ConfirmationNumber { get; set; }
 
         [Display(Name = "Reservation Status")]
         public ReservationStatus ReservationStatus { get; set; }

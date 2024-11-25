@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Create Reservation</h1>
 
 <h4>Reservation</h4>
 <hr />
@@ -12,6 +12,13 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @* Hidden field for PropertyID *@
+            @Html.HiddenFor(model => model.Property.PropertyID)
+
+            @* Hidden field for ReservationStatus, defaulting to Pending *@
+            @Html.HiddenFor(model => model.ReservationStatus, new { Value = BevoBnB.Models.ReservationStatus.Pending })
+
             <div class="form-group">
                 <label asp-for="CheckIn" class="control-label"></label>
                 <input asp-for="CheckIn" class="form-control" />
@@ -27,41 +34,25 @@
                 <input asp-for="NumOfGuests" class="form-control" />
                 <span asp-validation-for="NumOfGuests" class="text-danger"></span>
             </div>
+
+            @* Display Property-Related Fields *@
             <div class="form-group">
-                <label asp-for="WeekdayPrice" class="control-label"></label>
-                <input asp-for="WeekdayPrice" class="form-control" />
-                <span asp-validation-for="WeekdayPrice" class="text-danger"></span>
+                <label>Weekday Price</label>
+                @Html.DisplayFor(model => model.Property.WeekdayPricing)
             </div>
             <div class="form-group">
-                <label asp-for="WeekendPrice" class="control-label"></label>
-                <input asp-for="WeekendPrice" class="form-control" />
-                <span asp-validation-for="WeekendPrice" class="text-danger"></span>
+                <label>Weekend Price</label>
+                @Html.DisplayFor(model => model.Property.WeekendPricing)
             </div>
             <div class="form-group">
-                <label asp-for="CleaningFee" class="control-label"></label>
-                <input asp-for="CleaningFee" class="form-control" />
-                <span asp-validation-for="CleaningFee" class="text-danger"></span>
+                <label>Cleaning Fee</label>
+                @Html.DisplayFor(model => model.Property.CleaningFee)
             </div>
             <div class="form-group">
-                <label asp-for="DiscountRate" class="control-label"></label>
-                <input asp-for="DiscountRate" class="form-control" />
-                <span asp-validation-for="DiscountRate" class="text-danger"></span>
+                <label>Discount Rate</label>
+                @Html.DisplayFor(model => model.Property.DiscountRate)
             </div>
-            <div class="form-group">
-                <label asp-for="Tax" class="control-label"></label>
-                <input asp-for="Tax" class="form-control" />
-                <span asp-validation-for="Tax" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmationNumber" class="control-label"></label>
-                <input asp-for="ConfirmationNumber" class="form-control" />
-                <span asp-validation-for="ConfirmationNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReservationStatus" class="control-label"></label>
-                <select asp-for="ReservationStatus" class="form-control"></select>
-                <span asp-validation-for="ReservationStatus" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -72,4 +63,3 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-

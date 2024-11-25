@@ -115,6 +115,10 @@
     </dl>
 </div>
 <div>
+    <a asp-action="Create" asp-controller="Reservations" asp-route-propertyID="@Model.PropertyID">Reserve Property</a>
+
+</div>
+<div>
     <a asp-action="Edit" asp-route-id="@Model?.PropertyID">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

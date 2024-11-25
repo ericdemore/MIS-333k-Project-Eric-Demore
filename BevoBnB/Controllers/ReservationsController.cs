@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BevoBnB.DAL;
 using BevoBnB.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace BevoBnB.Controllers
 {
@@ -15,20 +16,52 @@ namespace BevoBnB.Controllers
     public class ReservationsController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ReservationsController(AppDbContext context)
+        public ReservationsController(AppDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Reservations
         public async Task<IActionResult> Index()
         {
             // query for all reservations 
-            var reservations = await _context.Reservations
-                .Include(r => r.Property) // so we can access property number
-                .OrderBy(r => r.ReservationID)
-                .ToListAsync();
+            // Set up a list of reservations to display
+            List<Reservation> reservations;
+
+            // Admin sees all reservations
+            if (User.IsInRole("Admin"))
+            {
+                reservations = await _context.Reservations
+                                .Include(r => r.Property)
+                                .Where(r => r.ReservationStatus == ReservationStatus.Valid || r.ReservationStatus == ReservationStatus.Cancelled)
+                                .OrderBy(r => r.ReservationID)
+                                .ToListAsync();
+            }
+
+            // host should see all reservations associated with their property
+            else if (User.IsInRole("Host")) 
+            {
+                reservations = await _context.Reservations
+                                .Include(r => r.Property)
+                                .Where(r => r.Property.User.UserName == User.Identity.Name 
+                                    && (r.ReservationStatus == ReservationStatus.Valid || r.ReservationStatus == ReservationStatus.Cancelled))
+                                .OrderBy(r => r.ReservationID)
+                                .ToListAsync();
+            }
+
+            // customer should see all reservations that they've made
+            else
+            {
+                reservations = await _context.Reservations
+                                .Include(r => r.Property)
+                                .Where(r => r.User.UserName == User.Identity.Name 
+                                    && (r.ReservationStatus == ReservationStatus.Valid || r.ReservationStatus == ReservationStatus.Cancelled))
+                                .OrderBy(r => r.ReservationID)
+                                .ToListAsync();
+            }
 
             return View(reservations);
         }
@@ -43,6 +76,7 @@ namespace BevoBnB.Controllers
 
             var reservation = await _context.Reservations
                 .FirstOrDefaultAsync(m => m.ReservationID == id);
+
             if (reservation == null)
             {
                 return NotFound();
@@ -52,24 +86,38 @@ namespace BevoBnB.Controllers
         }
 
         // GET: Reservations/Create
-        public IActionResult Create()
+        public IActionResult Create(int? propertyID)
         {
-            return View();
+            if (propertyID == null)
+            {
+                return View("Error", new String[] { "The user did not specify an ID. Try again!" });
+            }
+
+            Property dbProperty = _context.Properties.Find(propertyID);
+
+            if (dbProperty == null)
+            {
+                return View("Error", new String[] { "There is no property with that ID. Try again!" });
+            }
+
+            // Pre-fill reservation with property details
+            Reservation reservation = new Reservation
+            {
+                Property = dbProperty
+            };
+
+            return View(reservation);
         }
+
 
         // POST: Reservations/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReservationID,CheckIn,CheckOut,NumOfGuests,WeekdayPrice,WeekendPrice,CleaningFee,DiscountRate,Tax,ConfirmationNumber,ReservationStatus")] Reservation reservation)
+        public async Task<IActionResult> Create(Reservation reservation)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(reservation);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            
             return View(reservation);
         }
 

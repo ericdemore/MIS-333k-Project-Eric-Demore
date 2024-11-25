@@ -49,6 +49,12 @@ namespace BevoBnB.Controllers
                 return View(rvm);
             }
 
+            if (Is18OrOlder(rvm.DOB) == false)
+            {
+                // they were not 18 years or older when they tried to sign up
+                return View("Error", new string[] { "You must be 18 years or older to register!" });
+            }
+
             //this code maps the RegisterViewModel to the AppUser domain model
             AppUser newUser = new AppUser
             {
@@ -232,6 +238,21 @@ namespace BevoBnB.Controllers
 
             //send the user back to the home page
             return RedirectToAction("Index", "Home");
+        }
+
+        private bool Is18OrOlder(DateTime dob)
+        {
+            var today = DateTime.Today;
+            var age = today.Year - dob.Year;
+
+            if (dob > today.AddYears(-age))
+            {
+                age = age - 1;
+            }
+
+            bool is18 = age >= 18;
+
+            return is18;
         }
     }
 }
