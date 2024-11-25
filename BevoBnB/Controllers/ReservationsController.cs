@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BevoBnB.DAL;
 using BevoBnB.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BevoBnB.Controllers
 {
+    [Authorize]
     public class ReservationsController : Controller
     {
         private readonly AppDbContext _context;
@@ -22,7 +24,13 @@ namespace BevoBnB.Controllers
         // GET: Reservations
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Reservations.ToListAsync());
+            // query for all reservations 
+            var reservations = await _context.Reservations
+                .Include(r => r.Property) // so we can access property number
+                .OrderBy(r => r.ReservationID)
+                .ToListAsync();
+
+            return View(reservations);
         }
 
         // GET: Reservations/Details/5

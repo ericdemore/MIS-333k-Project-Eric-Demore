@@ -16,40 +16,22 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Property.PropertyNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConfirmationNumber)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.CheckIn)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CheckOut)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NumOfGuests)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WeekdayPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WeekendPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CleaningFee)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DiscountRate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tax)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ConfirmationNumber)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.ReservationStatus)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.WeekdayTotals)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WeekendTotals)
+                @Html.DisplayNameFor(model => model.Total)
             </th>
             <th></th>
         </tr>
@@ -58,45 +40,26 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Property.PropertyNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConfirmationNumber)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.CheckIn)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CheckOut)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NumOfGuests)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WeekdayPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WeekendPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CleaningFee)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiscountRate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tax)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ConfirmationNumber)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.ReservationStatus)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.WeekdayTotals)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WeekendTotals)
+                @Html.DisplayFor(modelItem => item.Total)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ReservationID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ReservationID">Details</a> |
-                <!--<a asp-action="Delete" asp-route-id="@item.ReservationID">Delete</a>-->
+                <a asp-action="Details" asp-route-id="@item.ReservationID">Details</a>
             </td>
         </tr>
 }

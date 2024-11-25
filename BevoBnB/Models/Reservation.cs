@@ -39,6 +39,7 @@ namespace BevoBnB.Models
         public decimal CleaningFee { get; set; }
 
         [Display(Name = "Discount Rate")]
+        [DisplayFormat(DataFormatString = "{0:P}")]
         public decimal? DiscountRate { get; set; }
 
         [Display(Name = "Tax Amount")]
@@ -62,6 +63,18 @@ namespace BevoBnB.Models
 
 
         // read only properties
+        [Display(Name = "Number of Weekday Nights")]
+        public int NumOfWeekdays
+        {
+            get { return CalculateNumberOfWeekdays(); }
+        }
+
+        [Display(Name = "Number of Weekend Nights")]
+        public int NumOfWeekends
+        {
+            get { return CalculateNumberOfWeekends(); }
+        }
+
         [Display(Name = "Weekday Totals")]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal WeekdayTotals
@@ -75,68 +88,159 @@ namespace BevoBnB.Models
         {
             get { return CalculateWeekendTotals(); }
         }
-
-        public decimal SalesTax
+        [Display(Name = "Subtotal")]
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        public decimal Subtotal
         {
-            get { return ((WeekdayTotals + WeekendTotals + CleaningFee) * TAX_RATE); }
+            get { return CalculateSubtotals(); }
         }
 
+        [Display(Name = "Discount Amount")]
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        public decimal DiscountAmount 
+        { 
+            get { return CalculateDiscount(); } 
+        }
+
+        [Display(Name = "Sales Tax")]
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        public decimal SalesTax
+        {
+            get { return CalculateSalesTax(); }
+        }
+
+        [Display(Name = "Total")]
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        public decimal Total
+        {
+            get { return CalculateTotals(); }
+        }
 
         // methods for reservations
         private decimal CalculateWeekdayTotals()
         {
-            decimal weekdayTotal = 0.00m;
+            if (ReservationStatus == ReservationStatus.Cancelled)
+            {
+                return 0.00m;
+            }
+
+            int numberOfWeekdays = CalculateNumberOfWeekdays();
+
+            return numberOfWeekdays * WeekdayPrice;
+        }
+
+        private decimal CalculateWeekendTotals()
+        {
+            if (ReservationStatus == ReservationStatus.Cancelled)
+            {
+                return 0.00m;
+            }
+
+            int numberOfWeekends = CalculateNumberOfWeekends();
+
+            return numberOfWeekends * WeekendPrice;
+        }
+
+        private decimal CalculateSubtotals()
+        {
+            decimal totalSubtotal = 0.00m;
+
+            if (ReservationStatus == ReservationStatus.Cancelled)
+            {
+                return 0.00m;
+            }
+
+            totalSubtotal = WeekdayTotals + WeekendTotals + CleaningFee;
+
+            return totalSubtotal;
+        }
+
+        private decimal CalculateDiscount()
+        {
+            decimal discountAmount = 0.00m;
+            decimal discountRate = DiscountRate == null ? 0.00m : DiscountRate.Value; // cannot use the DiscountRate if it's null, so turn
+
+            if (ReservationStatus == ReservationStatus.Cancelled)
+            {
+                return 0.00m;
+            }
+
+            discountAmount = ((WeekdayTotals + WeekendTotals) * discountRate) * -1.00m;
+
+            return discountAmount;
+        }
+
+        private decimal CalculateSalesTax()
+        {
+            decimal salesTax = 0.00m;
+
+            if (ReservationStatus == ReservationStatus.Cancelled)
+            {
+                return 0.00m;
+            }
+
+            salesTax = (WeekdayTotals + WeekendTotals) * TAX_RATE;
+
+            return salesTax;
+        }
+
+        private decimal CalculateTotals()
+        {
+            decimal totalAmount = 0.00m;
+
+            if (ReservationStatus == ReservationStatus.Cancelled)
+            {
+                return 0.00m;
+            }
+
+            totalAmount = WeekdayTotals + WeekendTotals + CleaningFee + SalesTax + DiscountAmount;
+
+            return totalAmount;
+        }
+
+        private int CalculateNumberOfWeekdays()
+        {
+            int weekdayCount = 0;
             DateTime currentDate = CheckIn;
 
-            if (ReservationStatus == ReservationStatus.Cancelled) 
+            if (ReservationStatus == ReservationStatus.Cancelled)
             {
-                return weekdayTotal;
+                return 0;
             }
 
             while (currentDate < CheckOut)
             {
                 if (currentDate.DayOfWeek != DayOfWeek.Friday && currentDate.DayOfWeek != DayOfWeek.Saturday)
                 {
-                    weekdayTotal += WeekdayPrice;
+                    weekdayCount = weekdayCount + 1;
                 }
-
                 currentDate = currentDate.AddDays(1);
             }
 
-            return weekdayTotal;
+            return weekdayCount;
         }
 
-        private decimal CalculateWeekendTotals()
+        private int CalculateNumberOfWeekends()
         {
-            decimal weekendTotal = 0.00m;
+            int weekendCount = 0;
             DateTime currentDate = CheckIn;
 
             if (ReservationStatus == ReservationStatus.Cancelled)
             {
-                return weekendTotal;
+                return 0;
             }
 
             while (currentDate < CheckOut)
             {
                 if (currentDate.DayOfWeek == DayOfWeek.Friday || currentDate.DayOfWeek == DayOfWeek.Saturday)
                 {
-                    weekendTotal += WeekendPrice;
+                    weekendCount = weekendCount + 1;
                 }
-
                 currentDate = currentDate.AddDays(1);
             }
 
-            return weekendTotal;
+            return weekendCount;
         }
-
-        private decimal CalculateSalesTax()
-        {
-            decimal cleaningFeeAmount = CleaningFee == null ? 0.00m : CleaningFee;
-
-            return 0.00m ;
-
-        }
-
     }
 }
 

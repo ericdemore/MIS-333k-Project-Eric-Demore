@@ -4,75 +4,90 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1 class="text-center mb-4">Reservation Details</h1>
 
-<div>
-    <h4>Reservation</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CheckIn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CheckIn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CheckOut)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CheckOut)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NumOfGuests)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NumOfGuests)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WeekdayPrice)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WeekdayPrice)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WeekendPrice)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WeekendPrice)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CleaningFee)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CleaningFee)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DiscountRate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DiscountRate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Tax)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Tax)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ConfirmationNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ConfirmationNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReservationStatus)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReservationStatus)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.ReservationID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="container w-75 mx-auto">
+    <!-- Reservation Details Section -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Reservation Information</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.CheckIn)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.CheckIn)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.CheckOut)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.CheckOut)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.NumOfWeekdays)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.NumOfWeekdays)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.NumOfWeekends)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.NumOfWeekends)</dd>
+
+                <dt class="col-sm-4">Number of Guests</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.NumOfGuests)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- Property Pricing Information Section -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Property Pricing Information</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.WeekdayPrice)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.WeekdayPrice)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.WeekendPrice)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.WeekendPrice)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.CleaningFee)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.CleaningFee)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DiscountRate)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.DiscountRate)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- Reservation Costs Section -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5>Reservation Costs</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.WeekdayTotals)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.WeekdayTotals)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.WeekendTotals)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.WeekendTotals)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.CleaningFee)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.CleaningFee)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Subtotal)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Subtotal)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DiscountAmount)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.DiscountAmount)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.SalesTax)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.SalesTax)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Total)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Total)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="text-center mt-4">
+        <a class="btn btn-primary me-2" asp-action="Edit" asp-route-id="@Model?.ReservationID">Edit</a>
+        <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+    </div>
 </div>
