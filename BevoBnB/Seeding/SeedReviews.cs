@@ -24,7 +24,7 @@ namespace BevoBnB.Seeding
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3127)
                 },
                 new Review
                 {
@@ -33,7 +33,7 @@ namespace BevoBnB.Seeding
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3002)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3085)
                 },
                 new Review
                 {
@@ -42,7 +42,7 @@ namespace BevoBnB.Seeding
                     HostComments = "The customer did not provide a valid reason for this rating.",
                     DisputeStatus = DisputeStatus.Disputed,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3003)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3161)
                 },
                 new Review
                 {
@@ -51,7 +51,7 @@ namespace BevoBnB.Seeding
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3127)
                 },
                 new Review
                 {
@@ -60,7 +60,7 @@ namespace BevoBnB.Seeding
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3002)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3107)
                 },
                 new Review
                 {
@@ -69,7 +69,7 @@ namespace BevoBnB.Seeding
                     HostComments = "It is not my fault there was corn. It was not my corn!",
                     DisputeStatus = DisputeStatus.Disputed,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3003)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3107)
                 },
                 new Review
                 {
@@ -78,7 +78,7 @@ namespace BevoBnB.Seeding
                     HostComments = "BevoBnB is the best",
                     DisputeStatus = DisputeStatus.ValidDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3107)
                 },
                 new Review
                 {
@@ -87,7 +87,7 @@ namespace BevoBnB.Seeding
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3002)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3065)
                 },
                 new Review
                 {
@@ -96,7 +96,7 @@ namespace BevoBnB.Seeding
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3003)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3133)
                 },
                 new Review
                 {
@@ -105,7 +105,7 @@ namespace BevoBnB.Seeding
                     HostComments = "The website was coded by students so the owner should not be penalized!",
                     DisputeStatus = DisputeStatus.InvalidDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3065)
                 },
                 new Review
                 {
@@ -114,7 +114,7 @@ namespace BevoBnB.Seeding
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3002)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3067)
                 },
                 new Review
                 {
@@ -123,7 +123,7 @@ namespace BevoBnB.Seeding
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3003)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3065)
                 },
                 new Review
                 {
@@ -132,7 +132,7 @@ namespace BevoBnB.Seeding
                     HostComments = "I do not understand this.",
                     DisputeStatus = DisputeStatus.ValidDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3065)
                 },
                 new Review
                 {
@@ -141,7 +141,7 @@ namespace BevoBnB.Seeding
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3002)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3133)
                 },
                 new Review
                 {
@@ -150,7 +150,7 @@ namespace BevoBnB.Seeding
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3003)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3107)
                 },
                 new Review
                 {
@@ -159,7 +159,7 @@ namespace BevoBnB.Seeding
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3085)
                 },
                 new Review
                 {
@@ -168,7 +168,7 @@ namespace BevoBnB.Seeding
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3002)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3087)
                 },
                 new Review
                 {
@@ -177,7 +177,7 @@ namespace BevoBnB.Seeding
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3003)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3087)
                 },
                 new Review
                 {
@@ -186,7 +186,7 @@ namespace BevoBnB.Seeding
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3001)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3127)
                 },
                 new Review
                 {
@@ -195,7 +195,7 @@ namespace BevoBnB.Seeding
                     HostComments = "Why??",
                     DisputeStatus = DisputeStatus.InvalidDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3002)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3133)
                 },
                 new Review
                 {
@@ -204,7 +204,7 @@ namespace BevoBnB.Seeding
                     HostComments = null,
                     DisputeStatus = DisputeStatus.NoDispute,
                     User = context.Users.FirstOrDefault(u => u.Email == "user@example.com"),
-                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3003)
+                    Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3161)
                 }
             };
 
