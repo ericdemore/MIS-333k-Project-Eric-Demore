@@ -108,13 +108,13 @@ namespace BevoBnB.Controllers
                 return View("Error", new string[] { "There is no property with that ID. Try again!" });
             }
 
+            if (dbProperty.PropertyStatus == PropertyStatus.Unapproved)
+            {
+                return View("Error", new String[] { "You cannot create a reservation for a property that has not been approved for reservations. Try again later!"});
+            }
+
             // Get the currently logged-in user
             AppUser currentUser = _userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
-
-            if (currentUser == null)
-            {
-                return View("Error", new string[] { "The logged-in user could not be found. Try again!" });
-            }
 
             // Create the reservation with property details
             var reservation = new Reservation
@@ -132,8 +132,6 @@ namespace BevoBnB.Controllers
         }
 
 
-
-
         // POST: Reservations/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -142,54 +140,75 @@ namespace BevoBnB.Controllers
         [Authorize(Roles = "Customer")]
         public IActionResult Create(Reservation reservation)
         {
-            // find the db property again
+            // Find the property using your existing approach
             var dbProperty = _context.Properties.Find(reservation.Property.PropertyID);
 
-            // Check if the property exists
-            if (dbProperty == null)
+            // Collect error messages
+            List<string> errorMessages = new List<string>();
+
+            // SECURITY CHECK: Ensure property still exists and is approved
+            if (dbProperty == null || dbProperty.PropertyStatus == PropertyStatus.Unapproved)
             {
-                ViewBag.ErrorMessage = "The specified property does not exist. Please try again.";
+                errorMessages.Add("The selected property is not available for reservations.");
+            }
+            else
+            {
+                // Check-in date must not be today
+                if (DateTime.Now.Date == reservation.CheckIn.Date)
+                {
+                    errorMessages.Add("You cannot make a reservation that starts today.");
+                }
+
+                // Check-in and check-out dates must be in the future
+                if (reservation.CheckIn.Date <= DateTime.Now.Date || reservation.CheckOut.Date <= DateTime.Now.Date)
+                {
+                    errorMessages.Add("Both check-in and check-out dates must be in the future.");
+                }
+
+                // Check-in date must be before the check-out date
+                if (reservation.CheckIn >= reservation.CheckOut)
+                {
+                    errorMessages.Add("Your check-in date must be before the check-out date.");
+                }
+
+                // Ensure the number of guests does not exceed the property's limit
+                if (reservation.NumOfGuests > dbProperty.GuestsAllowed)
+                {
+                    errorMessages.Add("The number of guests exceeds the limit for this property.");
+                }
+
+                // Check for reservation conflicts for the property itself
+                if (ReservationDateConflict(reservation))
+                {
+                    errorMessages.Add("The selected dates conflict with an existing reservation for this property.");
+                }
+
+                // Check if the reservation falls on unavailable dates
+                reservation.Property = dbProperty; // Ensure reservation is associated with the property
+                if (IsReservationOnUnavailableDates(reservation))
+                {
+                    errorMessages.Add("The selected dates include one or more days that are unavailable for reservations.");
+                }
+            }
+
+            // Display all errors if any
+            if (errorMessages.Any())
+            {
+                ViewBag.ErrorMessages = errorMessages;
                 return View(reservation);
             }
 
-            // Check in cannot be today
-            if (DateTime.Now.Date == reservation.CheckIn.Date)
-            {
-                ViewBag.ErrorMessage = "You cannot make a reservation that starts today.";
-                return View(reservation);
-            }
+            // Get the logged-in user
+            AppUser user = _userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
 
-            // Check-in date must be before the check-out date
-            if (reservation.CheckIn >= reservation.CheckOut)
-            {
-                ViewBag.ErrorMessage = "Your check-in date must be before the check-out date.";
-                return View(reservation);
-            }
-
-            // Check if the number of guests exceeds the limit for this property
-            if (reservation.NumOfGuests > dbProperty.GuestsAllowed)
-            {
-                ViewBag.ErrorMessage = "The number of guests exceeds the limit for this property.";
-                return View(reservation);
-            }
-
-            // Check for date conflicts
-            if (ReservationDateConflict(reservation))
-            {
-                ViewBag.ErrorMessage = "The selected dates conflict with an existing reservation.";
-                return View(reservation);
-            }
-
-            // Populate additional reservation details
+            // Populate reservation details from the property
             reservation.Property = dbProperty;
             reservation.WeekdayPrice = dbProperty.WeekdayPricing;
             reservation.WeekendPrice = dbProperty.WeekendPricing;
             reservation.CleaningFee = dbProperty.CleaningFee;
-            reservation.DiscountRate = dbProperty.DiscountRate;
+            reservation.DiscountRate = reservation.TotalNights >= dbProperty.MinNightsforDiscount ? dbProperty.DiscountRate : null;
             reservation.ReservationStatus = ReservationStatus.Pending;
-
-            // Assign the logged-in user
-            reservation.User = _userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            reservation.User = user;
 
             // Save the reservation
             _context.Add(reservation);
@@ -198,6 +217,7 @@ namespace BevoBnB.Controllers
             // Redirect to the Details view
             return RedirectToAction("Details", new { id = reservation.ReservationID });
         }
+
 
         public IActionResult ShoppingCart()
         {
@@ -210,14 +230,24 @@ namespace BevoBnB.Controllers
 
             if (reservations == null || reservations.Count == 0)
             {
-                string message = "There are no pending reservations in your shopping cart.";
-                ViewBag.EmptyCart = message;
-                return View();
+                ViewBag.EmptyCart = "There are no pending reservations in your shopping cart.";
+                return View(new List<Reservation>());
             }
+
+            // Calculate the totals
+            ViewBag.WeekdayTotal = reservations.Sum(r => r.WeekdayTotals);
+            ViewBag.WeekendTotal = reservations.Sum(r => r.WeekendTotals);
+            ViewBag.DiscountAmount = reservations.Sum(r => r.DiscountAmount);
+            ViewBag.SalesTax = reservations.Sum(r => r.SalesTax);
+            ViewBag.CleaningFee = reservations.Sum(r => r.CleaningFee);
+            ViewBag.StayTotal = reservations.Sum(r => r.StayTotal);
+            ViewBag.Subtotal = reservations.Sum(r => r.Subtotal);
+            ViewBag.Total = reservations.Sum(r => r.Total);
 
             // Pass the filtered reservations to the view
             return View(reservations);
         }
+
 
 
         // GET: Reservations/Edit/5
@@ -294,24 +324,35 @@ namespace BevoBnB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var reservation = await _context.Reservations.FindAsync(id);
+            var reservation = await _context.Reservations
+                                            .Include(r => r.Property)
+                                            .FirstOrDefaultAsync(r => r.ReservationID == id);
+
             if (reservation != null)
             {
                 _context.Reservations.Remove(reservation);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            // Redirect to ShoppingCart action to reload data
+            return RedirectToAction(nameof(ShoppingCart));
         }
+
 
         private bool ReservationExists(int id)
         {
             return _context.Reservations.Any(e => e.ReservationID == id);
         }
 
+        // -------------------------------------------------------------------------------------------------------------- //
+        // ------------------------------------------ Methods for Action Methods ---------------------------------------- //
+        // -------------------------------------------------------------------------------------------------------------- //
+
+
         // checks whether the reservations conflicts with another
         private bool ReservationDateConflict(Reservation reservation)
         {
+            // security check - no reservation was provided in the method
             if (reservation.Property == null)
             {
                 return false;
@@ -332,7 +373,7 @@ namespace BevoBnB.Controllers
                     if (reservation.CheckOut == existingReservation.CheckIn ||
                         reservation.CheckIn == existingReservation.CheckOut)
                     {
-                        continue; // No conflict for edge cases
+                        continue;
                     }
 
                     // Conflict found
@@ -342,6 +383,58 @@ namespace BevoBnB.Controllers
 
             // No conflicts found
             return false; 
+        }
+
+        private bool ShoppingCartDateConflict(Reservation newReservation, List<Reservation> cartReservations)
+        {
+            if (newReservation == null || cartReservations == null || !cartReservations.Any())
+            {
+                return false;
+            }
+
+            foreach (var existingReservation in cartReservations)
+            {
+                // Check for overlapping dates
+                if (newReservation.CheckIn < existingReservation.CheckOut &&
+                    newReservation.CheckOut > existingReservation.CheckIn)
+                {
+                    // Allow back-to-back reservations
+                    if (newReservation.CheckOut == existingReservation.CheckIn ||
+                        newReservation.CheckIn == existingReservation.CheckOut)
+                    {
+                        continue;
+                    }
+
+                    // Conflict found
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        // Checks if the reservation falls on any unavailable dates for the property
+        private bool IsReservationOnUnavailableDates(Reservation reservation)
+        {
+            // Ensure the property exists and has unavailable dates
+            if (reservation.Property == null || reservation.Property.UnavailableDates == null || !reservation.Property.UnavailableDates.Any())
+            {
+                return false;
+            }
+
+            // Check if any unavailable date conflicts with the reservation period
+            foreach (var unavailableDate in reservation.Property.UnavailableDates)
+            {
+                // Check if the unavailable date equals the CheckIn, CheckOut, or falls in between
+                if (unavailableDate >= reservation.CheckIn && unavailableDate < reservation.CheckOut)
+                {
+                    return true;
+                }
+            }
+
+            // No conflicts found
+            return false;
         }
     }
 }

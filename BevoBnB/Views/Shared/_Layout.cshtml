@@ -34,9 +34,15 @@
                                     Reservations
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-controller="Reservations" asp-action="Index">Reservations</a>
+                                    <a class="dropdown-item" asp-controller="Reservations" asp-action="Index">Reservation History</a>
                                     <a class="dropdown-item" asp-controller="Reservations" asp-action="ShoppingCart">Shopping Cart</a>
                                 </div>
+                            </li>
+                        }
+                        @if (User.IsInRole("Host"))
+                        {
+                            <li class="nav-item">
+                                <a asp-controller="Reservations" asp-action="Index" class="nav-link">Reservations</a>
                             </li>
                         }
                         @if (User.IsInRole("Admin"))

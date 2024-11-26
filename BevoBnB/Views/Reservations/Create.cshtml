@@ -10,14 +10,22 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+        @if (ViewBag.ErrorMessages != null && ((List<string>)ViewBag.ErrorMessages).Any())
+        {
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach (var error in (List<string>)ViewBag.ErrorMessages)
+                    {
+                        <li>@error</li>
+                    }
+                </ul>
+            </div>
+        }
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             @Html.HiddenFor(model => model.Property.PropertyID)
             <input type="hidden" asp-for="ReservationStatus" value="Pending" />
-
-            <!--Error Message-->
-            <li class="text-danger">@ViewBag.ErrorMessage</li>
 
             <!--Allowable User Inputs-->
             <div class="form-group">

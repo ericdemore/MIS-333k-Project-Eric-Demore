@@ -20,7 +20,7 @@ namespace BevoBnB.Models
         public DateTime CheckOut { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "The number of guests must be at least 1.")]
-        [Display(Name = "Number of Guests (including person making reservation)")]
+        [Display(Name = "Number of Guests")]
         public int NumOfGuests { get; set; }
 
         [Display(Name = "Weekday Price")]
@@ -72,6 +72,11 @@ namespace BevoBnB.Models
             get { return CalculateNumberOfWeekends(); }
         }
 
+        public int TotalNights
+        {
+            get { return NumOfWeekdays + NumOfWeekends; }
+        }
+
         [Display(Name = "Weekday Totals")]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal WeekdayTotals
@@ -85,6 +90,14 @@ namespace BevoBnB.Models
         {
             get { return CalculateWeekendTotals(); }
         }
+
+        [Display(Name = "Stay Total")]
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        public decimal StayTotal
+        {
+            get { return WeekdayTotals + WeekendTotals; }
+        }
+
         [Display(Name = "Subtotal")]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal Subtotal
