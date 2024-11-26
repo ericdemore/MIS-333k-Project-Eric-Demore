@@ -10,7 +10,7 @@
     <!-- Reservation Details Section -->
     <div class="card mb-3">
         <div class="card-header">
-            <h5>Reservation Information</h5>
+            <h5>Reservation Information for @ViewBag.customer</h5>
         </div>
         <div class="card-body">
             <dl class="row">
@@ -28,6 +28,9 @@
 
                 <dt class="col-sm-4">Number of Guests</dt>
                 <dd class="col-sm-8">@Html.DisplayFor(model => model.NumOfGuests)</dd>
+
+                <dt class="col-sm-4">Number of Guests</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.ReservationStatus)</dd>
             </dl>
         </div>
     </div>
