@@ -90,6 +90,10 @@ namespace BevoBnB.Controllers
         }
 
         // GET: Properties/Details/5
+        //TODO: this needs to return error views.not status 404 not found. 
+        //TODO: it should also return the avg rating, this should be an easy linq query that returns the avg for the property
+        //TODO: the view should not be viewable by the customer if it's unapproved
+        //TODO: only a host and admin may see the view if it's unapproved
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
