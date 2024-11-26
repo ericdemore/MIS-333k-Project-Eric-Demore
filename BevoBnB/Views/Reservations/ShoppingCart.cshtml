@@ -6,32 +6,19 @@
 
 <h1 class="my-4">Shopping Cart</h1>
 
-<p>
-    <a asp-action="Index" asp-controller="Properties" class="btn btn-primary mb-3">Search Properties to Add</a>
-</p>
-
 @if (Model == null || !Model.Any())
 {
+    <!-- Message when no reservations are found -->
     <p>@ViewBag.EmptyCart</p>
 }
 else
 {
-    @if (TempData["AlertMessage"] != null)
-    {
-        <div class="alert alert-dismissible alert-warning">
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            <h4 class="alert-heading">Warning!</h4>
-            <p class="mb-0">
-                @Html.Raw(TempData["AlertMessage"])
-            </p>
-        </div>
-    }
+    <!-- Shopping Cart Content -->
     <div class="row g-3">
         <!-- Table Section -->
         <div class="col-md-9">
             <div class="table-responsive">
                 <table class="table">
-                    <!-- Adjusted classes for smaller table -->
                     <thead class="thead-dark">
                         <tr>
                             <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CheckIn)</th>
@@ -60,9 +47,9 @@ else
                                 <td>@Html.DisplayFor(modelItem => item.Subtotal)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Total)</td>
                                 <td>
-                                        <a  asp-action="Edit" asp-route-id="@item.ReservationID">Edit</a>
-                                        <a  asp-action="Details" asp-route-id="@item.ReservationID">Details</a>
-                                        <a  asp-action="Delete" asp-route-id="@item.ReservationID">Delete</a>
+                                    <a asp-action="Edit" asp-route-id="@item.ReservationID">Edit</a>
+                                    <a asp-action="Details" asp-route-id="@item.ReservationID">Details</a>
+                                    <a asp-action="Delete" asp-route-id="@item.ReservationID">Delete</a>
                                 </td>
                             </tr>
                         }
@@ -105,9 +92,8 @@ else
                         </li>
                     </ul>
                 </div>
-                
             </div>
-            <a style="align-content"class="btn btn-lg btn-success" asp-action="CheckOut" asp-asp-controller="Reservations">Check Out</a>
+            <a class="btn btn-lg btn-success" asp-action="CheckOut">Check Out</a>
         </div>
     </div>
 }

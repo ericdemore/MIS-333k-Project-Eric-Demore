@@ -1,0 +1,36 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "Select a Customer";
+}
+
+<h1>Select the Customer for the Reservation</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SelectCustomerForRegistration">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Hidden field for PropertyID -->
+            <input type="hidden" name="propertyID" value="@ViewBag.PropertyID" />
+
+            <!-- Dropdown for selecting a customer -->
+            <div class="form-group">
+                <label class="control-label">All Customers:</label>
+                @Html.DropDownList("SelectedCustomer", (SelectList)@ViewBag.UserNames, new { @class = "form-control" })
+            </div>
+            <br />
+
+            <!-- Submit button -->
+            <div class="form-group">
+                <input type="submit" value="Select Customer" class="btn btn-primary" />
+            </div>
+        </form>
+        <br/>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

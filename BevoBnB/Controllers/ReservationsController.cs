@@ -93,8 +93,28 @@ namespace BevoBnB.Controllers
             return View(reservation);
         }
 
-        [Authorize(Roles = "Customer")]
-        public IActionResult Create(int? propertyID)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> SelectCustomerForRegistration(string? selectedCustomer, int? propertyID)
+        {
+
+            if (propertyID == null)
+            {
+                return View("Error", new string[] { "The user did not specify an ID. Try again!" });
+            }
+
+            if (string.IsNullOrEmpty(selectedCustomer))
+            {
+                ViewBag.UserNames = await GetAllCustomerUserNamesSelectList();
+                ViewBag.PropertyID = propertyID;
+                return View("SelectCustomerForRegistration");
+            }
+
+            // Redirect to the Create method with the selected customer and propertyID
+            return RedirectToAction("Create", new { selectedCustomer, propertyID });
+        }
+
+        [Authorize(Roles = "Customer, Admin")]
+        public IActionResult Create(int? propertyID, string? selectedCustomer)
         {
             if (propertyID == null)
             {
@@ -111,11 +131,31 @@ namespace BevoBnB.Controllers
 
             if (dbProperty.PropertyStatus == PropertyStatus.Unapproved)
             {
-                return View("Error", new String[] { "You cannot create a reservation for a property that has not been approved for reservations. Try again later!"});
+                return View("Error", new String[] { "You cannot create a reservation for a property that has not been approved for reservations. Try again later!" });
             }
 
-            // Get the currently logged-in user
-            AppUser currentUser = _userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            AppUser reservationUser;
+
+            // Determine the user to associate with the reservation
+            if (User.IsInRole("Admin"))
+            {
+                if (string.IsNullOrEmpty(selectedCustomer))
+                {
+                    return View("Error", new string[] { "No customer was selected. Please select a customer first." });
+                }
+
+                // Admin is creating a reservation for a selected customer
+                reservationUser = _userManager.Users.FirstOrDefault(u => u.UserName == selectedCustomer);
+                if (reservationUser == null)
+                {
+                    return View("Error", new string[] { "The selected customer does not exist. Try again!" });
+                }
+            }
+            else
+            {
+                // Customer is creating their own reservation
+                reservationUser = _userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            }
 
             // Create the reservation with property details
             var reservation = new Reservation
@@ -125,7 +165,7 @@ namespace BevoBnB.Controllers
                 CleaningFee = dbProperty.CleaningFee,
                 DiscountRate = dbProperty.DiscountRate,
                 Property = dbProperty,
-                User = currentUser,
+                User = reservationUser,
                 ReservationStatus = ReservationStatus.Pending
             };
 
@@ -138,13 +178,11 @@ namespace BevoBnB.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer, Admin")]
         public IActionResult Create(Reservation reservation)
         {
-            // Find the property using your existing approach
             Property dbProperty = _context.Properties.Find(reservation.Property.PropertyID);
 
-            // Collect error messages
             List<string> errorMessages = new List<string>();
 
             // SECURITY CHECK: Ensure property still exists and is approved
@@ -192,6 +230,34 @@ namespace BevoBnB.Controllers
                 }
             }
 
+            AppUser reservationUser;
+
+            // Determine the user to associate with the reservation
+            if (User.IsInRole("Admin") && !string.IsNullOrEmpty(reservation.User?.UserName))
+            {
+                reservationUser = _userManager.Users.FirstOrDefault(u => u.UserName == reservation.User.UserName);
+
+                if (reservationUser == null)
+                {
+                    return View("Error", new string[] { "The selected customer does not exist. Please try again!" });
+                }
+            }
+            else
+            {
+                // Customer creating their own reservation
+                reservationUser = _userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            }
+
+            // Check for conflicts in the selected customer's shopping cart
+            var userShoppingCart = _context.Reservations
+                .Where(r => r.User.Id == reservationUser.Id && r.ReservationStatus == ReservationStatus.Pending)
+                .ToList();
+
+            if (ShoppingCartDateConflict(reservation, userShoppingCart))
+            {
+                errorMessages.Add("The selected dates conflict with a pending reservation in the customer's shopping cart.");
+            }
+
             // Display all errors if any
             if (errorMessages.Any())
             {
@@ -199,51 +265,56 @@ namespace BevoBnB.Controllers
                 return View(reservation);
             }
 
-            // Get the logged-in user
-            AppUser user = _userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
-
-            // Populate reservation details from the property
+            // Populate reservation details
             reservation.Property = dbProperty;
+            reservation.User = reservationUser;
             reservation.WeekdayPrice = dbProperty.WeekdayPricing;
             reservation.WeekendPrice = dbProperty.WeekendPricing;
             reservation.CleaningFee = dbProperty.CleaningFee;
             reservation.DiscountRate = reservation.TotalNights >= dbProperty.MinNightsforDiscount ? dbProperty.DiscountRate : null;
             reservation.ReservationStatus = ReservationStatus.Pending;
-            reservation.User = user;
 
-            // Save the reservation
             _context.Add(reservation);
             _context.SaveChanges();
 
-            // Redirect to the Details view
             return RedirectToAction("Details", new { id = reservation.ReservationID });
         }
 
 
-        public IActionResult ShoppingCart()
-        {
-            // Get only reservations for the current user with "Pending" status
-            List<Reservation> reservations = _context.Reservations
-                .Include(r => r.Property)
-                .Include(r => r.User)
-                .Where(r => r.User.UserName == User.Identity.Name && r.ReservationStatus == ReservationStatus.Pending)
-                .ToList();
 
-            if (reservations == null || reservations.Count == 0)
+        [Authorize(Roles = "Customer")]
+        public async Task<IActionResult> ShoppingCart()
+        {
+            List<Reservation> reservations = new List<Reservation>();
+
+            // Get the logged-in customer
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+            if (user == null)
             {
-                ViewBag.EmptyCart = "There are no pending reservations in your shopping cart.";
-                return View(new List<Reservation>());
+                ViewBag.EmptyCart = "Unable to identify your account. Please log in again.";
+                return View(reservations);
             }
 
-            // Calculate the totals
-            ViewBag.DiscountAmount = reservations.Sum(r => r.DiscountAmount);
-            ViewBag.SalesTax = reservations.Sum(r => r.SalesTax);
-            ViewBag.CleaningFee = reservations.Sum(r => r.CleaningFee);
+            // Fetch pending reservations for the logged-in customer
+            reservations = await _context.Reservations
+                .Include(r => r.Property)
+                .Where(r => r.User.Id == user.Id && r.ReservationStatus == ReservationStatus.Pending)
+                .ToListAsync();
+
+            if (!reservations.Any())
+            {
+                ViewBag.EmptyCart = "There are no pending reservations in your shopping cart.";
+            }
+
+            // Calculate totals for display
             ViewBag.StayTotal = reservations.Sum(r => r.StayTotal);
+            ViewBag.CleaningFee = reservations.Sum(r => r.CleaningFee);
             ViewBag.Subtotal = reservations.Sum(r => r.Subtotal);
+            ViewBag.SalesTax = reservations.Sum(r => r.SalesTax);
+            ViewBag.DiscountAmount = reservations.Sum(r => r.DiscountAmount);
             ViewBag.Total = reservations.Sum(r => r.Total);
 
-            // Pass the filtered reservations to the view
             return View(reservations);
         }
 
@@ -317,6 +388,7 @@ namespace BevoBnB.Controllers
         }
 
         // GET: Reservations/Edit/5
+        [Authorize(Roles = "Customer")]
         public IActionResult Edit(int? id)
         {
             // Check if ID is null
@@ -358,6 +430,7 @@ namespace BevoBnB.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> Edit(int id, [Bind("ReservationID,CheckIn,CheckOut,NumOfGuests,ReservationStatus")] Reservation reservation)
         {
             if (id != reservation.ReservationID)
@@ -475,21 +548,38 @@ namespace BevoBnB.Controllers
         }
 
 
-
-
         // GET: Reservations/Delete/5
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error", new String[] { "You did not provide an ID to delete." });
             }
 
             var reservation = await _context.Reservations
-                .FirstOrDefaultAsync(m => m.ReservationID == id);
+                                            .Include(r => r.User)
+                                            .FirstOrDefaultAsync(r => r.ReservationID == id);
+
             if (reservation == null)
             {
-                return NotFound();
+                return View("Error", new String[] { "There's no reservation with that ID." });
+            }
+
+            // Security check: Ensure the reservation belongs to the logged-in user
+            if (reservation.User.UserName != User.Identity.Name)
+            {
+                return View("Error", new String[] { "You are not authorized to delete this reservation." });
+            }
+
+            if (reservation.ReservationStatus == ReservationStatus.Valid)
+            {
+                return View("Error", new String[] { "You cannot delete a reservation that has been already purchased." });
+            }
+
+            if (reservation.ReservationStatus == ReservationStatus.Cancelled)
+            {
+                return View("Error", new String[] { "You cannot delete a reservation that has already been purchased, even if it's cancelled." });
             }
 
             return View(reservation);
@@ -498,22 +588,40 @@ namespace BevoBnB.Controllers
         // POST: Reservations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var reservation = await _context.Reservations
+                                            .Include(r => r.User)
                                             .Include(r => r.Property)
                                             .FirstOrDefaultAsync(r => r.ReservationID == id);
 
-            if (reservation != null)
+            if (reservation == null)
             {
-                _context.Reservations.Remove(reservation);
-                await _context.SaveChangesAsync();
+                return View("Error", new String[] { "The reservation does not exist or has already been deleted." });
             }
 
-            // Redirect to ShoppingCart action to reload data
+            // Security check: Ensure the reservation belongs to the logged-in user
+            if (reservation.User.UserName != User.Identity.Name)
+            {
+                return View("Error", new String[] { "You are not authorized to delete this reservation." });
+            }
+
+            if (reservation.ReservationStatus == ReservationStatus.Valid)
+            {
+                return View("Error", new String[] { "You cannot delete a reservation that has been already purchased." });
+            }
+
+            if (reservation.ReservationStatus == ReservationStatus.Cancelled)
+            {
+                return View("Error", new String[] { "You cannot delete a reservation that has already been purchased, even if it's cancelled." });
+            }
+
+            _context.Reservations.Remove(reservation);
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(ShoppingCart));
         }
-
 
         private bool ReservationExists(int id)
         {
@@ -611,6 +719,29 @@ namespace BevoBnB.Controllers
 
             // No conflicts found
             return false;
+        }
+
+        public async Task<SelectList> GetAllCustomerUserNamesSelectList()
+        {
+            //create a list to hold the customers
+            List<AppUser> allCustomers = new List<AppUser>();
+
+            //See if the user is a customer
+            foreach (AppUser dbUser in _context.Users)
+            {
+                //if the user is a customer, add them to the list of customers
+                if (await _userManager.IsInRoleAsync(dbUser, "Customer") == true)//user is a customer
+                {
+                    allCustomers.Add(dbUser);
+                }
+            }
+
+            //create a new select list with the customer emails
+            SelectList sl = new SelectList(allCustomers.OrderBy(c => c.Email), nameof(AppUser.UserName), nameof(AppUser.Email));
+
+            //return the select list
+            return sl;
+
         }
     }
 }

@@ -36,6 +36,8 @@
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" asp-controller="Reservations" asp-action="Index">Reservation History</a>
                                     <a class="dropdown-item" asp-controller="Reservations" asp-action="ShoppingCart">Shopping Cart</a>
+                                    <a class="dropdown-item" asp-controller="Reservations" asp-action="SelectCustomerForRegistration"></a>
+                                    <a class="dropdown-item" asp-controller="Reservations" asp-action="SelectCustomerForRegistration">Admin Reservation</a>
                                 </div>
                             </li>
                         }
@@ -47,8 +49,16 @@
                         }
                         @if (User.IsInRole("Admin"))
                         {
-                            <li class="nav-item">
-                                <a asp-controller="Reservations" asp-action="Index" class="nav-link">Reservations</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    Reservations
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-controller="Reservations" asp-action="Index">Reservation History</a>
+                                    <a class="dropdown-item" asp-controller="Reservations" asp-action="ShoppingCart">Shopping Cart</a>
+                                    <hr/>
+                                    <a class="dropdown-item" asp-controller="Reservations" asp-action="SelectCustomerForRegistration">Admin Reservation</a>
+                                </div>
                             </li>
                             <li>
                                 <a asp-controller="RoleAdmin" asp-action="Index" class="nav-link">Manage Users</a>

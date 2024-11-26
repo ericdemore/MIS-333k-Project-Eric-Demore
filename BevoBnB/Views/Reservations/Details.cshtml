@@ -91,7 +91,19 @@
     <!-- Action Buttons -->
     <div class="text-center mt-4">
         <a class="btn btn-primary me-2" asp-action="Edit" asp-route-id="@Model?.ReservationID">Edit</a>
-        <a class="btn btn-secondary" asp-action="ShoppingCart">Check Out</a>
+        @if (User.Identity.IsAuthenticated)
+        {
+            if (User.IsInRole("Admin"))
+            {
+                <a asp-action="ShoppingCart" asp-route-customerId="customerIdValue">View Customer's Cart</a>
+
+            }
+
+            if (User.IsInRole("Customer"))
+            {
+                <a class="btn btn-secondary" asp-action="ShoppingCart">Check Out</a>
+            }
+        }
         <a class="btn btn-info" asp-action="Index" asp-controller="Properties">Add Another Property</a>
     </div>
 </div>

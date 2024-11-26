@@ -23,6 +23,10 @@
         }
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                @Html.HiddenFor(model => model.User.UserName)
+            }
 
             @Html.HiddenFor(model => model.Property.PropertyID)
             <input type="hidden" asp-for="ReservationStatus" value="Pending" />
