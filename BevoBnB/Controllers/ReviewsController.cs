@@ -22,7 +22,10 @@ namespace BevoBnB.Controllers
         // GET: Reviews
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Reviews.ToListAsync());
+            var reviews = await _context.Reviews
+                .Include(r => r.Property) // Ensure Property is loaded
+                .ToListAsync();
+            return View(reviews);
         }
 
         // GET: Reviews/Details/5

@@ -97,15 +97,19 @@ namespace BevoBnB.Controllers
                 return NotFound();
             }
 
-            var @property = await _context.Properties
+            // Include the related Reviews when fetching the Property
+            var property = await _context.Properties
+                .Include(p => p.Reviews) // Include the Reviews navigation property
                 .FirstOrDefaultAsync(m => m.PropertyID == id);
-            if (@property == null)
+
+            if (property == null)
             {
                 return NotFound();
             }
 
-            return View(@property);
+            return View(property);
         }
+
 
         // GET: Properties/Create
         public IActionResult Create()

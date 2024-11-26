@@ -2,16 +2,25 @@
 
 @{
     ViewData["Title"] = "Index";
+    var isAdmin = User.IsInRole("Admin"); // Check if the user is an Admin
+    var isCustomer = User.IsInRole("Customer"); // Check if the user is a Customer
 }
 
-<h1>Index</h1>
+<h1>Reviews</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (isCustomer)
+{
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+}
+
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayName("Property Number")
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rating)
             </th>
@@ -28,26 +37,34 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReviewText)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HostComments)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DisputeStatus)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ReviewID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ReviewID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ReviewID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.Property.PropertyNumber)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.ReviewText)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.HostComments)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.DisputeStatus)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ReviewID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ReviewID">Details</a>
+                    @if (isAdmin)
+                    {
+                                <span> | </span>
+                                <a asp-action="Delete" asp-route-id="@item.ReviewID">Delete</a>
+                    }
+                    </td>
+                </tr>
+        }
     </tbody>
 </table>
