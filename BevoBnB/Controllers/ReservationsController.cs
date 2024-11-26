@@ -9,6 +9,7 @@ using BevoBnB.DAL;
 using BevoBnB.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using BevoBnB.Utilities;
 
 namespace BevoBnB.Controllers
 {
@@ -141,7 +142,7 @@ namespace BevoBnB.Controllers
         public IActionResult Create(Reservation reservation)
         {
             // Find the property using your existing approach
-            var dbProperty = _context.Properties.Find(reservation.Property.PropertyID);
+            Property dbProperty = _context.Properties.Find(reservation.Property.PropertyID);
 
             // Collect error messages
             List<string> errorMessages = new List<string>();
@@ -235,8 +236,6 @@ namespace BevoBnB.Controllers
             }
 
             // Calculate the totals
-            ViewBag.WeekdayTotal = reservations.Sum(r => r.WeekdayTotals);
-            ViewBag.WeekendTotal = reservations.Sum(r => r.WeekendTotals);
             ViewBag.DiscountAmount = reservations.Sum(r => r.DiscountAmount);
             ViewBag.SalesTax = reservations.Sum(r => r.SalesTax);
             ViewBag.CleaningFee = reservations.Sum(r => r.CleaningFee);
@@ -249,20 +248,108 @@ namespace BevoBnB.Controllers
         }
 
 
+        public async Task<IActionResult> CheckOut()
+        {
+            // Retrieve all pending reservations for the logged-in user
+            List<Reservation> pendingReservations = await _context.Reservations
+                .Include(r => r.Property)
+                .Where(r => r.User.UserName == User.Identity.Name && r.ReservationStatus == ReservationStatus.Pending)
+                .ToListAsync();
+
+            // Check if there are no pending reservations
+            if (!pendingReservations.Any())
+            {
+                ViewBag.ErrorMessage = "Your shopping cart is empty. Add reservations to proceed with checkout.";
+                return RedirectToAction(nameof(ShoppingCart));
+            }
+
+            // Error message list
+            List<string> errorMessages = new List<string>();
+
+            foreach (var reservation in pendingReservations)
+            {
+                var dbProperty = reservation.Property;
+
+                // Check if the property still exists and is approved
+                if (dbProperty == null || dbProperty.PropertyStatus == PropertyStatus.Unapproved)
+                {
+                    errorMessages.Add($"The property for reservation ID {reservation.ReservationID} is not approved or no longer exists.");
+                }
+
+                // Check-in and check-out dates must be in the future
+                if (reservation.CheckIn.Date <= DateTime.Now.Date || reservation.CheckOut.Date <= DateTime.Now.Date)
+                {
+                    errorMessages.Add($"Reservation ID {reservation.ReservationID}: Both check-in and check-out dates must be in the future.");
+                }
+
+                // Check for reservation conflicts for the property itself
+                if (ReservationDateConflict(reservation))
+                {
+                    errorMessages.Add($"Reservation ID {reservation.ReservationID}: The selected dates conflict with an existing reservation for this property.");
+                }
+
+                // Check if the reservation falls on unavailable dates
+                if (IsReservationOnUnavailableDates(reservation))
+                {
+                    errorMessages.Add($"Reservation ID {reservation.ReservationID}: The selected dates include one or more unavailable days for this property.");
+                }
+            }
+
+            // If there are any errors, redirect to ShoppingCart and display them
+            if (errorMessages.Any())
+            {
+                TempData["AlertMessage"] = string.Join("<br>", errorMessages);
+                return RedirectToAction(nameof(ShoppingCart));
+            }
+
+            // Assign confirmation numbers and mark reservations as valid
+            foreach (var reservation in pendingReservations)
+            {
+                reservation.ReservationStatus = ReservationStatus.Valid;
+                reservation.ConfirmationNumber = GenerateNextConfirmationNumber.GetNextConfirmationNumber(_context);
+            }
+
+            // Save changes to the database
+            await _context.SaveChangesAsync();
+
+            // Pass the finalized reservations to the confirmation view
+            return View("Success", new String[] { "YIPPIE! You transaction successfully went through."});
+        }
 
         // GET: Reservations/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
+            // Check if ID is null
             if (id == null)
             {
-                return NotFound();
+                return View("Error", new string[] { "Please specify a reservation to edit." });
             }
 
-            var reservation = await _context.Reservations.FindAsync(id);
+            // Find the reservation in the database, include related details
+            Reservation reservation = _context.Reservations
+                                      .Include(r => r.Property)
+                                      .Include(r => r.User)
+                                      .FirstOrDefault(r => r.ReservationID == id);
+
+            // Reservation was not found
             if (reservation == null)
             {
-                return NotFound();
+                return View("Error", new string[] { "This reservation was not found in the database!" });
             }
+
+            // Reservation does not belong to the logged-in user (if customer)
+            if (User.IsInRole("Customer") && reservation.User.UserName != User.Identity.Name)
+            {
+                return View("Error", new string[] { "You are not authorized to edit this reservation!" });
+            }
+
+            // If the reservation is valid and check-in date is in the past
+            if (reservation.ReservationStatus == ReservationStatus.Valid && reservation.CheckIn.Date <= DateTime.Now.Date)
+            {
+                return View("Error", new string[] { "This reservation has already started or is completed and cannot be edited!" });
+            }
+
+            // Pass the reservation to the view
             return View(reservation);
         }
 
@@ -271,35 +358,124 @@ namespace BevoBnB.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ReservationID,CheckIn,CheckOut,NumOfGuests,WeekdayPrice,WeekendPrice,CleaningFee,DiscountRate,Tax,ConfirmationNumber,ReservationStatus")] Reservation reservation)
+        public async Task<IActionResult> Edit(int id, [Bind("ReservationID,CheckIn,CheckOut,NumOfGuests,ReservationStatus")] Reservation reservation)
         {
             if (id != reservation.ReservationID)
             {
-                return NotFound();
+                return View("Error", new string[] { "Invalid reservation ID." });
             }
 
-            if (ModelState.IsValid)
+            // Retrieve the reservation from the database
+            var dbReservation = _context.Reservations
+                                         .Include(r => r.Property)
+                                         .Include(r => r.User)
+                                         .FirstOrDefault(r => r.ReservationID == id);
+
+            if (dbReservation == null)
             {
+                return View("Error", new string[] { "Reservation not found in the database." });
+            }
+
+            // Ensure the user is authorized to edit this reservation
+            if (User.IsInRole("Customer") && dbReservation.User.UserName != User.Identity.Name)
+            {
+                return View("Error", new string[] { "You are not authorized to edit this reservation." });
+            }
+
+            // Handle cancellation for valid reservations
+            if (dbReservation.ReservationStatus == ReservationStatus.Valid && reservation.ReservationStatus == ReservationStatus.Cancelled)
+            {
+                // Validate cancellation eligibility
+                if (dbReservation.CheckIn <= DateTime.Now.AddDays(1))
+                {
+                    return View("Error", new string[] { "This reservation cannot be canceled within one day of the check-in date or after the check-in date has passed." });
+                }
+
+                // Update reservation status to cancelled
+                dbReservation.ReservationStatus = ReservationStatus.Cancelled;
+
                 try
                 {
-                    _context.Update(reservation);
+                    _context.Update(dbReservation);
                     await _context.SaveChangesAsync();
+                    ViewBag.AlertMessage = "Reservation successfully canceled.";
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception ex)
                 {
-                    if (!ReservationExists(reservation.ReservationID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return View("Error", new string[] { $"An error occurred while canceling the reservation: {ex.Message}" });
                 }
+
                 return RedirectToAction(nameof(Index));
             }
-            return View(reservation);
+
+            // Handle updates for pending reservations
+            if (dbReservation.ReservationStatus == ReservationStatus.Pending)
+            {
+                List<string> errorMessages = new List<string>();
+
+                var dbProperty = dbReservation.Property;
+
+                // Check-in and check-out validation
+                if (reservation.CheckIn <= DateTime.Now.Date)
+                {
+                    errorMessages.Add("Check-in date must be in the future.");
+                }
+                if (reservation.CheckIn >= reservation.CheckOut)
+                {
+                    errorMessages.Add("Check-out date must be after the check-in date.");
+                }
+
+                // Guest count validation
+                if (reservation.NumOfGuests > dbProperty.GuestsAllowed)
+                {
+                    errorMessages.Add($"The number of guests exceeds the limit for this property (Max: {dbProperty.GuestsAllowed}).");
+                }
+
+                // Check for reservation conflicts
+                dbReservation.CheckIn = reservation.CheckIn;
+                dbReservation.CheckOut = reservation.CheckOut;
+
+                if (ReservationDateConflict(dbReservation))
+                {
+                    errorMessages.Add("The selected dates conflict with an existing reservation for this property.");
+                }
+
+                // Check for unavailable dates
+                if (IsReservationOnUnavailableDates(dbReservation))
+                {
+                    errorMessages.Add("The selected dates include one or more days that are unavailable for reservations.");
+                }
+
+                // If errors exist, show them
+                if (errorMessages.Any())
+                {
+                    ViewBag.ErrorMessages = errorMessages;
+                    return View(dbReservation);
+                }
+
+                // Update reservation fields
+                dbReservation.CheckIn = reservation.CheckIn;
+                dbReservation.CheckOut = reservation.CheckOut;
+                dbReservation.NumOfGuests = reservation.NumOfGuests;
+
+                try
+                {
+                    _context.Update(dbReservation);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    return View("Error", new string[] { $"An error occurred while updating the reservation: {ex.Message}" });
+                }
+
+                return RedirectToAction(nameof(ShoppingCart));
+            }
+
+            return View("Error", new string[] { "Invalid action on reservation." });
         }
+
+
+
 
         // GET: Reservations/Delete/5
         public async Task<IActionResult> Delete(int? id)
