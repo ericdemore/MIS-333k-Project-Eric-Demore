@@ -20,9 +20,73 @@ namespace BevoBnB.Controllers
         }
 
         // GET: Properties
-        public async Task<IActionResult> Index()
+        // Updated Index method for handling guests and range filtering
+        public async Task<IActionResult> Index(string searchString, int? bedrooms, int? bathrooms, decimal? minPrice, decimal? maxPrice, int? guestsAllowed, bool? petsAllowed, bool? freeParking)
         {
-            return View(await _context.Properties.ToListAsync());
+            // Base query to retrieve all properties
+            var query = _context.Properties.AsQueryable();
+
+            // Apply SQL-compatible filters
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                query = query.Where(p =>
+                    (p.City != null && EF.Functions.Like(p.City, $"%{searchString}%")) ||
+                    (p.State.ToString() == searchString.ToUpper()) || // Exact match for state enum
+                    (p.StreetAddress != null && EF.Functions.Like(p.StreetAddress, $"%{searchString}%")) ||
+                    (p.ZipCode != null && EF.Functions.Like(p.ZipCode, $"%{searchString}%"))
+                );
+            }
+
+            if (bedrooms.HasValue)
+            {
+                query = query.Where(p => p.Bedrooms == bedrooms.Value);
+            }
+
+            if (bathrooms.HasValue)
+            {
+                query = query.Where(p => p.Bathrooms == bathrooms.Value);
+            }
+
+            if (minPrice.HasValue)
+            {
+                query = query.Where(p => p.WeekdayPricing >= minPrice || p.WeekendPricing >= minPrice);
+            }
+
+            if (maxPrice.HasValue)
+            {
+                query = query.Where(p => p.WeekdayPricing <= maxPrice || p.WeekendPricing <= maxPrice);
+            }
+
+            if (guestsAllowed.HasValue)
+            {
+                query = query.Where(p => p.GuestsAllowed == guestsAllowed.Value);
+            }
+
+            if (petsAllowed.HasValue)
+            {
+                query = query.Where(p => p.PetsAllowed == petsAllowed.Value);
+            }
+
+            if (freeParking.HasValue)
+            {
+                query = query.Where(p => p.FreeParking == freeParking.Value);
+            }
+
+            // Execute the query
+            var selectedProperties = await query.ToListAsync();
+
+            // Handle message for no results
+            if (!selectedProperties.Any())
+            {
+                ViewBag.NoResultsMessage = "No properties meet your search criteria.";
+            }
+
+            // Populate ViewBag with counts for display
+            ViewBag.AllProperties = _context.Properties.Count(); // Total number of properties
+            ViewBag.SelectedProperties = selectedProperties.Count; // Number of matched properties
+
+            // Sort results by City (or another property, if desired)
+            return View(selectedProperties.OrderBy(p => p.City).ToList());
         }
 
         // GET: Properties/Details/5
