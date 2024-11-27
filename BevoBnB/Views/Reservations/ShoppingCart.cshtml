@@ -13,6 +13,19 @@
 }
 else
 {
+    @if (TempData["AlertMessage"] != null)
+    {
+            <div class="alert alert-danger">
+            @TempData["AlertMessage"]
+            </div>
+    }
+    @if (TempData["SuccessMessage"] != null)
+    {
+            <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+            </div>
+    }
+
     <!-- Shopping Cart Content -->
     <div class="row g-3">
         <!-- Table Section -->
@@ -21,6 +34,7 @@ else
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
+                            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().ReservationID)</th>
                             <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CheckIn)</th>
                             <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CheckOut)</th>
                             <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Property.City)</th>
@@ -37,6 +51,7 @@ else
                         @foreach (var item in Model)
                         {
                             <tr>
+                                <td>@Html.DisplayFor(modelItem => item.ReservationID)</td>
                                 <td>@Html.DisplayFor(modelItem => item.CheckIn)</td>
                                 <td>@Html.DisplayFor(modelItem => item.CheckOut)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Property.City)</td>
