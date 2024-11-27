@@ -10,6 +10,7 @@ using BevoBnB.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using BevoBnB.Utilities;
+//using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BevoBnB.Controllers
 {
@@ -93,15 +94,17 @@ namespace BevoBnB.Controllers
             return View(reservation);
         }
 
+        // NOTE: the admin needs to access reservation creation from Reservation/Details, so it passes the property id
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> SelectCustomerForRegistration(string? selectedCustomer, int? propertyID)
         {
-
+            // no id was passed on, so we cannot make a reservation
             if (propertyID == null)
             {
                 return View("Error", new string[] { "The user did not specify an ID. Try again!" });
             }
 
+            // no user was selected, return them to the page with the same information
             if (string.IsNullOrEmpty(selectedCustomer))
             {
                 ViewBag.UserNames = await GetAllCustomerUserNamesSelectList();
@@ -113,22 +116,40 @@ namespace BevoBnB.Controllers
             return RedirectToAction("Create", new { selectedCustomer, propertyID });
         }
 
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> SelectCustomerShoppingCart(string? selectedCustomer)
+        {
+            if (string.IsNullOrEmpty(selectedCustomer))
+            {
+                // If no customer is selected, return to the selection view
+                ViewBag.UserNames = await GetAllCustomerUserNamesSelectList();
+                return View("SelectCustomerShoppingCart");
+            }
+
+            // Redirect to ShoppingCart with the selected customer's ID
+            return RedirectToAction("ShoppingCart", new { customerId = selectedCustomer });
+        }
+
+
         [Authorize(Roles = "Customer, Admin")]
         public IActionResult Create(int? propertyID, string? selectedCustomer)
         {
+            // no id was passed on, so we cannot make a reservation
             if (propertyID == null)
             {
                 return View("Error", new string[] { "The user did not specify an ID. Try again!" });
             }
 
-            // Find the property in the database
+            // find the property we're trying to make a reservation for
             Property dbProperty = _context.Properties.Find(propertyID);
 
+            // if the desired property was not found, the we cannnot make the reservation
             if (dbProperty == null)
             {
                 return View("Error", new string[] { "There is no property with that ID. Try again!" });
             }
 
+            // if the property is still not approved return them to 
             if (dbProperty.PropertyStatus == PropertyStatus.Unapproved)
             {
                 return View("Error", new String[] { "You cannot create a reservation for a property that has not been approved for reservations. Try again later!" });
@@ -281,22 +302,36 @@ namespace BevoBnB.Controllers
         }
 
 
-
-        [Authorize(Roles = "Customer")]
-        public async Task<IActionResult> ShoppingCart()
+        [Authorize(Roles = "Customer, Admin")]
+        public async Task<IActionResult> ShoppingCart(string? customerId = null)
         {
             List<Reservation> reservations = new List<Reservation>();
+            AppUser user;
 
-            // Get the logged-in customer
-            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
-
-            if (user == null)
+            if (!string.IsNullOrEmpty(customerId) && User.IsInRole("Admin"))
             {
-                ViewBag.EmptyCart = "Unable to identify your account. Please log in again.";
-                return View(reservations);
+                // Admin scenario: Fetch reservations for the selected customer
+                user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == customerId);
+
+                if (user == null)
+                {
+                    ViewBag.EmptyCart = "The selected customer does not exist.";
+                    return View(reservations);
+                }
+            }
+            else
+            {
+                // Customer scenario: Fetch reservations for the logged-in user
+                user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+                if (user == null)
+                {
+                    ViewBag.EmptyCart = "Unable to identify your account. Please log in again.";
+                    return View(reservations);
+                }
             }
 
-            // Fetch pending reservations for the logged-in customer
+            // Fetch pending reservations for the specified customer
             reservations = await _context.Reservations
                 .Include(r => r.Property)
                 .Where(r => r.User.Id == user.Id && r.ReservationStatus == ReservationStatus.Pending)
@@ -304,7 +339,7 @@ namespace BevoBnB.Controllers
 
             if (!reservations.Any())
             {
-                ViewBag.EmptyCart = "There are no pending reservations in your shopping cart.";
+                ViewBag.EmptyCart = "There are no pending reservations in the shopping cart.";
             }
 
             // Calculate totals for display
@@ -317,7 +352,6 @@ namespace BevoBnB.Controllers
 
             return View(reservations);
         }
-
 
         public async Task<IActionResult> CheckOut()
         {
