@@ -32,80 +32,151 @@ namespace BevoBnB.Controllers
         [AllowAnonymous]
         public IActionResult Register()
         {
+            // Check if the user is authenticated
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Host") || User.IsInRole("Customer"))
+                {
+                    return View("Error", new string[] { "You are not authorized to access this page." });
+                }
+            }
+
+            // Allow access for anonymous users or admins
             return View();
         }
 
-        // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<ActionResult> Register(RegisterViewModel rvm)
         {
-            //if registration data is valid, create a new user on the database
-            if (ModelState.IsValid == false)
+            // Validate the model state
+            if (!ModelState.IsValid)
             {
-                //this is the sad path - something went wrong, 
-                //return the user to the register page to try again
                 return View(rvm);
             }
 
-            if (Is18OrOlder(rvm.DOB) == false)
+            // Initialize error messages list
+            ViewBag.ErrorMessages = new List<string>();
+
+            // Admin-specific logic
+            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
             {
-                // they were not 18 years or older when they tried to sign up
-                return View("Error", new string[] { "You must be 18 years or older to register!" });
-            }
-
-            //this code maps the RegisterViewModel to the AppUser domain model
-            AppUser newUser = new AppUser
-            {
-                UserName = rvm.Email,
-                Email = rvm.Email,
-                PhoneNumber = rvm.PhoneNumber,
-
-                //TODO: Add the rest of the custom user fields here
-                //FirstName is included as an example
-                FirstName = rvm.FirstName,
-                LastName = rvm.LastName,
-                LineAddress = rvm.LineAddress,
-                DOB = rvm.DOB
-
-            };
-
-            //create AddUserModel
-            AddUserModel aum = new AddUserModel()
-            {
-                User = newUser,
-                Password = rvm.Password,
-
-                //TODO: You will need to change this value if you want to 
-                //add the user to a different role - just specify the role name.
-                RoleName = "Customer"
-            };
-
-            //This code uses the AddUser utility to create a new user with the specified password
-            IdentityResult result = await Utilities.AddUser.AddUserWithRoleAsync(aum, _userManager, _context);
-
-            if (result.Succeeded) //everything is okay
-            {
-                //NOTE: This code logs the user into the account that they just created
-                //You may or may not want to log a user in directly after they register - check
-                //the business rules!
-                Microsoft.AspNetCore.Identity.SignInResult result2 = await _signInManager.PasswordSignInAsync(rvm.Email, rvm.Password, false, lockoutOnFailure: false);
-
-                //Send the user to the home page
-                return RedirectToAction("Index", "Home");
-            }
-            else  //the add user operation didn't work, and we need to show an error message
-            {
-                foreach (IdentityError error in result.Errors)
+                // Admin must be 18 years or older
+                if (!Is18OrOlder(rvm.DOB))
                 {
-                    ModelState.AddModelError("", error.Description);
+                    return View("Error", new String[] { "You need to be 18 years or older to register an account." });
                 }
 
-                //send user back to page with errors
-                return View(rvm);
+                // Admins can only create admin accounts
+                if (!AdminEmailFormat(rvm.Email))
+                {
+                    ViewBag.ErrorMessages.Add("All admin emails need to end with @bevobnb.com.");
+                    return View(rvm);
+                }
+
+                // Check if the email already exists
+                if (EmailAlreadyExists(rvm.Email))
+                {
+                    ViewBag.ErrorMessages.Add("The provided email is already in use.");
+                    return View(rvm);
+                }
+
+                AppUser newAdmin = new AppUser
+                {
+                    UserName = rvm.Email,
+                    Email = rvm.Email,
+                    PhoneNumber = rvm.PhoneNumber,
+                    FirstName = rvm.FirstName,
+                    LastName = rvm.LastName,
+                    LineAddress = rvm.LineAddress,
+                    DOB = rvm.DOB
+                };
+
+                AddUserModel adminAum = new AddUserModel
+                {
+                    User = newAdmin,
+                    Password = rvm.Password,
+                    RoleName = "Admin"
+                };
+
+                IdentityResult adminResult = await Utilities.AddUser.AddUserWithRoleAsync(adminAum, _userManager, _context);
+
+                if (adminResult.Succeeded)
+                {
+                    // Admin stays logged in, no redirection to login
+                    return RedirectToAction("Profiles", "Admin");
+                }
+                else
+                {
+                    foreach (var error in adminResult.Errors)
+                    {
+                        ViewBag.ErrorMessages.Add(error.Description);
+                    }
+                    return View(rvm);
+                }
+            }
+
+            // Anonymous user-specific logic
+            else
+            {
+                // Check if the user is 18 or older
+                if (!Is18OrOlder(rvm.DOB))
+                {
+                    return View("Error", new String[] { "You need to be 18 years or older to register an account." });
+                }
+
+                // Check if the email already exists
+                if (EmailAlreadyExists(rvm.Email))
+                {
+                    ViewBag.ErrorMessages.Add("The provided email is already in use.");
+                    return View(rvm);
+                }
+
+                // Determine role based on checkbox
+                string roleName = rvm.IsHostAccount ? "Host" : "Customer";
+
+                AppUser newUser = new AppUser
+                {
+                    UserName = rvm.Email,
+                    Email = rvm.Email,
+                    PhoneNumber = rvm.PhoneNumber,
+                    FirstName = rvm.FirstName,
+                    LastName = rvm.LastName,
+                    LineAddress = rvm.LineAddress,
+                    DOB = rvm.DOB
+                };
+
+                AddUserModel aum = new AddUserModel
+                {
+                    User = newUser,
+                    Password = rvm.Password,
+                    RoleName = roleName
+                };
+
+                IdentityResult result = await Utilities.AddUser.AddUserWithRoleAsync(aum, _userManager, _context);
+
+                if (result.Succeeded)
+                {
+                    // Automatically log in the user after successful registration
+                    await _signInManager.PasswordSignInAsync(rvm.Email, rvm.Password, isPersistent: false, lockoutOnFailure: false);
+
+                    // Redirect to the home page
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ViewBag.ErrorMessages.Add(error.Description);
+                    }
+                    return View(rvm);
+                }
             }
         }
+
+
+
 
         // GET: /Account/Login
         [AllowAnonymous]
@@ -254,5 +325,30 @@ namespace BevoBnB.Controllers
 
             return is18;
         }
+
+        private bool AdminEmailFormat(string email)
+        {
+            // Check if the email is valid (not null or empty)
+            if (string.IsNullOrEmpty(email))
+            {
+                return false;
+            }
+
+            // Check if the email ends with "@bevobnb.com"
+            if (email.ToLower().EndsWith("@bevobnb.com"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool EmailAlreadyExists(string email)
+        {
+            string normalizedEmail = email.ToLower();
+
+            return _context.Users.Any(u => u.Email.ToLower() == normalizedEmail);
+        }
+
     }
 }

@@ -68,20 +68,20 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    User Management
-                                </a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-controller="RoleAdmin" asp-action="Index">User Roles</a>
-                                    <a class="dropdown-item" asp-controller="RoleAdmin" asp-action="Register">Create Admin</a>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     Categories
                                 </a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" asp-controller="Categories" asp-action="Index">View Categories</a>
                                     <a class="dropdown-item" asp-controller="Categories" asp-action="Create">Create Category</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    User Management
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-controller="RoleAdmin" asp-action="Index">User Roles</a>
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="Register">Create Admin</a>
                                 </div>
                             </li>
                         }

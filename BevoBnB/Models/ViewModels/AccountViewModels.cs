@@ -72,6 +72,8 @@ namespace BevoBnB.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public bool IsHostAccount { get; set; }
     }
 
     //NOTE: This is the view model used to allow the user to 
