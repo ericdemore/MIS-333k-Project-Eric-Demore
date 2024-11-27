@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BevoBnB.DAL;
 using BevoBnB.Models;
+using BevoBnB.ViewModels;
 
 namespace BevoBnB.Controllers
 {
@@ -21,32 +22,64 @@ namespace BevoBnB.Controllers
 
         // GET: Properties
         // Updated Index method for handling guests and range filtering
-        public async Task<IActionResult> Index(string searchString, int? bedrooms, int? bathrooms, decimal? minPrice, decimal? maxPrice, int? guestsAllowed, bool? petsAllowed, bool? freeParking)
+        public async Task<IActionResult> Index(
+     string? searchString,
+     string? city,
+     string? state,
+     int? categoryId,
+     int? bedrooms,
+     int? bathrooms,
+     decimal? minPrice,
+     decimal? maxPrice,
+     int? guestsAllowed,
+     bool? petsAllowed,
+     bool? freeParking)
         {
             // Base query to retrieve all properties
             var query = _context.Properties.AsQueryable();
 
-            // Apply SQL-compatible filters
+            // General Search
             if (!string.IsNullOrEmpty(searchString))
             {
                 query = query.Where(p =>
                     (p.City != null && EF.Functions.Like(p.City, $"%{searchString}%")) ||
-                    (p.State.ToString() == searchString.ToUpper()) || // Exact match for state enum
+                    (p.State.ToString() == searchString.ToUpper()) ||
                     (p.StreetAddress != null && EF.Functions.Like(p.StreetAddress, $"%{searchString}%")) ||
                     (p.ZipCode != null && EF.Functions.Like(p.ZipCode, $"%{searchString}%"))
                 );
             }
 
+            // City Filter
+            if (!string.IsNullOrEmpty(city))
+            {
+                query = query.Where(p => p.City != null && EF.Functions.Like(p.City, $"%{city}%"));
+            }
+
+            // State Filter
+            if (!string.IsNullOrEmpty(state) && state != "All States")
+            {
+                query = query.Where(p => p.State.ToString() == state.ToUpper());
+            }
+
+            // Category Filter
+            if (categoryId.HasValue)
+            {
+                query = query.Where(p => p.Category.CategoryID == categoryId.Value);
+            }
+
+            // Bedrooms Filter
             if (bedrooms.HasValue)
             {
-                query = query.Where(p => p.Bedrooms == bedrooms.Value);
+                query = query.Where(p => p.Bedrooms >= bedrooms.Value);
             }
 
+            // Bathrooms Filter
             if (bathrooms.HasValue)
             {
-                query = query.Where(p => p.Bathrooms == bathrooms.Value);
+                query = query.Where(p => p.Bathrooms >= bathrooms.Value);
             }
 
+            // Price Range Filters
             if (minPrice.HasValue)
             {
                 query = query.Where(p => p.WeekdayPricing >= minPrice || p.WeekendPricing >= minPrice);
@@ -57,16 +90,19 @@ namespace BevoBnB.Controllers
                 query = query.Where(p => p.WeekdayPricing <= maxPrice || p.WeekendPricing <= maxPrice);
             }
 
+            // Guests Allowed Filter
             if (guestsAllowed.HasValue)
             {
-                query = query.Where(p => p.GuestsAllowed == guestsAllowed.Value);
+                query = query.Where(p => p.GuestsAllowed >= guestsAllowed.Value);
             }
 
+            // Pets Allowed Filter
             if (petsAllowed.HasValue)
             {
                 query = query.Where(p => p.PetsAllowed == petsAllowed.Value);
             }
 
+            // Free Parking Filter
             if (freeParking.HasValue)
             {
                 query = query.Where(p => p.FreeParking == freeParking.Value);
@@ -88,6 +124,7 @@ namespace BevoBnB.Controllers
             // Sort results by City (or another property, if desired)
             return View(selectedProperties.OrderBy(p => p.City).ToList());
         }
+
 
         // GET: Properties/Details/5
         //TODO: this needs to return error views.not status 404 not found. 
@@ -114,6 +151,52 @@ namespace BevoBnB.Controllers
             return View(property);
         }
 
+        // GET: Properties/DetailedSearch
+        public IActionResult DetailedSearch()
+        {
+            var categories = _context.Categories.Select(c => new SelectListItem
+            {
+                Value = c.CategoryID.ToString(),
+                Text = c.CategoryName
+            }).ToList();
+
+            var states = Enum.GetValues(typeof(States)).Cast<States>().Select(s => new SelectListItem
+            {
+                Value = s.ToString(),
+                Text = s.ToString()
+            }).ToList();
+
+            // Debugging
+            Console.WriteLine($"Categories Count: {categories.Count}"); // Ensure categories are being loaded
+            Console.WriteLine($"States Count: {states.Count}"); // Ensure states enum is being loaded
+
+            var viewModel = new PropertySearchViewModel
+            {
+                Categories = categories,
+                States = states
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult DisplaySearchResults(PropertySearchViewModel searchModel)
+        {
+            // Redirect to Index with search criteria
+            return RedirectToAction("Index", new
+            {
+                city = searchModel.City,
+                state = searchModel.State,
+                categoryId = searchModel.CategoryId,
+                bedrooms = searchModel.Bedrooms,
+                bathrooms = searchModel.Bathrooms,
+                minPrice = searchModel.MinPrice,
+                maxPrice = searchModel.MaxPrice,
+                guestsAllowed = searchModel.GuestsAllowed,
+                petsAllowed = searchModel.PetsAllowed,
+                freeParking = searchModel.FreeParking
+            });
+        }
 
         // GET: Properties/Create
         public IActionResult Create()
@@ -154,8 +237,6 @@ namespace BevoBnB.Controllers
         }
 
         // POST: Properties/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("PropertyID,PropertyNumber,StreetAddress,City,State,ZipCode,Bedrooms,Bathrooms,GuestsAllowed,PetsAllowed,FreeParking,WeekdayPricing,WeekendPricing,CleaningFee,DiscountRate,MinNightsforDiscount,UnavailableDates,PropertyStatus")] Property @property)
