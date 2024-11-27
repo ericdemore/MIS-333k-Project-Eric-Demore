@@ -97,15 +97,18 @@ namespace BevoBnB.Models
         [Display(Name = "Current Property Status")]
         public PropertyStatus PropertyStatus { get; set; }
 
+        // Added Property
+        [Display(Name = "Category")]
+        [ForeignKey("Category")]
+        public int CategoryId { get; set; } // Foreign key to reference Category
 
-        // navigational properties
+        // Navigational properties
         public AppUser User { get; set; }
         public Category Category { get; set; }
         public List<Review> Reviews { get; set; }
         public List<Reservation> Reservations { get; set; }
 
-
-        // constructor for null references/prevent them
+        // Constructor for null references/prevent them
         public Property()
         {
             if (Reviews == null)
