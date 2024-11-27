@@ -307,6 +307,9 @@ namespace BevoBnB.Controllers
             return RedirectToAction("Details", new { id = reservation.ReservationID });
         }
 
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> ShoppingCart(string? customerId = null)
         {
             List<Reservation> reservations = new List<Reservation>();
@@ -357,6 +360,8 @@ namespace BevoBnB.Controllers
             return View(reservations);
         }
 
+
+        [Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> CheckOut(string? customerId = null)
         {
             List<Reservation> pendingReservations;
@@ -437,23 +442,29 @@ namespace BevoBnB.Controllers
                 return RedirectToAction(nameof(ShoppingCart), new { customerId });
             }
 
-            // Assign confirmation numbers and mark reservations as valid
+            // Generate a single confirmation number for the entire transaction
+            int transactionConfirmationNumber = GenerateNextConfirmationNumber.GetNextConfirmationNumber(_context);
+
+            // Assign the confirmation number and mark reservations as valid
             foreach (var reservation in pendingReservations)
             {
                 reservation.ReservationStatus = ReservationStatus.Valid;
-                reservation.ConfirmationNumber = GenerateNextConfirmationNumber.GetNextConfirmationNumber(_context);
+                reservation.ConfirmationNumber = transactionConfirmationNumber; // Use the same confirmation number
             }
 
             // Save changes to the database
             await _context.SaveChangesAsync();
 
-            // Redirect to success
-            return View("Success", new String[] { "The transaction went through. Enjoy your stay!" });
+            // Prepare the success message with the confirmation number as a string
+            string successMessage = $"The transaction went through. Enjoy your stay! Confirmation Number: {transactionConfirmationNumber}";
+
+            // Redirect to success view with the success message
+            return View("Success", new[] { successMessage });
         }
 
 
-        // GET: Reservations/Edit/5
-        [Authorize(Roles = "Customer, Host")]
+            // GET: Reservations/Edit/5
+            [Authorize(Roles = "Customer, Host")]
         public IActionResult Edit(int? id)
         {
             // Check if ID is null
@@ -700,6 +711,64 @@ namespace BevoBnB.Controllers
             return RedirectToAction(nameof(ShoppingCart));
         }
 
+        [Authorize]
+        public async Task<IActionResult> TransactionHistory()
+        {
+            // Get the current user
+            var user = await _userManager.GetUserAsync(User);
+
+            // Check the user's role
+            var userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+
+            IQueryable<Reservation> reservationsQuery = _context.Reservations
+                .Include(r => r.Property) // Include property details
+                .Include(r => r.User);    // Include user details
+
+            // Filter based on role
+            if (userRole == "Customer")
+            {
+                // Customer: Only their reservations
+                reservationsQuery = reservationsQuery.Where(r => r.User.Id == user.Id);
+            }
+            else if (userRole == "Host")
+            {
+                // Host: Reservations for properties they own
+                reservationsQuery = reservationsQuery.Where(r => r.Property.User.Id == user.Id);
+            }
+            else if (userRole == "Admin")
+            {
+                // Admin: Can see all reservations (no filtering needed)
+            }
+            else
+            {
+                // Unauthorized role
+                return View("Error", new string[] { "You are not authorized to view this page." });
+            }
+
+            // Fetch the filtered reservations into memory
+            var reservations = await reservationsQuery.Where(r => r.ConfirmationNumber != null).ToListAsync();
+
+            // Group the reservations by confirmation number
+            var groupedReservations = reservations
+                .GroupBy(r => r.ConfirmationNumber)
+                .Select(group => new TransactionHistoryViewModel
+                {
+                    ConfirmationNumber = group.Key.ToString(), // Convert ConfirmationNumber explicitly to string
+                    TotalAmount = group.Sum(r =>
+                        r.WeekdayTotals +
+                        r.WeekendTotals +
+                        (r.CleaningFee = r.ReservationStatus == ReservationStatus.Cancelled ? 0 : r.CleaningFee) +
+                        r.SalesTax + // Add calculated sales tax
+                        r.DiscountAmount // DiscountAmount is already negative
+                    ),
+                    Reservations = group.ToList() // List of grouped reservations
+                })
+                .OrderByDescending(group => group.ConfirmationNumber) // Order by ConfirmationNumber descending
+                .ToList();
+
+            return View(groupedReservations);
+        }
+
         private bool ReservationExists(int id)
         {
             return _context.Reservations.Any(e => e.ReservationID == id);
@@ -774,71 +843,8 @@ namespace BevoBnB.Controllers
             return false;
         }
 
-        [Authorize]
-        public async Task<IActionResult> TransactionHistory()
-        {
-            // Get the current user
-            var user = await _userManager.GetUserAsync(User);
-
-            // Check the user's role
-            var userRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
-
-            IQueryable<Reservation> reservationsQuery = _context.Reservations
-                .Include(r => r.Property) // Include property details
-                .Include(r => r.User);    // Include user details
-
-            // Filter based on role
-            if (userRole == "Customer")
-            {
-                // Customer: Only their reservations
-                reservationsQuery = reservationsQuery.Where(r => r.User.Id == user.Id);
-            }
-            else if (userRole == "Host")
-            {
-                // Host: Reservations for properties they own
-                reservationsQuery = reservationsQuery.Where(r => r.Property.User.Id == user.Id);
-            }
-            else if (userRole == "Admin")
-            {
-                // Admin: Can see all reservations (no filtering needed)
-            }
-            else
-            {
-                // Unauthorized role
-                return View("Error", new string[] { "You are not authorized to view this page." });
-            }
-
-            // Fetch the filtered reservations into memory
-            var reservations = await reservationsQuery.Where(r => r.ConfirmationNumber != null).ToListAsync();
-
-            // Group the reservations by confirmation number
-            var groupedReservations = reservations
-                .GroupBy(r => r.ConfirmationNumber)
-                .Select(group => new TransactionHistoryViewModel
-                {
-                    ConfirmationNumber = group.Key.ToString(), // Convert ConfirmationNumber explicitly to string
-                    TotalAmount = group.Sum(r =>
-                        r.WeekdayTotals +
-                        r.WeekendTotals +
-                        (r.CleaningFee = r.ReservationStatus == ReservationStatus.Cancelled ? 0 : r.CleaningFee) +
-                        r.SalesTax + // Add calculated sales tax
-                        r.DiscountAmount // DiscountAmount is already negative
-                    ),
-                    Reservations = group.ToList() // List of grouped reservations
-                })
-                .OrderByDescending(group => group.ConfirmationNumber) // Order by ConfirmationNumber descending
-                .ToList();
-
-            return View(groupedReservations);
-        }
-
-
-
-
-
-
-
         // Checks if the reservation falls on any unavailable dates for the property
+        /*
         private bool IsReservationOnUnavailableDates(Reservation reservation)
         {
             // Ensure the property exists and has unavailable dates
@@ -860,6 +866,30 @@ namespace BevoBnB.Controllers
             // No conflicts found
             return false;
         }
+        */
+
+        // Checks if the reservation falls on any unavailable dates for the property
+        private bool IsReservationOnUnavailableDates(Reservation reservation)
+        {
+            // Ensure the property exists and has unavailable dates
+            if (reservation.Property == null || reservation.Property.UnavailableDates == null || !reservation.Property.UnavailableDates.Any())
+            {
+                return false;
+            }
+
+            // Check if any unavailable date falls within the reservation period
+            foreach (var unavailableDate in reservation.Property.UnavailableDates)
+            {
+                // Check if the unavailable date falls on or within the reservation period
+                if (unavailableDate >= reservation.CheckIn && unavailableDate <= reservation.CheckOut)
+                {
+                    return true; // Conflict found
+                }
+            }
+
+            return false; // No conflicts
+        }
+
 
         public async Task<SelectList> GetAllCustomerUserNamesSelectList()
         {
@@ -870,7 +900,7 @@ namespace BevoBnB.Controllers
             foreach (AppUser dbUser in _context.Users)
             {
                 //if the user is a customer, add them to the list of customers
-                if (await _userManager.IsInRoleAsync(dbUser, "Customer") == true)//user is a customer
+                if (await _userManager.IsInRoleAsync(dbUser, "Customer") == true)
                 {
                     allCustomers.Add(dbUser);
                 }
@@ -891,7 +921,7 @@ namespace BevoBnB.Controllers
             // See if the user is a customer
             foreach (AppUser dbUser in _context.Users)
             {
-                if (await _userManager.IsInRoleAsync(dbUser, "Customer")) // Check if the user is a customer
+                if (await _userManager.IsInRoleAsync(dbUser, "Customer"))
                 {
                     allCustomers.Add(dbUser);
                 }
@@ -900,8 +930,8 @@ namespace BevoBnB.Controllers
             // Create a new select list with the customer IDs and emails
             SelectList sl = new SelectList(
                 allCustomers.OrderBy(c => c.Email),
-                nameof(AppUser.Id), // Use Id as the value field
-                nameof(AppUser.Email) // Use Email as the display field
+                nameof(AppUser.Id),
+                nameof(AppUser.Email)
             );
 
             return sl;
