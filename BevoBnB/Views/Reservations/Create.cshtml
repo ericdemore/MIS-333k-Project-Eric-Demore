@@ -1,68 +1,76 @@
 ﻿@model BevoBnB.Models.Reservation
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Reservation";
 }
 
-<h1>Create Reservation</h1>
-
-<h4>Reservation</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        @if (ViewBag.ErrorMessages != null && ((List<string>)ViewBag.ErrorMessages).Any())
-        {
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach (var error in (List<string>)ViewBag.ErrorMessages)
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0 text-center">Create a New Reservation</h4>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.ErrorMessages != null && ((List<string>)ViewBag.ErrorMessages).Any())
                     {
-                        <li>@error</li>
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach (var error in (List<string>)ViewBag.ErrorMessages)
+                                {
+                                    <li>@error</li>
+                                }
+                            </ul>
+                        </div>
                     }
-                </ul>
+
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <!-- Hidden Fields for Admin and Property Data -->
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            @Html.HiddenFor(model => model.User.UserName)
+                        }
+                        @Html.HiddenFor(model => model.Property.PropertyID)
+                        <input type="hidden" asp-for="ReservationStatus" value="Pending" />
+                        @Html.HiddenFor(model => model.Property.WeekdayPricing)
+                        @Html.HiddenFor(model => model.Property.WeekendPricing)
+                        @Html.HiddenFor(model => model.Property.CleaningFee)
+                        @Html.HiddenFor(model => model.Property.DiscountRate)
+
+                        <!-- Form Fields -->
+                        <div class="form-group mb-3">
+                            <label asp-for="CheckIn" class="form-label font-weight-bold">Check-In Date</label>
+                            <input asp-for="CheckIn" class="form-control" type="date" />
+                            <span asp-validation-for="CheckIn" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="CheckOut" class="form-label font-weight-bold">Check-Out Date</label>
+                            <input asp-for="CheckOut" class="form-control" type="date" />
+                            <span asp-validation-for="CheckOut" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="NumOfGuests" class="form-label font-weight-bold">Number of Guests</label>
+                            <input asp-for="NumOfGuests" class="form-control" />
+                            <span asp-validation-for="NumOfGuests" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <i class="bi bi-plus-circle"></i> Create Reservation
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <a asp-action="Index" class="btn btn-link">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
             </div>
-        }
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-            {
-                @Html.HiddenFor(model => model.User.UserName)
-            }
-
-            @Html.HiddenFor(model => model.Property.PropertyID)
-            <input type="hidden" asp-for="ReservationStatus" value="Pending" />
-
-            <!--Allowable User Inputs-->
-            <div class="form-group">
-                <label asp-for="CheckIn" class="control-label"></label>
-                <input asp-for="CheckIn" class="form-control" type="date" />
-                <span asp-validation-for="CheckIn" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="CheckOut" class="control-label"></label>
-                <input asp-for="CheckOut" class="form-control" type="date" />
-                <span asp-validation-for="CheckOut" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="NumOfGuests" class="control-label"></label>
-                <input asp-for="NumOfGuests" class="form-control" />
-                <span asp-validation-for="NumOfGuests" class="text-danger"></span>
-            </div>
-
-            <!-- Property-related hidden fields -->
-            @Html.HiddenFor(model => model.Property.WeekdayPricing)
-            @Html.HiddenFor(model => model.Property.WeekendPricing)
-            @Html.HiddenFor(model => model.Property.CleaningFee)
-            @Html.HiddenFor(model => model.Property.DiscountRate)
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>

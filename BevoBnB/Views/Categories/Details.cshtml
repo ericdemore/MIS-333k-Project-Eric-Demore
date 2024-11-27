@@ -1,24 +1,60 @@
 ﻿@model BevoBnB.Models.Category
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Category Details";
 }
 
-<h1>Details</h1>
+<h1 class="my-4">Category Details</h1>
 
-<div>
-    <h4>Category</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CategoryName)
-        </dd>
-    </dl>
+<div class="card mb-4">
+    <div class="card-header">
+        <h4>@Model.CategoryName</h4>
+    </div>
+    <div class="card-body">
+        <p class="mb-0">
+            Below is the list of all approved properties under the <strong>@Model.CategoryName</strong> category.
+        </p>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.CategoryID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+@if (ViewBag.Properties != null && ((List<BevoBnB.Models.Property>)ViewBag.Properties).Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Location</th>
+                    <th>Host</th>
+                    <th>Weekday Price</th>
+                    <th>Weekend Price</th>
+                    <th>Guests Allowed</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var property in (List<BevoBnB.Models.Property>)ViewBag.Properties)
+                {
+                    <tr>
+                        <td>@property.City, @property.State</td>
+                        <td>@property.User.FirstName @property.User.LastName (@property.User.UserName)</td>
+                        <td>@property.WeekdayPricing.ToString("C")</td>
+                        <td>@property.WeekendPricing.ToString("C")</td>
+                        <td>@property.GuestsAllowed</td>
+                        <td>
+                            <a asp-action="Details" asp-controller="Properties" asp-route-id="@property.PropertyID" class="btn btn-sm btn-primary">View Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p class="text-muted">There are no approved properties under this category.</p>
+}
+
+<div class="mt-4">
+    <a asp-action="Edit" asp-route-id="@Model?.CategoryID" class="btn btn-warning">Edit Category</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>

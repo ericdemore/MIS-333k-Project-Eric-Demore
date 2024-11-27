@@ -4,33 +4,40 @@
     ViewData["Title"] = "Select a Customer";
 }
 
-<h1>Select the Customer for the Reservation</h1>
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0 text-center">Select a Customer for the Reservation</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="SelectCustomerForRegistration">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="SelectCustomerForRegistration">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <!-- Hidden field for PropertyID -->
+                        <input type="hidden" name="propertyID" value="@ViewBag.PropertyID" />
 
-            <!-- Hidden field for PropertyID -->
-            <input type="hidden" name="propertyID" value="@ViewBag.PropertyID" />
+                        <!-- Dropdown for selecting a customer -->
+                        <div class="form-group mb-3">
+                            <label for="SelectedCustomer" class="form-label font-weight-bold">Select Customer:</label>
+                            @Html.DropDownList("SelectedCustomer", (SelectList)@ViewBag.UserNames, new { @class = "form-select", id = "SelectedCustomer" })
+                        </div>
 
-            <!-- Dropdown for selecting a customer -->
-            <div class="form-group">
-                <label class="control-label">All Customers:</label>
-                @Html.DropDownList("SelectedCustomer", (SelectList)@ViewBag.UserNames, new { @class = "form-control" })
+                        <!-- Submit button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-person-check"></i> Select Customer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <a asp-action="Index" class="btn btn-link">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
             </div>
-            <br />
-
-            <!-- Submit button -->
-            <div class="form-group">
-                <input type="submit" value="Select Customer" class="btn btn-primary" />
-            </div>
-        </form>
-        <br/>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>

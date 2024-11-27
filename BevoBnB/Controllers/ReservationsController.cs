@@ -80,13 +80,11 @@ namespace BevoBnB.Controllers
             }
 
             var reservation = await _context.Reservations
+                .Include(r => r.Property)
+                .Include(r => r.User)
                 .FirstOrDefaultAsync(m => m.ReservationID == id);
 
-            AppUser customer;
-
-            customer = _userManager.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
-
-            ViewBag.Customer = customer.FirstName + " " + customer.LastName;
+            ViewBag.Customer = reservation.User.FirstName + " " + reservation.User.LastName;   
 
             if (reservation == null)
             {
@@ -455,7 +453,7 @@ namespace BevoBnB.Controllers
 
 
         // GET: Reservations/Edit/5
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer, Host")]
         public IActionResult Edit(int? id)
         {
             // Check if ID is null
@@ -476,8 +474,12 @@ namespace BevoBnB.Controllers
                 return View("Error", new string[] { "This reservation was not found in the database!" });
             }
 
-            // Reservation does not belong to the logged-in user (if customer)
+            // Ensure the user is authorized to edit this reservation
             if (User.IsInRole("Customer") && reservation.User.UserName != User.Identity.Name)
+            {
+                return View("Error", new string[] { "You are not authorized to edit this reservation!" });
+            }
+            else if (User.IsInRole("Host") && reservation.Property.User.UserName != User.Identity.Name)
             {
                 return View("Error", new string[] { "You are not authorized to edit this reservation!" });
             }
@@ -493,11 +495,9 @@ namespace BevoBnB.Controllers
         }
 
         // POST: Reservations/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer, Host")]
         public async Task<IActionResult> Edit(int id, [Bind("ReservationID,CheckIn,CheckOut,NumOfGuests,ReservationStatus")] Reservation reservation)
         {
             if (id != reservation.ReservationID)
@@ -521,12 +521,22 @@ namespace BevoBnB.Controllers
             {
                 return View("Error", new string[] { "You are not authorized to edit this reservation." });
             }
+            else if (User.IsInRole("Host") && dbReservation.Property.User.UserName != User.Identity.Name)
+            {
+                return View("Error", new string[] { "You are not authorized to edit this reservation!" });
+            }
 
-            // Handle cancellation for valid reservations
+            // Handle cancellation for valid reservations by the host or customer
             if (dbReservation.ReservationStatus == ReservationStatus.Valid && reservation.ReservationStatus == ReservationStatus.Cancelled)
             {
-                // Validate cancellation eligibility
-                if (dbReservation.CheckIn <= DateTime.Now.AddDays(1))
+                // Hosts can only cancel reservations more than one day before the check-in date
+                if (User.IsInRole("Host") && dbReservation.CheckIn <= DateTime.Now.AddDays(1))
+                {
+                    return View("Error", new string[] { "Hosts can only cancel reservations more than one day before the check-in date." });
+                }
+
+                // Customers can cancel if the reservation hasn't started
+                if (User.IsInRole("Customer") && dbReservation.CheckIn <= DateTime.Now.AddDays(1))
                 {
                     return View("Error", new string[] { "This reservation cannot be canceled within one day of the check-in date or after the check-in date has passed." });
                 }
@@ -548,7 +558,7 @@ namespace BevoBnB.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            // Handle updates for pending reservations
+            // Handle updates for pending reservations (retain existing functionality for customers)
             if (dbReservation.ReservationStatus == ReservationStatus.Pending)
             {
                 List<string> errorMessages = new List<string>();

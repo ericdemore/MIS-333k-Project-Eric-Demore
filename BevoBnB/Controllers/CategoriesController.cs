@@ -32,15 +32,24 @@ namespace BevoBnB.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error", new String[] { "No category was provided. Try again!" });
             }
 
             var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.CategoryID == id);
+
             if (category == null)
             {
-                return NotFound();
+                return View("Error", new String[] { "The category could not be found." });
             }
+
+            var properties = _context.Properties
+                .Include(p => p.Category)
+                .Include(p => p.User) // Include the host (User)
+                .Where(p => p.Category.CategoryID == id && p.PropertyStatus == PropertyStatus.Approved) // Only approved properties
+                .ToList();
+
+            ViewBag.Properties = properties;
 
             return View(category);
         }
