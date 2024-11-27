@@ -219,29 +219,76 @@ namespace BevoBnB.Controllers
             });
         }
 
-        // GET: Properties/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+        //// GET: Properties/Create
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        // POST: Properties/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PropertyID,PropertyNumber,StreetAddress,City,State,ZipCode,Bedrooms,Bathrooms,GuestsAllowed,PetsAllowed,FreeParking,WeekdayPricing,WeekendPricing,CleaningFee,DiscountRate,MinNightsforDiscount,UnavailableDates,PropertyStatus")] Property @property)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(@property);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(@property);
-        }
+        //// POST: Properties/Create
+        //// To protect from overposting attacks, enable the specific properties you want to bind to.
+        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("PropertyID,PropertyNumber,StreetAddress,City,State,ZipCode,Bedrooms,Bathrooms,GuestsAllowed,PetsAllowed,FreeParking,WeekdayPricing,WeekendPricing,CleaningFee,DiscountRate,MinNightsforDiscount,UnavailableDates,PropertyStatus")] Property @property)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(@property);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(@property);
+        //}
 
         // GET: Properties/Edit/5
+
+        // POST: Properties/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("StreetAddress,City,State,ZipCode,Bedrooms,Bathrooms,GuestsAllowed,PetsAllowed,FreeParking,WeekdayPricing,WeekendPricing,CleaningFee,DiscountRate,MinNightsforDiscount")] Property property)
+        {
+            // Restrict access to hosts
+            if (!User.IsInRole("Host"))
+            {
+                ViewBag.ErrorMessage = "Only hosts are authorized to create properties.";
+                return View("Error"); // Redirect to an error view
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Automatically generate a unique property number
+                property.PropertyNumber = GeneratePropertyNumber();
+
+                // Automatically set the default property status to Unapproved
+                property.PropertyStatus = PropertyStatus.Unapproved; // Use the enum value
+
+                // Add the property to the database
+                _context.Add(property);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(property);
+        }
+
+        // Helper method to generate a unique property number
+        private int GeneratePropertyNumber()
+        {
+            // Generate a random property number
+            Random random = new Random();
+            int propertyNumber;
+
+            // Ensure the property number is unique
+            do
+            {
+                propertyNumber = random.Next(1000, 9999); // Generate a number between 1000 and 9999
+            } while (_context.Properties.Any(p => p.PropertyNumber == propertyNumber));
+
+            return propertyNumber;
+        }
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)

@@ -24,7 +24,6 @@
     </div>
 </form>
 
-
 <!-- Results Count -->
 @if (ViewBag.SelectedProperties != null && ViewBag.AllProperties != null)
 {
@@ -40,9 +39,13 @@
     </p>
 }
 
-<p>
-    <a asp-action="Create" class="btn btn-success">Create New</a>
-</p>
+<!-- Conditional "Create New" Button -->
+@if (User.Identity.IsAuthenticated && User.IsInRole("Host"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-success">Create New</a>
+    </p>
+}
 
 <!-- Properties Table -->
 <table class="table">
@@ -78,9 +81,15 @@
                     <td>@item.WeekdayPricing.ToString("C")</td>
                     <td>@item.WeekendPricing.ToString("C")</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.PropertyID">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.PropertyID">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.PropertyID">Delete</a>
+                        <!-- Conditional Edit/Delete Links -->
+                        @if (User.Identity.IsAuthenticated && (User.IsInRole("Host") || User.IsInRole("Admin")))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.PropertyID">Edit</a>
+                    <a asp-action = "Delete" asp-route-id = "@item.PropertyID" > Delete </a>
+                       }
+
+                        <!-- Details Link (Visible to Everyone) -->
+                        <a asp-action="Details" asp-route-id="@item.PropertyID">Details</a>
                     </td>
                 </tr>
             }
