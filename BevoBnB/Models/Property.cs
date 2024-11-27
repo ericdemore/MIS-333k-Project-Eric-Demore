@@ -12,7 +12,7 @@ namespace BevoBnB.Models
         CA, GA, IA, MD, MO, NJ, OH, SC, VT, WY,
         DC
     }
-    public enum PropertyStatus { Approved, Unapproved }
+    public enum PropertyStatus { Approved, Unapproved, Inactive }
 
     public class Property
     {
