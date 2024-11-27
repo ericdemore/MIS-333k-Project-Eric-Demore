@@ -24,10 +24,11 @@ namespace BevoBnB.ViewModels
         public decimal? MinPrice { get; set; } 
 
         [Range(0, double.MaxValue, ErrorMessage = "Price must be a positive value.")]
-        public decimal? MaxPrice { get; set; } 
+        public decimal? MaxPrice { get; set; }
 
-        public bool PetsAllowed { get; set; } = false; // Default to false
-        public bool FreeParking { get; set; } = false; // Default to false
+        public bool PetsAllowed { get; set; }  // Default to false
+        public bool FreeParking { get; set; }  // Default to false
+
 
         public int? CategoryId { get; set; } 
 

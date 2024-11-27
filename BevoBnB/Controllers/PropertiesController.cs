@@ -96,17 +96,20 @@ namespace BevoBnB.Controllers
                 query = query.Where(p => p.GuestsAllowed >= guestsAllowed.Value);
             }
 
+
             // Pets Allowed Filter
             if (petsAllowed.HasValue)
             {
-                query = query.Where(p => p.PetsAllowed == petsAllowed.Value);
+                query = query.Where(p => p.PetsAllowed == true);
             }
 
             // Free Parking Filter
             if (freeParking.HasValue)
             {
-                query = query.Where(p => p.FreeParking == freeParking.Value);
+                query = query.Where(p => p.FreeParking == true);
             }
+
+
 
             // Execute the query
             var selectedProperties = await query.ToListAsync();
