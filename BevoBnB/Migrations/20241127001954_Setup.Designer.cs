@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BevoBnB.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241125073354_MakeTaxNull")]
-    partial class MakeTaxNull
+    [Migration("20241127001954_Setup")]
+    partial class Setup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

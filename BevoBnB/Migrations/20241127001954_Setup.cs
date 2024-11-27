@@ -230,10 +230,10 @@ namespace BevoBnB.Migrations
                     NumOfGuests = table.Column<int>(type: "int", nullable: false),
                     WeekdayPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     WeekendPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CleaningFee = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    CleaningFee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DiscountRate = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    Tax = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ConfirmationNumber = table.Column<int>(type: "int", nullable: false),
+                    Tax = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ConfirmationNumber = table.Column<int>(type: "int", nullable: true),
                     ReservationStatus = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     PropertyID = table.Column<int>(type: "int", nullable: false)
