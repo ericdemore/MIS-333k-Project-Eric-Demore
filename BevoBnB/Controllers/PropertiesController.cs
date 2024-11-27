@@ -130,7 +130,7 @@ namespace BevoBnB.Controllers
 
 
         // GET: Properties/Details/5
-        //TODO: this needs to return error views.not status 404 not found. 
+        //TODO: this needs to return error views, not status 404 not found. 
         //TODO: it should also return the avg rating, this should be an easy linq query that returns the avg for the property
         //TODO: the view should not be viewable by the customer if it's unapproved
         //TODO: only a host and admin may see the view if it's unapproved
@@ -138,21 +138,39 @@ namespace BevoBnB.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                // Display a generic error message for missing property ID
+                ViewBag.ErrorMessage = "Property ID was not provided.";
+                return View("Error");
             }
 
-            // Include the related Reviews when fetching the Property
+            // Fetch property details, including reviews
             var property = await _context.Properties
                 .Include(p => p.Reviews) // Include the Reviews navigation property
                 .FirstOrDefaultAsync(m => m.PropertyID == id);
 
             if (property == null)
             {
-                return NotFound();
+                // Display a user-friendly error if the property doesn't exist
+                ViewBag.ErrorMessage = $"Property with ID {id} was not found.";
+                return View("Error");
             }
 
+            // Restrict access to unapproved properties for customers
+            if (property.PropertyStatus != PropertyStatus.Approved && User.IsInRole("Customer"))
+            {
+                ViewBag.ErrorMessage = "You are not authorized to view this property.";
+                return View("Error");
+            }
+
+            // Calculate average rating for the property
+            ViewBag.AvgRating = property.Reviews != null && property.Reviews.Any()
+                ? property.Reviews.Average(r => r.Rating).ToString("0.0")
+                : "No Ratings Yet";
+
+            // Return the property details view
             return View(property);
         }
+
 
         // GET: Properties/DetailedSearch
         public IActionResult DetailedSearch()

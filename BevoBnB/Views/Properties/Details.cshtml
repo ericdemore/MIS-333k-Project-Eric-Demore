@@ -6,6 +6,38 @@
 
 <h1>Property Details</h1>
 
+ <!-- Display the Average Rating -->
+ <h3>
+     <!-- Display the numeric average rating -->
+     Average Rating: @if (ViewBag.AvgRating != null && ViewBag.AvgRating != "No Ratings Yet")
+     {
+         <span>@ViewBag.AvgRating</span>
+         <span>
+             <!-- Full stars based on the integer part of the average rating -->
+             @for (int i = 0; i < Math.Floor(Convert.ToDouble(ViewBag.AvgRating)); i++)
+             {
+                 <i class="fa fa-star text-primary"></i> <!-- Full star -->
+             }
+
+             <!-- Half star if fractional part >= 0.5 -->
+             @if (Convert.ToDouble(ViewBag.AvgRating) % 1 >= 0.5)
+             {
+                 <i class="fa fa-star-half-alt text-primary"></i> <!-- Half star -->
+             }
+
+             <!-- Empty stars for the remaining slots up to 5 -->
+             @for (int i = (int)Math.Ceiling(Convert.ToDouble(ViewBag.AvgRating)); i < 5; i++)
+             {
+                 <i class="fa fa-star-o text-muted"></i> <!-- Empty star -->
+             }
+         </span>
+     }
+     else
+     {
+         <span>No Ratings Yet</span>
+     }
+ </h3>
+
 <div>
     <h4>Property</h4>
     <hr />
@@ -119,76 +151,76 @@
 <h2>Reviews</h2>
 @if (Model.Reviews != null && Model.Reviews.Any())
 {
-    <!-- Sort reviews by Rating in descending order -->
+            <!-- Sort reviews by Rating in descending order -->
     var sortedReviews = Model.Reviews.OrderByDescending(r => r.Rating);
 
-    <table class="table" style="border-collapse: collapse; width: 100%;">
-        <thead>
-            <tr style="border-bottom: 2px solid black;">
-                <th style="border-right: 2px solid black;">Rating</th>
-                <th style="border-right: 2px solid black;">Customer Comment</th>
-                <th style="border-right: 2px solid black;">Host Comment</th>
-                <th>Details</th>
-            </tr>
-        </thead>
-        <tbody>
+            <table class="table" style="border-collapse: collapse; width: 100%;">
+                <thead>
+                    <tr style="border-bottom: 2px solid black;">
+                        <th style="border-right: 2px solid black;">Rating</th>
+                        <th style="border-right: 2px solid black;">Customer Comment</th>
+                        <th style="border-right: 2px solid black;">Host Comment</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
             @foreach (var review in sortedReviews)
             {
-                <tr>
-                    <!-- Rating column with bold text and right border -->
-                    <td style="font-weight: bold; border-right: 2px solid black; text-align: center;">
+                                <tr>
+                                    <!-- Rating column with bold text and right border -->
+                                    <td style="font-weight: bold; border-right: 2px solid black; text-align: center;">
                         @Html.DisplayFor(modelItem => review.Rating)
-                    </td>
-                    <!-- Customer Comment with conditional check and right border -->
-                    <td style="white-space: normal; word-wrap: break-word; border-right: 2px solid black; padding: 10px;">
+                                    </td>
+                                    <!-- Customer Comment with conditional check and right border -->
+                                    <td style="white-space: normal; word-wrap: break-word; border-right: 2px solid black; padding: 10px;">
                         @if (!string.IsNullOrEmpty(review.ReviewText))
                         {
                             @Html.DisplayFor(modelItem => review.ReviewText)
                         }
                         else
                         {
-                            <span style="font-style: italic; color: gray;">No customer comments available.</span>
+                                                    <span style="font-style: italic; color: gray;">No customer comments available.</span>
                         }
-                    </td>
-                    <!-- Host Comment with conditional check and right border -->
-                    <td style="white-space: normal; word-wrap: break-word; border-right: 2px solid black; padding: 10px;">
+                                    </td>
+                                    <!-- Host Comment with conditional check and right border -->
+                                    <td style="white-space: normal; word-wrap: break-word; border-right: 2px solid black; padding: 10px;">
                         @if (!string.IsNullOrEmpty(review.HostComments))
                         {
                             @Html.DisplayFor(modelItem => review.HostComments)
                         }
                         else
                         {
-                            <span style="font-style: italic; color: gray;">No host comments available.</span>
+                                                    <span style="font-style: italic; color: gray;">No host comments available.</span>
                         }
-                    </td>
-                    <!-- Details column -->
-                    <td style="text-align: center;">
-                        <a asp-action="Details" asp-controller="Reviews" asp-route-id="@review.ReviewID">View Details</a>
-                    </td>
-                </tr>
+                                    </td>
+                                    <!-- Details column -->
+                                    <td style="text-align: center;">
+                                        <a asp-action="Details" asp-controller="Reviews" asp-route-id="@review.ReviewID">View Details</a>
+                                    </td>
+                                </tr>
             }
-        </tbody>
-    </table>
+                </tbody>
+            </table>
 }
 else
 {
-    <p>No reviews available for this property.</p>
+            <p>No reviews available for this property.</p>
 }
 
 @if (User.Identity.IsAuthenticated)
 {
     if (User.IsInRole("Customer"))
     {
-        <div>
-            <a asp-action="Create" asp-controller="Reservations" asp-route-propertyID="@Model.PropertyID">Reserve Property</a>
-        </div>
+                        <div>
+                            <a asp-action="Create" asp-controller="Reservations" asp-route-propertyID="@Model.PropertyID">Reserve Property</a>
+                        </div>
     }
 
     if (User.IsInRole("Admin"))
     {
-        <div>
-            <a asp-action="SelectCustomerForRegistration" asp-controller="Reservations" asp-route-propertyID="@Model.PropertyID">Reserve Property</a>
-        </div>
+                        <div>
+                            <a asp-action="SelectCustomerForRegistration" asp-controller="Reservations" asp-route-propertyID="@Model.PropertyID">Reserve Property</a>
+                        </div>
     }
 }
 <div>
