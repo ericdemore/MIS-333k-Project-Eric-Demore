@@ -81,6 +81,11 @@ namespace BevoBnB.Models
     public class ChangePasswordViewModel
     {
         [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Current password")]
+        public string OldPassword { get; set; }
+
+        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
@@ -130,5 +135,36 @@ namespace BevoBnB.Models
 
         [Display(Name = "Last Name")]
         public String LastName { get; set; }
+    }
+
+    public class EditViewModel
+    {
+        public string Id { get; set; } // User ID
+
+        [Required(ErrorMessage = "First name is required.")]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Last name is required.")]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Date of birth is required.")]
+        [Display(Name = "Date of Birth")]
+        [DataType(DataType.Date)]
+        public DateTime DOB { get; set; }
+
+        [Required(ErrorMessage = "Address is required.")]
+        [Display(Name = "Address")]
+        public string LineAddress { get; set; }
+
+        [Display(Name = "Hire Status")]
+        public HireStatus? HireStatus { get; set; }
+
+        [Required(ErrorMessage = "Phone number is required.")]
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 }

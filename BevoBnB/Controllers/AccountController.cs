@@ -200,31 +200,40 @@ namespace BevoBnB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel lvm, string? returnUrl)
         {
-            //if user forgot to include user name or password,
-            //send them back to the login page to try again
-            if (ModelState.IsValid == false)
+            // If the model state is invalid, return to the login view with errors
+            if (!ModelState.IsValid)
             {
                 return View(lvm);
             }
 
-            //attempt to sign the user in using the SignInManager
-            Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(lvm.Email, lvm.Password, lvm.RememberMe, lockoutOnFailure: false);
+            // Check if the user is terminated before attempting login
+            if (IsEmployeeTerminated(lvm.Email))
+            {
+                // Add an error to the model state for feedback
+                ModelState.AddModelError("", "Your account is terminated and you cannot log in.");
+                return View(lvm);
+            }
 
-            //if the login worked, take the user to either the url
-            //they requested OR the homepage if there isn't a specific url
+            // Attempt to sign the user in using the SignInManager
+            Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(
+                lvm.Email,
+                lvm.Password,
+                lvm.RememberMe,
+                lockoutOnFailure: false
+            );
+
+            // If the login was successful, redirect to returnUrl or home
             if (result.Succeeded)
             {
-                //return ?? "/" means if returnUrl is null, substitute "/" (home)
                 return Redirect(returnUrl ?? "/");
             }
-            else //log in was not successful
+            else // Login attempt failed
             {
-                //add an error to the model to show invalid attempt
                 ModelState.AddModelError("", "Invalid login attempt.");
-                //send user back to login page to try again
                 return View(lvm);
             }
         }
+
 
         public IActionResult AccessDenied()
         {
@@ -232,18 +241,43 @@ namespace BevoBnB.Controllers
         }
 
         //GET: Account/Index
-        public IActionResult Index()
+        public IActionResult Index(string? id)
         {
             IndexViewModel ivm = new IndexViewModel();
+            AppUser user;
 
-            //get user info
-            String id = User.Identity.Name;
-            AppUser user = _context.Users.FirstOrDefault(u => u.UserName == id);
+            // Check if an ID is passed and retrieve the user by ID
+            if (string.IsNullOrEmpty(id) == false)
+            {
+                user = _context.Users.FirstOrDefault(u => u.Id == id);
 
-            //populate the view model
-            //(i.e. map the domain model to the view model)
+                if (user == null)
+                {
+                    return View("Error", new String[] { "The user was not found." });
+                }
+
+                // Security check: Ensure the logged-in user is viewing their own account or is an admin
+                // if the user is admin it will fail
+                if (User.IsInRole("Admin") == false && user.UserName != User.Identity.Name)
+                {
+                    return View("Error", new String[] { "You are not authorized to view this user's profile." });
+                }
+            }
+            else
+            {
+                // Default to logged-in user's profile
+                string currentUserName = User.Identity.Name;
+                user = _context.Users.FirstOrDefault(u => u.UserName == currentUserName);
+
+                if (user == null)
+                {
+                    return View("Error", new String[] { "Your account was not found." });
+                }
+            }
+
+            // Populate the view model
             ivm.Email = user.Email;
-            ivm.HasPassword = true;
+            ivm.HasPassword = true; // Assuming this is always true for now
             ivm.UserID = user.Id;
             ivm.UserName = user.UserName;
             ivm.Address = user.LineAddress;
@@ -251,17 +285,22 @@ namespace BevoBnB.Controllers
             ivm.LastName = user.LastName;
             ivm.PhoneNumber = user.PhoneNumber;
             ivm.DOB = user.DOB;
-            ivm.HireStatus = user.HireStatus == HireStatus.Employed ? "Employee" : "Terminated Employee";
 
+            if (user.HireStatus == null)
+            {
+                ViewBag.EmployeeStatus = false;
+                ivm.HireStatus = null;
+            }
+            else
+            {
+                ViewBag.EmployeeStatus = true;
+                ivm.HireStatus = user.HireStatus == HireStatus.Employed ? "Employee" : "Terminated Employee";
+            }
 
-
-            //send data to the view
+            // Send data to the view
             return View(ivm);
         }
 
-
-
-        //Logic for change password
         // GET: /Account/ChangePassword
         public ActionResult ChangePassword()
         {
@@ -310,6 +349,7 @@ namespace BevoBnB.Controllers
             }
         }
 
+
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -322,9 +362,121 @@ namespace BevoBnB.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult Edit()
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Edit(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return View("Error", new String[] { "You did not provide an ID." });
+            }
+
+            // Find the user by ID
+            AppUser user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user == null)
+            {
+                return View("Error", new String[] { "The user was not found." });
+            }
+
+            // Security check: Ensure the logged-in user is editing their own account unless they are an admin
+            if (!User.IsInRole("Admin") && user.UserName != User.Identity.Name)
+            {
+                return View("Error", new String[] { "You are not authorized to access this user's information." });
+            }
+
+            // Check if the user is in the Admin role
+            var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
+            // Populate the model
+            var model = new EditViewModel
+            {
+                Id = user.Id, // Include the user's ID
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                DOB = user.DOB,
+                LineAddress = user.LineAddress,
+                HireStatus = isAdmin ? user.HireStatus : null,
+                PhoneNumber = user.PhoneNumber,
+                IsAdmin = isAdmin
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EditViewModel model)
+        {
+            // Find the user by ID
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == model.Id);
+
+            if (user == null)
+            {
+                return View("Error", new String[] { "The user was not found." });
+            }
+
+            // Security check: Ensure the logged-in user is editing their own account unless they are an admin
+            if (!User.IsInRole("Admin") && user.UserName != User.Identity.Name)
+            {
+                return View("Error", new String[] { "You are not authorized to edit this user's information." });
+            }
+
+            var errorMessages = new List<string>();
+
+            // Ensure the user is at least 18 years old
+            if (!Is18OrOlder(model.DOB))
+            {
+                errorMessages.Add("The user must be at least 18 years old.");
+            }
+
+            if (errorMessages.Any())
+            {
+                ViewBag.ErrorMessages = errorMessages;
+                return View(model);
+            }
+
+            // Update the user's details
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.DOB = model.DOB;
+            user.LineAddress = model.LineAddress;
+            user.PhoneNumber = model.PhoneNumber;
+
+            // Update HireStatus if the user is an Admin
+            if (await _userManager.IsInRoleAsync(user, "Admin") && model.HireStatus.HasValue)
+            {
+                user.HireStatus = model.HireStatus;
+            }
+
+            try
+            {
+                // Update the user in the database
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return View("Success", new string[] { "Profile information has successfully been updated!"}); // Redirect after success
+                }
+                else
+                {
+                    // Add identity errors to the errorMessages list
+                    foreach (var error in result.Errors)
+                    {
+                        errorMessages.Add(error.Description);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                errorMessages.Add($"An error occurred: {ex.Message}");
+            }
+
+            ViewBag.ErrorMessages = errorMessages;
+
+            return View(model);
         }
 
 
@@ -375,6 +527,14 @@ namespace BevoBnB.Controllers
             string normalizedEmail = email.ToLower();
 
             return _context.Users.Any(u => u.Email.ToLower() == normalizedEmail);
+        }
+
+        private bool IsEmployeeTerminated(string email)
+        {
+            var user = _userManager.Users.FirstOrDefault(u => u.Email == email);
+
+            // Return true if the user exists and their HireStatus is Terminated
+            return user != null && user.HireStatus == HireStatus.Terminated;
         }
 
     }

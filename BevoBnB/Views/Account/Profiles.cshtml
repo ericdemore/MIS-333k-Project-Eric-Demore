@@ -10,10 +10,9 @@
     <thead>
         <tr>
             <th>User ID</th>
+            <th>Email</th>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Date of Birth</th>
-            <th>Address</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -22,14 +21,57 @@
         {
             <tr>
                 <td>@user.Id</td>
+                <td>@user.Email</td>
                 <td>@user.FirstName</td>
                 <td>@user.LastName</td>
-                <td>@user.DOB.ToString("MM/dd/yyyy")</td>
-                <td>@user.LineAddress</td>
                 <td>
-                    <a asp-action="Index" asp-route-id="@user.Id">Details</a>
+                    <!-- Offcanvas Trigger -->
+                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasUserInfo-@user.Id" aria-controls="offcanvasUserInfo-@user.Id">
+                        View Information
+                    </button>
                 </td>
             </tr>
+
+            <!-- Offcanvas for Each User -->
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasUserInfo-@user.Id" aria-labelledby="offcanvasUserInfoLabel-@user.Id">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasUserInfoLabel-@user.Id">User Information</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">User ID:</dt>
+                        <dd class="col-sm-8">@user.Id</dd>
+
+                        <dt class="col-sm-4">User Name:</dt>
+                        <dd class="col-sm-8">@user.UserName</dd>
+
+                        <dt class="col-sm-4">Email:</dt>
+                        <dd class="col-sm-8">@user.Email</dd>
+
+                        <dt class="col-sm-4">First Name:</dt>
+                        <dd class="col-sm-8">@user.FirstName</dd>
+
+                        <dt class="col-sm-4">Last Name:</dt>
+                        <dd class="col-sm-8">@user.LastName</dd>
+
+                        <dt class="col-sm-4">Phone Number:</dt>
+                        <dd class="col-sm-8">@user.PhoneNumber</dd>
+
+                        <dt class="col-sm-4">Date of Birth:</dt>
+                        <dd class="col-sm-8">@user.DOB.ToString("MM/dd/yyyy")</dd>
+
+                        <dt class="col-sm-4">Address:</dt>
+                        <dd class="col-sm-8">@user.LineAddress</dd>
+
+                        <div class="btn-group">
+                            <a class="btn btn-primary" asp-action="Index" asp-route-id="@user.Id">View Profile</a>
+                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@user.Id">Edit Profile</a>
+                        </div>
+                        
+                    </dl>
+                </div>
+            </div>
         }
     </tbody>
 </table>
