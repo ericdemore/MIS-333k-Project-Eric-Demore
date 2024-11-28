@@ -1,11 +1,38 @@
 ﻿@model IEnumerable<BevoBnB.Models.Property>
 
 @{
-    ViewData["Title"] = "Properties";
+    ViewData["Title"] = "Index";
 }
 
 <h1>Properties</h1>
 
+<!-- General Search Form -->
+<form asp-action="Index" method="get" class="mb-4">
+    <div class="row g-3">
+        <!-- General Search -->
+        <div class="col-md-4">
+            <label for="searchString" class="form-label">General Search</label>
+            <input type="text" name="searchString" id="searchString" class="form-control" placeholder="City, state, etc." value="@ViewData["SearchString"]" />
+        </div>
+
+        <!-- Buttons (Placed in a new row below the input) -->
+        <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-primary me-2">Search</button>
+            <a asp-action="Index" class="btn btn-danger me-2">Clear Search</a>
+            <a asp-action="DetailedSearch" class="btn btn-secondary">Detailed Search</a>
+        </div>
+    </div>
+</form>
+
+<!-- Results Count -->
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <p>@ViewBag.Message</p>
+}
+
+
+
+<!-- "Create New" Button -->
 @if (User.Identity.IsAuthenticated && User.IsInRole("Host"))
 {
     <p>
@@ -13,14 +40,11 @@
     </p>
 }
 
-<!-- Showing X out of Y Properties -->
-<p>
-    Showing @Model.Count() out of @ViewBag.TotalItems Properties
-</p>
-
+<!-- Properties Table -->
 <table class="table">
     <thead>
         <tr>
+            <!-- Columns visible to Admin -->
             @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
             {
                 <th>@Html.DisplayNameFor(model => model.PropertyNumber)</th>
@@ -30,34 +54,52 @@
             <th>@Html.DisplayNameFor(model => model.State)</th>
             <th>@Html.DisplayNameFor(model => model.Bedrooms)</th>
             <th>@Html.DisplayNameFor(model => model.Bathrooms)</th>
-            <th>@Html.DisplayNameFor(model => model.Category.CategoryName)</th>
-            <th>@Html.DisplayNameFor(model => model.AverageRating)</th>
+            <th>@Html.DisplayNameFor(model => model.GuestsAllowed)</th>
+            <th>@Html.DisplayNameFor(model => model.PetsAllowed)</th>
+            <th>@Html.DisplayNameFor(model => model.FreeParking)</th>
+            <th>@Html.DisplayNameFor(model => model.WeekdayPricing)</th>
+            <th>@Html.DisplayNameFor(model => model.WeekendPricing)</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <!-- Columns visible to Admin -->
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <td>@Html.DisplayFor(modelItem => item.PropertyNumber)</td>
+                        <td>@Html.DisplayFor(modelItem => item.User.Email)</td>
+                    }
+                    <td>@Html.DisplayFor(modelItem => item.City)</td>
+                    <td>@Html.DisplayFor(modelItem => item.State)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Bedrooms)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Bathrooms)</td>
+                    <td>@Html.DisplayFor(modelItem => item.GuestsAllowed)</td>
+                    <td>@(item.PetsAllowed ? "Yes" : "No")</td>
+                    <td>@(item.FreeParking ? "Yes" : "No")</td>
+                    <td>@item.WeekdayPricing.ToString("C")</td>
+                    <td>@item.WeekendPricing.ToString("C")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.PropertyID">Details</a>
+
+                        <!-- Edit/Delete for Hosts and Admins -->
+                        @if (User.Identity.IsAuthenticated && (User.IsInRole("Host") || User.IsInRole("Admin")))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.PropertyID">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.PropertyID">Delete</a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                {
-                    <td>@Html.DisplayFor(modelItem => item.PropertyNumber)</td>
-                    <td>@Html.DisplayFor(modelItem => item.User.Email)</td>
-                }
-                <td>@Html.DisplayFor(modelItem => item.City)</td>
-                <td>@Html.DisplayFor(modelItem => item.State)</td>
-                <td>@Html.DisplayFor(modelItem => item.Bedrooms)</td>
-                <td>@Html.DisplayFor(modelItem => item.Bathrooms)</td>
-                <td>@Html.DisplayFor(modelItem => item.Category.CategoryName)</td>
-                <td>@item.AverageRating</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.PropertyID">Details</a>
-
-                    @if (User.Identity.IsAuthenticated && (User.IsInRole("Host") || User.IsInRole("Admin")))
-                    {
-                        <a asp-action="Edit" asp-route-id="@item.PropertyID">Edit</a>
-                    }
-                </td>
+                <td colspan="11">No properties match your search criteria.</td>
             </tr>
         }
     </tbody>
