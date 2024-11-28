@@ -7,7 +7,7 @@
 <h1>Detailed Search</h1>
 <hr />
 
-<form asp-action="Index" method="get">
+<form asp-action="DisplaySearchResults" method="post">
     <div class="row g-3">
         <!-- City -->
         <div class="col-md-4">
@@ -66,18 +66,18 @@
     <div class="row g-3 mt-3">
         <!-- Pets Allowed -->
         <div class="form-check">
-            <input type="hidden" name="PetsAllowed" value="false" />
+            <input type="hidden" name="PetsAllowed" value="false" /> <!-- Sends false if not checked -->
             <input asp-for="PetsAllowed" class="form-check-input" type="checkbox" value="true" />
             <label asp-for="PetsAllowed" class="form-check-label">Pets Allowed</label>
         </div>
 
         <!-- Free Parking -->
         <div class="form-check">
-            <input type="hidden" name="FreeParking" value="false" />
+            <input type="hidden" name="FreeParking" value="false" /> <!-- Sends false if not checked -->
             <input asp-for="FreeParking" class="form-check-input" type="checkbox" value="true" />
             <label asp-for="FreeParking" class="form-check-label">Free Parking</label>
         </div>
-
+    </div>
 
 
     <!-- Submit Button -->
