@@ -120,5 +120,24 @@ namespace BevoBnB.Models
                 Reservations = new List<Reservation>();
             }
         }
+
+        // read only properties (not in db Schema)
+        [Display(Name = "Average Rating")]
+        public decimal AverageRating
+        {
+            get { return CalculateAvgRating(); }
+        }
+
+        // methods
+
+        private decimal CalculateAvgRating()
+        {
+            if (Reviews == null || Reviews.Any() == false)
+            {
+                return 0;
+            }
+
+            return (int)Math.Round(Reviews.Average(p => p.Rating));
+        }
     }
 }

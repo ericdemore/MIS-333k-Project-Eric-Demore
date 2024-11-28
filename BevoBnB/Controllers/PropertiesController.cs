@@ -8,124 +8,120 @@ using Microsoft.EntityFrameworkCore;
 using BevoBnB.DAL;
 using BevoBnB.Models;
 using BevoBnB.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using System.Drawing.Printing;
 
 namespace BevoBnB.Controllers
 {
     public class PropertiesController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public PropertiesController(AppDbContext context)
+        public PropertiesController(AppDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Properties
-        // Updated Index method for handling guests and range filtering
-        public async Task<IActionResult> Index(
-     string? searchString,
-     string? city,
-     string? state,
-     int? categoryId,
-     int? bedrooms,
-     int? bathrooms,
-     decimal? minPrice,
-     decimal? maxPrice,
-     int? guestsAllowed,
-     bool? petsAllowed,
-     bool? freeParking)
+        public async Task<IActionResult> Index(int? page)
         {
-            // Base query to retrieve all properties
-            var query = _context.Properties.AsQueryable();
+            const int PAGE_SIZE = 20;
+            int pageNumber = page ?? 1;
 
-            // General Search
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                query = query.Where(p =>
-                    (p.City != null && EF.Functions.Like(p.City, $"%{searchString}%")) ||
-                    (p.State.ToString() == searchString.ToUpper()) ||
-                    (p.StreetAddress != null && EF.Functions.Like(p.StreetAddress, $"%{searchString}%")) ||
-                    (p.ZipCode != null && EF.Functions.Like(p.ZipCode, $"%{searchString}%"))
-                );
-            }
+            List<Property> activeProperties;
 
-            // City Filter
-            if (!string.IsNullOrEmpty(city))
-            {
-                query = query.Where(p => p.City != null && EF.Functions.Like(p.City, $"%{city}%"));
-            }
+            activeProperties = await _context.Properties
+                .Include(p => p.Category)
+                .Include(p => p.Reviews)
+                .Include(p => p.User)
+                .Where(p => p.PropertyStatus == PropertyStatus.Approved)
+                .OrderBy(p => p.City)
+                .ThenBy(p => p.State)
+                .ThenBy(p => p.PropertyID)
+                .ToListAsync();
 
-            // State Filter
-            if (!string.IsNullOrEmpty(state) && state != "All States")
-            {
-                query = query.Where(p => p.State.ToString() == state.ToUpper());
-            }
+            int totalItems = activeProperties.Count;
+            ViewBag.TotalItems = totalItems;
 
-            // Category Filter
-            if (categoryId.HasValue)
-            {
-                query = query.Where(p => p.Category.CategoryID == categoryId.Value);
-            }
+            List<Property> propertiesToDisplay;
 
-            // Bedrooms Filter
-            if (bedrooms.HasValue)
-            {
-                query = query.Where(p => p.Bedrooms >= bedrooms.Value);
-            }
+            propertiesToDisplay = activeProperties
+                .Skip((pageNumber - 1) * PAGE_SIZE)
+                .Take(PAGE_SIZE)
+                .ToList();
 
-            // Bathrooms Filter
-            if (bathrooms.HasValue)
-            {
-                query = query.Where(p => p.Bathrooms >= bathrooms.Value);
-            }
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / PAGE_SIZE);
+            ViewBag.CurrentPage = pageNumber;
 
-            // Price Range Filters
-            if (minPrice.HasValue)
-            {
-                query = query.Where(p => p.WeekdayPricing >= minPrice || p.WeekendPricing >= minPrice);
-            }
+            return View(propertiesToDisplay);
+        }
 
-            if (maxPrice.HasValue)
-            {
-                query = query.Where(p => p.WeekdayPricing <= maxPrice || p.WeekendPricing <= maxPrice);
-            }
+        public async Task<IActionResult> Unapproved(int? page)
+        {
+            const int PAGE_SIZE = 20;
+            int pageNumber = page ?? 1;
 
-            // Guests Allowed Filter
-            if (guestsAllowed.HasValue)
-            {
-                query = query.Where(p => p.GuestsAllowed >= guestsAllowed.Value);
-            }
+            List<Property> unapprovedProperties;
 
+            unapprovedProperties = await _context.Properties
+                .Include(p => p.Category)
+                .Include(p => p.Reviews)
+                .Include(p => p.User)
+                .Where(p => p.PropertyStatus == PropertyStatus.Unapproved)
+                .OrderBy(p => p.City)
+                .ThenBy(p => p.State)
+                .ThenBy(p => p.PropertyID)
+                .ToListAsync();
 
-            // Pets Allowed Filter
-            if (petsAllowed.HasValue)
-            {
-                query = query.Where(p => p.PetsAllowed == true);
-            }
+            int totalItems = unapprovedProperties.Count;
+            ViewBag.TotalItems = totalItems;
 
-            // Free Parking Filter
-            if (freeParking.HasValue)
-            {
-                query = query.Where(p => p.FreeParking == true);
-            }
+            List<Property> propertiesToDisplay;
 
+            propertiesToDisplay = unapprovedProperties
+                .Skip((pageNumber - 1) * PAGE_SIZE)
+                .Take(PAGE_SIZE)
+                .ToList();
 
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / PAGE_SIZE);
+            ViewBag.CurrentPage = pageNumber;
 
-            // Execute the query
-            var selectedProperties = await query.ToListAsync();
+            return View("Index", propertiesToDisplay);
+        }
 
-            // Handle message for no results
-            if (!selectedProperties.Any())
-            {
-                ViewBag.NoResultsMessage = "No properties meet your search criteria.";
-            }
+        public async Task<IActionResult> Inactive(int? page)
+        {
+            const int PAGE_SIZE = 20;
+            int pageNumber = page ?? 1;
 
-            // Populate ViewBag with counts for display
-            ViewBag.AllProperties = _context.Properties.Count(); // Total number of properties
-            ViewBag.SelectedProperties = selectedProperties.Count; // Number of matched properties
+            List<Property> inactiveProperties;
 
-            // Sort results by City (or another property, if desired)
-            return View(selectedProperties.OrderBy(p => p.City).ToList());
+            inactiveProperties = await _context.Properties
+                .Include(p => p.Category)
+                .Include(p => p.Reviews)
+                .Include(p => p.User)
+                .Where(p => p.PropertyStatus == PropertyStatus.Inactive)
+                .OrderBy(p => p.City)
+                .ThenBy(p => p.State)
+                .ThenBy(p => p.PropertyID)
+                .ToListAsync();
+
+            int totalItems = inactiveProperties.Count;
+            ViewBag.TotalItems = totalItems;
+
+            List<Property> propertiesToDisplay;
+
+            propertiesToDisplay = inactiveProperties
+                .Skip((pageNumber - 1) * PAGE_SIZE)
+                .Take(PAGE_SIZE)
+                .ToList();
+
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / PAGE_SIZE);
+            ViewBag.CurrentPage = pageNumber;
+
+            return View("Index", propertiesToDisplay);
         }
 
 

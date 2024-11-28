@@ -1,43 +1,10 @@
 ﻿@model IEnumerable<BevoBnB.Models.Property>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Properties";
 }
 
 <h1>Properties</h1>
-
-<!-- General Search Form -->
-<form asp-action="Index" method="get" class="mb-4">
-    <div class="row g-3">
-        <!-- General Search -->
-        <div class="col-md-4">
-            <label for="searchString" class="form-label">General Search</label>
-            <input type="text" name="searchString" id="searchString" class="form-control" placeholder="City, state, etc." value="@ViewData["SearchString"]" />
-        </div>
-
-        <!-- Buttons (Placed in a new row below the input) -->
-        <div class="col-12 mt-3">
-            <button type="submit" class="btn btn-primary me-2">Search</button>
-            <a asp-action="Index" class="btn btn-danger me-2">Clear Search</a>
-            <a asp-action="DetailedSearch" class="btn btn-secondary">Detailed Search</a>
-        </div>
-    </div>
-</form>
-
-<!-- Results Count -->
-@if (ViewBag.SelectedProperties != null && ViewBag.AllProperties != null)
-{
-    <p>
-        @if (ViewBag.SelectedProperties == ViewBag.AllProperties || ViewBag.SelectedProperties == 0)
-        {
-            <span>Showing @ViewBag.SelectedProperties of @ViewBag.AllProperties properties.</span>
-        }
-        else
-        {
-            <span>Showing @ViewBag.SelectedProperties of @ViewBag.SelectedProperties properties.</span>
-        }
-    </p>
-}
 
 <!-- Conditional "Create New" Button -->
 @if (User.Identity.IsAuthenticated && User.IsInRole("Host"))
@@ -51,54 +18,109 @@
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.PropertyNumber)</th>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <th>@Html.DisplayNameFor(model => model.PropertyNumber)</th>
+                <th>@Html.DisplayNameFor(model => model.User.Email)</th>
+            }
             <th>@Html.DisplayNameFor(model => model.City)</th>
             <th>@Html.DisplayNameFor(model => model.State)</th>
             <th>@Html.DisplayNameFor(model => model.Bedrooms)</th>
             <th>@Html.DisplayNameFor(model => model.Bathrooms)</th>
-            <th>@Html.DisplayNameFor(model => model.GuestsAllowed)</th>
-            <th>@Html.DisplayNameFor(model => model.PetsAllowed)</th>
-            <th>@Html.DisplayNameFor(model => model.FreeParking)</th>
-            <th>@Html.DisplayNameFor(model => model.WeekdayPricing)</th>
-            <th>@Html.DisplayNameFor(model => model.WeekendPricing)</th>
+            <th>@Html.DisplayNameFor(model => model.Category.CategoryName)</th>
+            <th>@Html.DisplayNameFor(model => model.AverageRating)</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @if (Model != null && Model.Any())
-        {
-            foreach (var item in Model)
-            {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.PropertyNumber)</td>
-                    <td>@Html.DisplayFor(modelItem => item.City)</td>
-                    <td>@Html.DisplayFor(modelItem => item.State)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Bedrooms)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Bathrooms)</td>
-                    <td>@Html.DisplayFor(modelItem => item.GuestsAllowed)</td>
-                    <td>@(item.PetsAllowed ? "Yes" : "No")</td>
-                    <td>@(item.FreeParking ? "Yes" : "No")</td>
-                    <td>@item.WeekdayPricing.ToString("C")</td>
-                    <td>@item.WeekendPricing.ToString("C")</td>
-                    <td>
-                        <!-- Conditional Edit/Delete Links -->
-                        @if (User.Identity.IsAuthenticated && (User.IsInRole("Host") || User.IsInRole("Admin")))
-                        {
-                            <a asp-action="Edit" asp-route-id="@item.PropertyID">Edit</a>
-                    <a asp-action = "Delete" asp-route-id = "@item.PropertyID" > Delete </a>
-                       }
-
-                        <!-- Details Link (Visible to Everyone) -->
-                        <a asp-action="Details" asp-route-id="@item.PropertyID">Details</a>
-                    </td>
-                </tr>
-            }
-        }
-        else
+        @foreach (var item in Model)
         {
             <tr>
-                <td colspan="11">No properties match your search criteria.</td>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <td>@Html.DisplayFor(modelItem => item.PropertyNumber)</td>
+                    <td>@Html.DisplayFor(modelItem => item.User.Email)</td>
+                }
+                <td>@Html.DisplayFor(modelItem => item.City)</td>
+                <td>@Html.DisplayFor(modelItem => item.State)</td>
+                <td>@Html.DisplayFor(modelItem => item.Bedrooms)</td>
+                <td>@Html.DisplayFor(modelItem => item.Bathrooms)</td>
+                <td>@Html.DisplayFor(modelItem => item.Category.CategoryName)</td>
+                <td>@item.AverageRating</td>
+                <td>
+                    <!-- Details Link (Visible to Everyone) -->
+                    <a asp-action="Details" asp-route-id="@item.PropertyID">Details</a>
+
+                    <!-- Conditional Edit Link -->
+                    @if (User.Identity.IsAuthenticated && (User.IsInRole("Host") || User.IsInRole("Admin")))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.PropertyID">Edit</a>
+                    }
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+<!-- Pagination Controls -->
+<div>
+    <ul class="pagination">
+        <!-- Previous Button -->
+        @if (ViewBag.CurrentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)">&laquo;</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#">&laquo;</a>
+            </li>
+        }
+
+        @* Calculate the range of pages to display *@
+        @{
+            int startPage = Math.Max(1, ViewBag.CurrentPage - 2);
+            int endPage = Math.Min(ViewBag.TotalPages, startPage + 4);
+
+            // Adjust startPage if we're near the last page
+            if (endPage - startPage < 4)
+            {
+                startPage = Math.Max(1, endPage - 4);
+            }
+        }
+
+        <!-- Page Numbers -->
+        @for (int i = startPage; i <= endPage; i++)
+        {
+            if (i == ViewBag.CurrentPage)
+            {
+                <li class="page-item active">
+                    <a class="page-link" href="#">@i</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                </li>
+            }
+        }
+
+        <!-- Next Button -->
+        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)">&raquo;</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#">&raquo;</a>
+            </li>
+        }
+    </ul>
+</div>
+

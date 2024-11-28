@@ -104,6 +104,12 @@ namespace BevoBnB.Controllers
             {
                 return View("Error", new String[] { "You cannot make a reservation for a property that is unapproved" });
             }
+
+            if (dbProperty.PropertyStatus == PropertyStatus.Inactive)
+            {
+                return View("Error", new String[] { "You cannot make a reservation for a property that is active." });
+            }
+
             // no id was passed on, so we cannot make a reservation
             if (propertyID == null)
             {
@@ -161,6 +167,12 @@ namespace BevoBnB.Controllers
                 return View("Error", new String[] { "You cannot create a reservation for a property that has not been approved for reservations. Try again later!" });
             }
 
+            // if the property is still not approved return them to 
+            if (dbProperty.PropertyStatus == PropertyStatus.Inactive)
+            {
+                return View("Error", new String[] { "You cannot create a reservation for a property that has been listed as inactive. Try again later!" });
+            }
+
             AppUser reservationUser;
 
             // Determine the user to associate with the reservation
@@ -168,14 +180,14 @@ namespace BevoBnB.Controllers
             {
                 if (string.IsNullOrEmpty(selectedCustomer))
                 {
-                    return View("Error", new string[] { "No customer was selected. Please select a customer first." });
+                    return View("Error", new String[] { "No customer was selected. Please select a customer first." });
                 }
 
                 // Admin is creating a reservation for a selected customer
                 reservationUser = _userManager.Users.FirstOrDefault(u => u.UserName == selectedCustomer);
                 if (reservationUser == null)
                 {
-                    return View("Error", new string[] { "The selected customer does not exist. Try again!" });
+                    return View("Error", new String[] { "The selected customer does not exist. Try again!" });
                 }
             }
             else
@@ -213,7 +225,7 @@ namespace BevoBnB.Controllers
             List<string> errorMessages = new List<string>();
 
             // SECURITY CHECK: Ensure property still exists and is approved
-            if (dbProperty == null || dbProperty.PropertyStatus == PropertyStatus.Unapproved)
+            if (dbProperty == null || dbProperty.PropertyStatus == PropertyStatus.Unapproved || dbProperty.PropertyStatus == PropertyStatus.Inactive)
             {
                 errorMessages.Add("The selected property is not available for reservations.");
             }
@@ -411,7 +423,7 @@ namespace BevoBnB.Controllers
                 var dbProperty = reservation.Property;
 
                 // Check if the property still exists and is approved
-                if (dbProperty == null || dbProperty.PropertyStatus == PropertyStatus.Unapproved)
+                if (dbProperty == null || dbProperty.PropertyStatus == PropertyStatus.Unapproved || dbProperty.PropertyStatus == PropertyStatus.Inactive)
                 {
                     errorMessages.Add($"The property for reservation ID {reservation.ReservationID} is not approved or no longer exists.");
                 }
