@@ -1,0 +1,32 @@
+﻿@model BevoBnB.ViewModels.ReportViewModel
+
+<h2>Admin Report Details</h2>
+
+<table class="table">
+    <tr>
+        <th>Total Revenue</th>
+        <td>@Model.TotalRevenue.ToString("C")</td>
+    </tr>
+    <tr>
+        <th>Total Commission</th>
+        <td>@Model.TotalCommission.ToString("C")</td>
+    </tr>
+    <tr>
+        <th>Total Reservations</th>
+        <td>@Model.TotalReservations</td>
+    </tr>
+    <tr>
+        <th>Average Commission Per Reservation</th>
+        <td>@Model.AverageCommissionPerReservation.ToString("C")</td>
+    </tr>
+    <tr>
+        <th>Total Properties</th>
+        <td>@Model.TotalProperties</td>
+    </tr>
+    <tr>
+        <th>Date Range</th>
+        <td>@Model.StartDate?.ToString("MM/dd/yyyy") - @Model.EndDate?.ToString("MM/dd/yyyy")</td>
+    </tr>
+</table>
+
+<a asp-action="Create" class="btn btn-secondary">Create New Report</a>
