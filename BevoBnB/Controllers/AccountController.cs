@@ -7,6 +7,7 @@ using BevoBnB.DAL;
 using BevoBnB.Models;
 using BevoBnB.Utilities;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace BevoBnB.Controllers
@@ -18,14 +19,16 @@ namespace BevoBnB.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly PasswordValidator<AppUser> _passwordValidator;
         private readonly AppDbContext _context;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(AppDbContext appDbContext, UserManager<AppUser> userManager, SignInManager<AppUser> signIn)
+        public AccountController(AppDbContext appDbContext, UserManager<AppUser> userManager, SignInManager<AppUser> signIn, RoleManager<IdentityRole> roleManager)
         {
             _context = appDbContext;
             _userManager = userManager;
             _signInManager = signIn;
             //user manager only has one password validator
             _passwordValidator = (PasswordValidator<AppUser>)userManager.PasswordValidators.FirstOrDefault();
+            _roleManager = roleManager;
         }
 
         // GET: /Account/Register
@@ -309,6 +312,17 @@ namespace BevoBnB.Controllers
 
             //send the user back to the home page
             return RedirectToAction("Index", "Home");
+        }
+
+
+        public async Task<IActionResult> Profiles()
+        {
+
+            // Retrieve all users from the UserManager
+            var allUsers = await _userManager.Users.ToListAsync();
+
+            // Pass the list of users to the view
+            return View(allUsers);
         }
 
         private bool Is18OrOlder(DateTime dob)

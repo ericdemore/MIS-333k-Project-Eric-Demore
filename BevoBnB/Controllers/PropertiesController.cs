@@ -27,7 +27,7 @@ namespace BevoBnB.Controllers
         // GET: Properties
         public async Task<IActionResult> Index(int? page)
         {
-            const int PAGE_SIZE = 20;
+            const int PAGE_SIZE = 50;
             int pageNumber = page ?? 1;
 
             List<Property> activeProperties;
@@ -123,6 +123,7 @@ namespace BevoBnB.Controllers
 
             return View("Index", propertiesToDisplay);
         }
+
 
 
         // GET: Properties/Details/5
