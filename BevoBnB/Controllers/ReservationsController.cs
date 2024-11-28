@@ -319,9 +319,6 @@ namespace BevoBnB.Controllers
             return RedirectToAction("Details", new { id = reservation.ReservationID });
         }
 
-
-        [HttpGet]
-        [Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> ShoppingCart(string? customerId = null)
         {
             List<Reservation> reservations = new List<Reservation>();
@@ -329,28 +326,27 @@ namespace BevoBnB.Controllers
 
             if (!string.IsNullOrEmpty(customerId) && User.IsInRole("Admin"))
             {
-                // Admin scenario: Fetch reservations for the selected customer
+                // Admin scenario: Fetch reservations for the specified customer
                 user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == customerId);
-
                 if (user == null)
                 {
                     ViewBag.EmptyCart = "The selected customer does not exist.";
                     return View(reservations);
                 }
+                ViewBag.CustomerId = customerId; // Set customerId for admin
             }
             else
             {
                 // Customer scenario: Fetch reservations for the logged-in user
                 user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
-
                 if (user == null)
                 {
                     ViewBag.EmptyCart = "Unable to identify your account. Please log in again.";
                     return View(reservations);
                 }
+                ViewBag.CustomerId = user.Id; // Set current user's ID for customer
             }
 
-            // Fetch pending reservations for the specified customer
             reservations = await _context.Reservations
                 .Include(r => r.Property)
                 .Where(r => r.User.Id == user.Id && r.ReservationStatus == ReservationStatus.Pending)
@@ -358,19 +354,23 @@ namespace BevoBnB.Controllers
 
             if (!reservations.Any())
             {
-                ViewBag.EmptyCart = "There are no pending reservations in the shopping cart.";
+                // Message for an empty cart
+                ViewBag.EmptyCart = "Your shopping cart is empty. Add some reservations to check out.";
             }
-
-            // Calculate totals for display
-            ViewBag.StayTotal = reservations.Sum(r => r.StayTotal);
-            ViewBag.CleaningFee = reservations.Sum(r => r.CleaningFee);
-            ViewBag.Subtotal = reservations.Sum(r => r.Subtotal);
-            ViewBag.SalesTax = reservations.Sum(r => r.SalesTax);
-            ViewBag.DiscountAmount = reservations.Sum(r => r.DiscountAmount);
-            ViewBag.Total = reservations.Sum(r => r.Total);
+            else
+            {
+                // Calculate totals for non-empty cart
+                ViewBag.StayTotal = reservations.Sum(r => r.StayTotal);
+                ViewBag.CleaningFee = reservations.Sum(r => r.CleaningFee);
+                ViewBag.Subtotal = reservations.Sum(r => r.Subtotal);
+                ViewBag.SalesTax = reservations.Sum(r => r.SalesTax);
+                ViewBag.DiscountAmount = reservations.Sum(r => r.DiscountAmount);
+                ViewBag.Total = reservations.Sum(r => r.Total);
+            }
 
             return View(reservations);
         }
+
 
 
         [Authorize(Roles = "Admin, Customer")]
@@ -379,11 +379,11 @@ namespace BevoBnB.Controllers
             List<Reservation> pendingReservations;
             AppUser user;
 
+            // Determine user based on role
             if (!string.IsNullOrEmpty(customerId) && User.IsInRole("Admin"))
             {
-                // Admin scenario: Fetch reservations for the selected customer
+                // Admin scenario: Fetch reservations for the specified customer
                 user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == customerId);
-
                 if (user == null)
                 {
                     TempData["AlertMessage"] = "The selected customer does not exist.";
@@ -394,7 +394,6 @@ namespace BevoBnB.Controllers
             {
                 // Customer scenario: Fetch reservations for the logged-in user
                 user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
-
                 if (user == null)
                 {
                     TempData["AlertMessage"] = "Unable to identify your account. Please log in again.";
@@ -402,81 +401,74 @@ namespace BevoBnB.Controllers
                 }
             }
 
-            // Fetch all pending reservations for the specified customer
+            // Fetch pending reservations for the user
             pendingReservations = await _context.Reservations
                 .Include(r => r.Property)
                 .Where(r => r.User.Id == user.Id && r.ReservationStatus == ReservationStatus.Pending)
                 .ToListAsync();
 
-            // Check if there are no pending reservations
             if (!pendingReservations.Any())
             {
                 TempData["AlertMessage"] = "The shopping cart is empty. Add reservations to proceed with checkout.";
                 return RedirectToAction(nameof(ShoppingCart), new { customerId });
             }
 
-            // Error message list
+            // Error validation
             List<string> errorMessages = new List<string>();
-
             foreach (var reservation in pendingReservations)
             {
                 var dbProperty = reservation.Property;
 
-                // Check if the property still exists and is approved
                 if (dbProperty == null || dbProperty.PropertyStatus == PropertyStatus.Unapproved || dbProperty.PropertyStatus == PropertyStatus.Inactive)
                 {
                     errorMessages.Add($"The property for reservation ID {reservation.ReservationID} is not approved or no longer exists.");
                 }
 
-                // Check-in and check-out dates must be in the future
                 if (reservation.CheckIn.Date <= DateTime.Now.Date || reservation.CheckOut.Date <= DateTime.Now.Date)
                 {
                     errorMessages.Add($"Reservation ID {reservation.ReservationID}: Both check-in and check-out dates must be in the future.");
                 }
 
-                // Check for reservation conflicts for the property itself
                 if (ReservationDateConflict(reservation))
                 {
                     errorMessages.Add($"Reservation ID {reservation.ReservationID}: The selected dates conflict with an existing reservation for this property.");
                 }
 
-                // Check if the reservation falls on unavailable dates
                 if (IsReservationOnUnavailableDates(reservation))
                 {
                     errorMessages.Add($"Reservation ID {reservation.ReservationID}: The selected dates include one or more unavailable days for this property.");
                 }
             }
 
-            // If there are any errors, redirect to ShoppingCart and display them
             if (errorMessages.Any())
             {
                 TempData["AlertMessage"] = string.Join("<br>", errorMessages);
                 return RedirectToAction(nameof(ShoppingCart), new { customerId });
             }
 
-            // Generate a single confirmation number for the entire transaction
+            // Generate a single confirmation number for the transaction
             int transactionConfirmationNumber = GenerateNextConfirmationNumber.GetNextConfirmationNumber(_context);
 
-            // Assign the confirmation number and mark reservations as valid
             foreach (var reservation in pendingReservations)
             {
                 reservation.ReservationStatus = ReservationStatus.Valid;
-                reservation.ConfirmationNumber = transactionConfirmationNumber; // Use the same confirmation number
+                reservation.ConfirmationNumber = transactionConfirmationNumber;
             }
 
-            // Save changes to the database
             await _context.SaveChangesAsync();
 
-            // Prepare the success message with the confirmation number as a string
-            string successMessage = $"The transaction went through. Enjoy your stay! Confirmation Number: {transactionConfirmationNumber}";
+            // Prepare success message
+            string successMessage = $"Transaction completed. Enjoy your stay! Confirmation Number: {transactionConfirmationNumber}";
 
-            // Redirect to success view with the success message
             return View("Success", new[] { successMessage });
         }
 
 
-            // GET: Reservations/Edit/5
-            [Authorize(Roles = "Customer, Host")]
+
+
+
+        // GET: Reservations/Edit/5
+        [Authorize(Roles = "Customer, Host")]
         public IActionResult Edit(int? id)
         {
             // Check if ID is null

@@ -13,10 +13,12 @@ namespace BevoBnB.Models
 
         [Display(Name = "Check-In Date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}")]
         public DateTime CheckIn { get; set; }
 
         [Display(Name = "Check-Out Date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}")]
         public DateTime CheckOut { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "The number of guests must be at least 1.")]

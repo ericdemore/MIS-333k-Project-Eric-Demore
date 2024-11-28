@@ -102,8 +102,38 @@ namespace BevoBnB.Models
     public class IndexViewModel
     {
         public bool HasPassword { get; set; }
+
+        [Display(Name = "User Name")]
         public String UserName { get; set; }
+
+        [Display(Name = "Email Address")]
         public String Email { get; set; }
+
+        [Display(Name = "User ID")]
         public String UserID { get; set; }
+
+        [Display(Name = "Street Address")]
+        public String Address { get; set; }
+
+        [Display(Name = "City")]
+        public String City { get; set; }
+
+        [Display(Name = "Phone Number")]
+        [DataType(DataType.PhoneNumber)]
+        public String PhoneNumber { get; set; }
+
+        [Display(Name = "Hire Status")]
+        public String? HireStatus { get; set; }
+
+        [Display(Name = "Date of Birth")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime DOB { get; set; }
+
+        [Display(Name = "First Name")]
+        public String FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public String LastName { get; set; }
     }
 }

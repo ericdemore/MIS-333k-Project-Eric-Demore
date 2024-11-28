@@ -25,11 +25,8 @@ namespace BevoBnB.Controllers
         }
 
         // GET: Properties
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index()
         {
-            const int PAGE_SIZE = 50;
-            int pageNumber = page ?? 1;
-
             List<Property> activeProperties;
 
             activeProperties = await _context.Properties
@@ -42,27 +39,13 @@ namespace BevoBnB.Controllers
                 .ThenBy(p => p.PropertyID)
                 .ToListAsync();
 
-            int totalItems = activeProperties.Count;
-            ViewBag.TotalItems = totalItems;
+            ViewBag.TotalItems = activeProperties.Count;
 
-            List<Property> propertiesToDisplay;
-
-            propertiesToDisplay = activeProperties
-                .Skip((pageNumber - 1) * PAGE_SIZE)
-                .Take(PAGE_SIZE)
-                .ToList();
-
-            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / PAGE_SIZE);
-            ViewBag.CurrentPage = pageNumber;
-
-            return View(propertiesToDisplay);
+            return View(activeProperties);
         }
 
-        public async Task<IActionResult> Unapproved(int? page)
+        public async Task<IActionResult> Unapproved()
         {
-            const int PAGE_SIZE = 20;
-            int pageNumber = page ?? 1;
-
             List<Property> unapprovedProperties;
 
             unapprovedProperties = await _context.Properties
@@ -75,27 +58,13 @@ namespace BevoBnB.Controllers
                 .ThenBy(p => p.PropertyID)
                 .ToListAsync();
 
-            int totalItems = unapprovedProperties.Count;
-            ViewBag.TotalItems = totalItems;
+            ViewBag.TotalItems = unapprovedProperties.Count;
 
-            List<Property> propertiesToDisplay;
-
-            propertiesToDisplay = unapprovedProperties
-                .Skip((pageNumber - 1) * PAGE_SIZE)
-                .Take(PAGE_SIZE)
-                .ToList();
-
-            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / PAGE_SIZE);
-            ViewBag.CurrentPage = pageNumber;
-
-            return View("Index", propertiesToDisplay);
+            return View("Index", unapprovedProperties);
         }
 
         public async Task<IActionResult> Inactive(int? page)
         {
-            const int PAGE_SIZE = 20;
-            int pageNumber = page ?? 1;
-
             List<Property> inactiveProperties;
 
             inactiveProperties = await _context.Properties
@@ -108,20 +77,9 @@ namespace BevoBnB.Controllers
                 .ThenBy(p => p.PropertyID)
                 .ToListAsync();
 
-            int totalItems = inactiveProperties.Count;
-            ViewBag.TotalItems = totalItems;
+            ViewBag.TotalItems = inactiveProperties.Count;
 
-            List<Property> propertiesToDisplay;
-
-            propertiesToDisplay = inactiveProperties
-                .Skip((pageNumber - 1) * PAGE_SIZE)
-                .Take(PAGE_SIZE)
-                .ToList();
-
-            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / PAGE_SIZE);
-            ViewBag.CurrentPage = pageNumber;
-
-            return View("Index", propertiesToDisplay);
+            return View("Index", inactiveProperties);
         }
 
 

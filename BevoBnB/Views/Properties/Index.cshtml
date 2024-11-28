@@ -6,7 +6,6 @@
 
 <h1>Properties</h1>
 
-<!-- Conditional "Create New" Button -->
 @if (User.Identity.IsAuthenticated && User.IsInRole("Host"))
 {
     <p>
@@ -16,12 +15,9 @@
 
 <!-- Showing X out of Y Properties -->
 <p>
-    Showing @(Model.Count()) out of @ViewBag.TotalItems Properties
+    Showing @Model.Count() out of @ViewBag.TotalItems Properties
 </p>
 
-
-
-<!-- Properties Table -->
 <table class="table">
     <thead>
         <tr>
@@ -55,10 +51,8 @@
                 <td>@Html.DisplayFor(modelItem => item.Category.CategoryName)</td>
                 <td>@item.AverageRating</td>
                 <td>
-                    <!-- Details Link (Visible to Everyone) -->
                     <a asp-action="Details" asp-route-id="@item.PropertyID">Details</a>
 
-                    <!-- Conditional Edit Link -->
                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Host") || User.IsInRole("Admin")))
                     {
                         <a asp-action="Edit" asp-route-id="@item.PropertyID">Edit</a>
@@ -68,65 +62,3 @@
         }
     </tbody>
 </table>
-
-<!-- Pagination Controls -->
-<div>
-    <ul class="pagination">
-        <!-- Previous Button -->
-        @if (ViewBag.CurrentPage > 1)
-        {
-            <li class="page-item">
-                <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)">&laquo;</a>
-            </li>
-        }
-        else
-        {
-            <li class="page-item disabled">
-                <a class="page-link" href="#">&laquo;</a>
-            </li>
-        }
-
-        @* Calculate the range of pages to display *@
-        @{
-            int startPage = Math.Max(1, ViewBag.CurrentPage - 2);
-            int endPage = Math.Min(ViewBag.TotalPages, startPage + 4);
-
-            // Adjust startPage if we're near the last page
-            if (endPage - startPage < 4)
-            {
-                startPage = Math.Max(1, endPage - 4);
-            }
-        }
-
-        <!-- Page Numbers -->
-        @for (int i = startPage; i <= endPage; i++)
-        {
-            if (i == ViewBag.CurrentPage)
-            {
-                <li class="page-item active">
-                    <a class="page-link" href="#">@i</a>
-                </li>
-            }
-            else
-            {
-                <li class="page-item">
-                    <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
-                </li>
-            }
-        }
-
-        <!-- Next Button -->
-        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
-        {
-            <li class="page-item">
-                <a class="page-link" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)">&raquo;</a>
-            </li>
-        }
-        else
-        {
-            <li class="page-item disabled">
-                <a class="page-link" href="#">&raquo;</a>
-            </li>
-        }
-    </ul>
-</div>

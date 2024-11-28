@@ -9,106 +9,105 @@
 @if (Model == null || !Model.Any())
 {
     <!-- Message when no reservations are found -->
-    <p>@ViewBag.EmptyCart</p>
+    <p class="text-center text-muted">@ViewBag.EmptyCart</p>
 }
 else
 {
     @if (TempData["AlertMessage"] != null)
     {
-            <div class="alert alert-danger">
+        <div class="alert alert-danger">
             @TempData["AlertMessage"]
-            </div>
+        </div>
     }
     @if (TempData["SuccessMessage"] != null)
     {
-            <div class="alert alert-success">
+        <div class="alert alert-success">
             @TempData["SuccessMessage"]
-            </div>
+        </div>
     }
 
     <!-- Shopping Cart Content -->
-    <div class="row g-3">
-        <!-- Table Section -->
-        <div class="col-md-9">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().ReservationID)</th>
-                            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CheckIn)</th>
-                            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CheckOut)</th>
-                            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Property.City)</th>
-                            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Property.State)</th>
-                            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().NumOfGuests)</th>
-                            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().StayTotal)</th>
-                            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CleaningFee)</th>
-                            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Subtotal)</th>
-                            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Total)</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@Html.DisplayFor(modelItem => item.ReservationID)</td>
-                                <td>@Html.DisplayFor(modelItem => item.CheckIn)</td>
-                                <td>@Html.DisplayFor(modelItem => item.CheckOut)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Property.City)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Property.State)</td>
-                                <td>@Html.DisplayFor(modelItem => item.NumOfGuests)</td>
-                                <td>@Html.DisplayFor(modelItem => item.StayTotal)</td>
-                                <td>@Html.DisplayFor(modelItem => item.CleaningFee)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Subtotal)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Total)</td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.ReservationID">Edit</a>
-                                    <a asp-action="Details" asp-route-id="@item.ReservationID">Details</a>
-                                    <a asp-action="Delete" asp-route-id="@item.ReservationID">Delete</a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="table-responsive mb-3">
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().ReservationID)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CheckIn)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CheckOut)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Property.City)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Property.State)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().NumOfGuests)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().StayTotal)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CleaningFee)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Subtotal)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Total)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.ReservationID)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CheckIn)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CheckOut)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Property.City)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Property.State)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NumOfGuests)</td>
+                        <td>@Html.DisplayFor(modelItem => item.StayTotal)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CleaningFee)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Subtotal)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Total)</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ReservationID" class="btn btn-sm btn-warning">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.ReservationID" class="btn btn-sm btn-info">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.ReservationID" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
-        <!-- Summary Card Section -->
-        <div class="col-md-2 offset-md-0.5">
-            <div class="card border-primary mb-3" style="max-width: 20rem;">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">@Html.DisplayNameFor(model => model.FirstOrDefault().Total)</h5>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>@Html.DisplayNameFor(model => model.FirstOrDefault().StayTotal):</span>
-                            <strong>@ViewBag.StayTotal?.ToString("C")</strong>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>@Html.DisplayNameFor(model => model.FirstOrDefault().CleaningFee):</span>
-                            <strong>@ViewBag.CleaningFee?.ToString("C")</strong>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>@Html.DisplayNameFor(model => model.FirstOrDefault().Subtotal):</span>
-                            <strong>@ViewBag.Subtotal?.ToString("C")</strong>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>@Html.DisplayNameFor(model => model.FirstOrDefault().SalesTax):</span>
-                            <strong>@ViewBag.SalesTax?.ToString("C")</strong>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>@Html.DisplayNameFor(model => model.FirstOrDefault().DiscountAmount):</span>
-                            <strong>@ViewBag.DiscountAmount?.ToString("C")</strong>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between bg-light">
-                            <span>@Html.DisplayNameFor(model => model.FirstOrDefault().Total):</span>
-                            <strong class="text-primary">@ViewBag.Total?.ToString("C")</strong>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <a class="btn btn-lg btn-success" asp-action="CheckOut">Check Out</a>
+    <!-- Offcanvas Button -->
+    <button class="btn btn-primary mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#totalsOffcanvas" aria-controls="totalsOffcanvas">
+        View Grand Totals
+    </button>
+
+    <!-- Offcanvas Section -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="totalsOffcanvas" aria-labelledby="totalsOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="totalsOffcanvasLabel">Grand Totals</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total Stay Amount:</span>
+                    <strong>@ViewBag.StayTotal?.ToString("C")</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total Cleaning Fee:</span>
+                    <strong>@ViewBag.CleaningFee?.ToString("C")</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Subtotal:</span>
+                    <strong>@ViewBag.Subtotal?.ToString("C")</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Sales Tax:</span>
+                    <strong>@ViewBag.SalesTax?.ToString("C")</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total Discount:</span>
+                    <strong>@ViewBag.DiscountAmount?.ToString("C")</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                    <span>Grand Total:</span>
+                    <strong class="text-primary">@ViewBag.Total?.ToString("C")</strong>
+                </li>
+            </ul>
+            <a class="btn btn-success mt-3 w-100" asp-action="CheckOut" asp-route-customerId="@ViewBag.CustomerId">Proceed to Checkout</a>
         </div>
     </div>
 }

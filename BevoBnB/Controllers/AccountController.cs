@@ -246,6 +246,14 @@ namespace BevoBnB.Controllers
             ivm.HasPassword = true;
             ivm.UserID = user.Id;
             ivm.UserName = user.UserName;
+            ivm.Address = user.LineAddress;
+            ivm.FirstName = user.FirstName;
+            ivm.LastName = user.LastName;
+            ivm.PhoneNumber = user.PhoneNumber;
+            ivm.DOB = user.DOB;
+            ivm.HireStatus = user.HireStatus == HireStatus.Employed ? "Employee" : "Terminated Employee";
+
+
 
             //send data to the view
             return View(ivm);
@@ -312,6 +320,11 @@ namespace BevoBnB.Controllers
 
             //send the user back to the home page
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Edit()
+        {
+            return View();
         }
 
 
