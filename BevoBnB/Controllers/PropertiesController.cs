@@ -10,6 +10,7 @@ using BevoBnB.Models;
 using BevoBnB.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using System.Drawing.Printing;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BevoBnB.Controllers
 {
@@ -438,74 +439,48 @@ public async Task<IActionResult> DisplaySearchResults(PropertySearchViewModel se
 }
 
 
-        //// GET: Properties/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        // GET: Properties/Create
+        [HttpGet]
+        [Authorize(Roles = "Host")]
+        public IActionResult Create()
+        {
+            if (User.IsInRole("Host") == false)
+            {
+                return View("Error", new string[] { "You are not authorized to create properties." });
+            }
 
-        //// POST: Properties/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("PropertyID,PropertyNumber,StreetAddress,City,State,ZipCode,Bedrooms,Bathrooms,GuestsAllowed,PetsAllowed,FreeParking,WeekdayPricing,WeekendPricing,CleaningFee,DiscountRate,MinNightsforDiscount,UnavailableDates,PropertyStatus")] Property @property)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(@property);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(@property);
-        //}
+            // Fetch categories from the database and populate the dropdown
+            ViewBag.AllCategories = GetAllCategoriesSelectList();
 
-        // GET: Properties/Edit/5
+            Property newProperty = new Property()
+            {
+                PropertyNumber = Utilities.GenerateNextPropertyNumber.GetNextPropertyNumber(_context),
+                PropertyStatus = PropertyStatus.Unapproved,
+                UnavailableDates = new List<DateTime>()
+            };
+
+            return View(newProperty);
+        }
 
         // POST: Properties/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StreetAddress,City,State,ZipCode,Bedrooms,Bathrooms,GuestsAllowed,PetsAllowed,FreeParking,WeekdayPricing,WeekendPricing,CleaningFee,DiscountRate,MinNightsforDiscount")] Property property)
+        public async Task<IActionResult> Create(Property property)
         {
             // Restrict access to hosts
-            if (!User.IsInRole("Host"))
+            if (User.IsInRole("Host") == false)
             {
-                ViewBag.ErrorMessage = "Only hosts are authorized to create properties.";
-                return View("Error"); // Redirect to an error view
+                return View("Error");
             }
 
-            if (ModelState.IsValid)
-            {
-                // Automatically generate a unique property number
-                property.PropertyNumber = GeneratePropertyNumber();
+            property.PropertyNumber = Utilities.GenerateNextPropertyNumber.GetNextPropertyNumber(_context);
+            property.PropertyStatus = PropertyStatus.Unapproved;
+            property.UnavailableDates = new List<DateTime>();
 
-                // Automatically set the default property status to Unapproved
-                property.PropertyStatus = PropertyStatus.Unapproved; // Use the enum value
+            _context.Add(property);
+            await _context.SaveChangesAsync();
 
-                // Add the property to the database
-                _context.Add(property);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(property);
-        }
-
-        // Helper method to generate a unique property number
-        private int GeneratePropertyNumber()
-        {
-            // Generate a random property number
-            Random random = new Random();
-            int propertyNumber;
-
-            // Ensure the property number is unique
-            do
-            {
-                propertyNumber = random.Next(1000, 9999); // Generate a number between 1000 and 9999
-            } while (_context.Properties.Any(p => p.PropertyNumber == propertyNumber));
-
-            return propertyNumber;
+            return View("Details", property);
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -593,5 +568,23 @@ public async Task<IActionResult> DisplaySearchResults(PropertySearchViewModel se
         {
             return _context.Properties.Any(e => e.PropertyID == id);
         }
+
+        // GetAllCategoriesSelectList Method
+        private SelectList GetAllCategoriesSelectList()
+        {
+            // Get the list of categories from the database
+            List<Category> categoryList = _context.Categories.ToList();
+
+            // Add a dummy entry so the user can select a default category (like "Select a Category")
+            Category selectNone = new Category() { CategoryID = 0, CategoryName = "Select a Category" };
+            categoryList.Insert(0, selectNone); // Insert it at the start of the list
+
+            // Convert the list to a SelectList
+            SelectList categorySelectList = new SelectList(categoryList.OrderBy(c => c.CategoryID), "CategoryID", "CategoryName");
+
+            // Return the SelectList
+            return categorySelectList;
+        }
+
     }
 }
