@@ -338,7 +338,7 @@ namespace BevoBnB.Controllers
                     ViewBag.EmptyCart = "The selected customer does not exist.";
                     return View(reservations);
                 }
-                ViewBag.CustomerId = customerId; // Set customerId for admin
+                ViewBag.CustomerId = customerId;
             }
             else
             {
@@ -349,7 +349,7 @@ namespace BevoBnB.Controllers
                     ViewBag.EmptyCart = "Unable to identify your account. Please log in again.";
                     return View(reservations);
                 }
-                ViewBag.CustomerId = user.Id; // Set current user's ID for customer
+                ViewBag.CustomerId = user.Id;
             }
 
             reservations = await _context.Reservations
