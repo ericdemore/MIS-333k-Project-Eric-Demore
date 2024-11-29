@@ -84,7 +84,6 @@ namespace BevoBnB.Controllers
         //}
 
         // GET: Properties
-        // GET: Properties
         public async Task<IActionResult> Index(
             string? searchString, // Combine general search into one parameter
             int? categoryId,
@@ -348,56 +347,51 @@ public IActionResult DetailedSearch()
     return View(viewModel);
 }
 
-// POST: Properties/DisplaySearchResults
-[HttpPost]
-public async Task<IActionResult> DisplaySearchResults(PropertySearchViewModel searchModel)
-{
-    // Start with all properties
-    IQueryable<Property> query = _context.Properties
-        .Include(p => p.Category)
-        .Include(p => p.Reviews)
-        .Include(p => p.User);
+        // POST: Properties/DisplaySearchResults
+        [HttpPost]
+        public async Task<IActionResult> DisplaySearchResults(PropertySearchViewModel searchModel)
+        {
+            // Start with all properties
+            IQueryable<Property> query = _context.Properties
+                .Include(p => p.Category)
+                .Include(p => p.Reviews)
+                .Include(p => p.User);
 
-    // Apply filters based on search model inputs
-    if (!string.IsNullOrEmpty(searchModel.City))
-    {
-        query = query.Where(p => p.City.Contains(searchModel.City, StringComparison.OrdinalIgnoreCase));
-    }
+            // Apply filters based on search model inputs
+            if (!string.IsNullOrEmpty(searchModel.City))
+            {
+                query = query.Where(p => p.City.ToLower().Contains(searchModel.City.ToLower()));
+            }
 
-    if (!string.IsNullOrEmpty(searchModel.State) && searchModel.State != "All States")
-    {
-        query = query.Where(p => p.State.ToString() == searchModel.State);
-    }
+            if (!string.IsNullOrEmpty(searchModel.State) && searchModel.State != "All States")
+            {
+                query = query.Where(p => p.State.ToString() == searchModel.State);
+            }
 
-    if (searchModel.CategoryId.HasValue)
-    {
-        query = query.Where(p => p.Category.CategoryID == searchModel.CategoryId.Value);
-    }
+            if (searchModel.CategoryId.HasValue)
+            {
+                query = query.Where(p => p.Category.CategoryID == searchModel.CategoryId.Value);
+            }
 
-    if (searchModel.Bedrooms.HasValue)
-    {
-        query = query.Where(p => p.Bedrooms >= searchModel.Bedrooms.Value);
-    }
+            if (searchModel.Bedrooms.HasValue)
+            {
+                query = query.Where(p => p.Bedrooms >= searchModel.Bedrooms.Value);
+            }
 
-    if (searchModel.Bathrooms.HasValue)
-    {
-        query = query.Where(p => p.Bathrooms >= searchModel.Bathrooms.Value);
-    }
+            if (searchModel.Bathrooms.HasValue)
+            {
+                query = query.Where(p => p.Bathrooms >= searchModel.Bathrooms.Value);
+            }
 
-    if (searchModel.MinPrice.HasValue)
-    {
-        query = query.Where(p => p.WeekdayPricing >= searchModel.MinPrice.Value || p.WeekendPricing >= searchModel.MinPrice.Value);
-    }
+            if (searchModel.MinPrice.HasValue)
+            {
+                query = query.Where(p => p.WeekdayPricing >= searchModel.MinPrice.Value || p.WeekendPricing >= searchModel.MinPrice.Value);
+            }
 
-    if (searchModel.MaxPrice.HasValue)
-    {
-        query = query.Where(p => p.WeekdayPricing <= searchModel.MaxPrice.Value || p.WeekendPricing <= searchModel.MaxPrice.Value);
-    }
-
-    if (searchModel.GuestsAllowed.HasValue)
-    {
-        query = query.Where(p => p.GuestsAllowed >= searchModel.GuestsAllowed.Value);
-    }
+            if (searchModel.MaxPrice.HasValue)
+            {
+                query = query.Where(p => p.WeekdayPricing <= searchModel.MaxPrice.Value || p.WeekendPricing <= searchModel.MaxPrice.Value);
+            }
 
             if (searchModel.GuestsAllowed.HasValue)
             {
@@ -406,37 +400,39 @@ public async Task<IActionResult> DisplaySearchResults(PropertySearchViewModel se
 
             if (searchModel.PetsAllowed)
             {
-                query = query.Where(p => p.PetsAllowed == true); // Show only properties that allow pets
+                query = query.Where(p => p.PetsAllowed == true);
             }
 
             if (searchModel.FreeParking)
             {
-                query = query.Where(p => p.FreeParking == true); // Show only properties with free parking
+                query = query.Where(p => p.FreeParking == true);
             }
 
             // Restrict results based on user role
             if (!User.Identity.IsAuthenticated || User.IsInRole("Customer"))
-    {
-        query = query.Where(p => p.PropertyStatus == PropertyStatus.Approved); // Only approved properties
-    }
+            {
+                query = query.Where(p => p.PropertyStatus == PropertyStatus.Approved); // Only approved properties
+            }
 
-    // Execute the query
-    var filteredProperties = await query
-        .OrderBy(p => p.City)
-        .ThenBy(p => p.State)
-        .ThenBy(p => p.PropertyID)
-        .ToListAsync();
+            // Execute the query
+            var filteredProperties = await query
+                .OrderBy(p => p.City)
+                .ThenBy(p => p.State)
+                .ThenBy(p => p.PropertyID)
+                .ToListAsync();
 
-    // Set ViewBag messages for search results
-    ViewBag.TotalItems = await _context.Properties.CountAsync();
-    ViewBag.SelectedProperties = filteredProperties.Count;
-    ViewBag.Message = filteredProperties.Any()
-        ? $"Showing {ViewBag.SelectedProperties} out of {ViewBag.TotalItems} properties."
-        : "No properties match your search criteria.";
+            // Set ViewBag messages for search results
+            ViewBag.TotalItems = await _context.Properties.CountAsync();
+            ViewBag.SelectedProperties = filteredProperties.Count;
+            ViewBag.Message = filteredProperties.Any()
+                ? $"Showing {ViewBag.SelectedProperties} out of {ViewBag.TotalItems} properties."
+                : "No properties match your search criteria.";
 
-    // Return the Index view with filtered properties
-    return View("Index", filteredProperties);
-}
+            // Return the Index view with filtered properties
+            return View("Index", filteredProperties);
+        }
+
+
 
 
         // GET: Properties/Create
