@@ -167,6 +167,7 @@ namespace BevoBnB.Controllers
 
             // Execute query and load results
             var propertiesToDisplay = await query
+                .Include(p => p.User)
                 .OrderBy(p => p.City)
                 .ThenBy(p => p.State)
                 .ThenBy(p => p.PropertyID)
@@ -226,8 +227,6 @@ namespace BevoBnB.Controllers
 
             return View("Index", inactiveProperties);
         }
-
-
 
         // GET: Properties/Details/5
         //TODO: this needs to return error views, not status 404 not found. 
@@ -473,6 +472,10 @@ public async Task<IActionResult> DisplaySearchResults(PropertySearchViewModel se
                 return View("Error");
             }
 
+            
+            AppUser user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+            property.User = user;
             property.PropertyNumber = Utilities.GenerateNextPropertyNumber.GetNextPropertyNumber(_context);
             property.PropertyStatus = PropertyStatus.Unapproved;
             property.UnavailableDates = new List<DateTime>();
@@ -481,6 +484,81 @@ public async Task<IActionResult> DisplaySearchResults(PropertySearchViewModel se
             await _context.SaveChangesAsync();
 
             return View("Details", property);
+        }
+
+        [Authorize(Roles = "Admin, Host")]
+        public async Task<IActionResult> ApproveProperty(int propertyID)
+        {
+            if (propertyID == null)
+            {
+                return View("Error", new string[] { "You did not provide a valid ID." });
+            }
+
+            Property property = await _context.Properties
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(p => p.PropertyID == propertyID);
+
+            if (property == null)
+            {
+                return View("Error", new string[] { "No property was found with the provided ID." });
+            }
+
+            if (User.IsInRole("Admin"))
+            {
+                property.PropertyStatus = PropertyStatus.Approved;
+            }
+            else if (User.IsInRole("Host"))
+            {
+                if (property.User.Email != User.Identity.Name)
+                {
+                    return View("Error", new string[] { "You can only approve properties that belong to you." });
+                }
+                if (property.PropertyStatus == PropertyStatus.Inactive)
+                {
+                    property.PropertyStatus = PropertyStatus.Approved;
+                }
+                else
+                {
+                    return View("Error", new string[] { "Only inactive properties can be re-approved." });
+                }
+            }
+
+            _context.Properties.Update(property);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = property.PropertyID });
+        }
+
+        [Authorize(Roles = "Host")]
+        public async Task<IActionResult> DeactiveProperty(int propertyID)
+        {
+
+            if (propertyID == null)
+            {
+                return View("Error", new string[] { "You did not provide an ID." });
+            }
+
+            Property property = await _context.Properties.FindAsync(propertyID);
+            AppUser user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+            if (property == null)
+            {
+                return View("Error", new String[] { "No property was found." });
+            }
+
+            if (property.User.Email != User.Identity.Name)
+            {
+                return View("Error", new String[] { "This property does not belong to you." });
+            }
+
+            // Update the property status to approved
+            property.PropertyStatus = PropertyStatus.Inactive;
+
+            _context.Properties.Update(property);
+            await _context.SaveChangesAsync();
+
+            // Redirect to the Details view of the approved property
+            return RedirectToAction("Details", new { id = property.PropertyID });
         }
 
         public async Task<IActionResult> Edit(int? id)
