@@ -137,7 +137,7 @@ namespace BevoBnB.Models
                 return 0;
             }
 
-            return (int)Math.Round(Reviews.Average(p => p.Rating));
+            return (int)Math.Round(Reviews.Average(p => p.Rating), 1);
         }
     }
 }

@@ -480,14 +480,36 @@ namespace BevoBnB.Controllers
         }
 
 
-        public async Task<IActionResult> Profiles()
+        public async Task<IActionResult> Profiles(ProfileSearchViewModel? svm)
         {
+            var query = _userManager.Users.AsQueryable();
 
-            // Retrieve all users from the UserManager
-            var allUsers = await _userManager.Users.ToListAsync();
+            if (svm != null)
+            {
+                if (svm.Email != null && svm.Email != " ")
+                {
+                    query = query.Where(u => u.Email != null && u.Email.Contains(svm.Email));
+                }
 
-            // Pass the list of users to the view
-            return View(allUsers);
+                if (svm.FirstName != null && svm.FirstName != " ")
+                {
+                    query = query.Where(u => u.FirstName != null && u.FirstName.Contains(svm.FirstName));
+                }
+
+                if (svm.LastName != null && svm.LastName != " ")
+                {
+                    query = query.Where(u => u.LastName != null && u.LastName.Contains(svm.LastName));
+                }
+
+                if (svm.PhoneNumber != null)
+                {
+                    query = query.Where(u => u.PhoneNumber == svm.PhoneNumber);
+                }
+            }
+
+            var filteredUsers = await query.ToListAsync();
+
+            return View(filteredUsers);
         }
 
         private bool Is18OrOlder(DateTime dob)

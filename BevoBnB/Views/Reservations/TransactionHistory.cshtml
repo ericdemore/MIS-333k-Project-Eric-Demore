@@ -4,48 +4,57 @@
     ViewData["Title"] = "Transaction History";
 }
 
-<h1>Transaction History</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">Transaction History</h1>
 
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th>Confirmation Number</th>
-            <th>Total Amount</th>
-            <th>Reservation Details</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var group in Model)
-        {
-            <tr>
-                <td>@group.ConfirmationNumber</td>
-                <td>@group.TotalAmount.ToString("C")</td>
-                <td>
-                    <table class="table table-sm table-striped">
-                        <thead>
-                            <tr>
-                                <th>Reservation ID</th>
-                                <th>Check-In</th>
-                                <th>Check-Out</th>
-                                <th>Guests</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var reservation in group.Reservations)
-                            {
-                                <tr>
-                                    <td>@reservation.ReservationID</td>
-                                    <td>@reservation.CheckIn.ToShortDateString()</td>
-                                    <td>@reservation.CheckOut.ToShortDateString()</td>
-                                    <td>@reservation.NumOfGuests</td>
-                                    <td>@reservation.Total.ToString("C")</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    @if (!Model.Any())
+    {
+        <p class="text-muted">No transactions found.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Confirmation Number</th>
+                    <th>Total Amount</th>
+                    <th>Reservation Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in Model)
+                {
+                    <tr>
+                        <td class="fw-bold align-middle">@group.ConfirmationNumber</td>
+                        <td class="text-success align-middle">@group.TotalAmount.ToString("C")</td>
+                        <td>
+                            <table class="table table-sm table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th class="text-start">ID</th>
+                                        <th class="text-start">Check-In</th>
+                                        <th class="text-start">Check-Out</th>
+                                        <th class="text-start">Guests</th>
+                                        <th class="text-start">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var reservation in group.Reservations)
+                                    {
+                                        <tr>
+                                            <td class="text-start">@reservation.ReservationID</td>
+                                            <td class="text-start">@reservation.CheckIn.ToShortDateString()</td>
+                                            <td class="text-start">@reservation.CheckOut.ToShortDateString()</td>
+                                            <td class="text-start">@reservation.NumOfGuests</td>
+                                            <td class="text-start text-success fw-bold">@reservation.Total.ToString("C")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

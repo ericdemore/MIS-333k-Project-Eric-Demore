@@ -267,6 +267,11 @@ namespace BevoBnB.Controllers
                 {
                     errorMessages.Add("The selected dates include one or more days that are unavailable for reservations.");
                 }
+
+                if (ExistingReservationsAlready(reservation))
+                {
+                    errorMessages.Add("You already have a reservation that overlaps with these dates.");
+                }
             }
 
             AppUser reservationUser;
@@ -418,6 +423,11 @@ namespace BevoBnB.Controllers
             foreach (var reservation in pendingReservations)
             {
                 var dbProperty = reservation.Property;
+
+                if (ExistingReservationsAlready(reservation))
+                {
+                    errorMessages.Add($"The reservation for '{reservation.ReservationID}' conflicts with an existing reservation during the selected dates.");
+                }
 
                 if (dbProperty == null || dbProperty.PropertyStatus == PropertyStatus.Unapproved || dbProperty.PropertyStatus == PropertyStatus.Inactive)
                 {
@@ -940,5 +950,35 @@ namespace BevoBnB.Controllers
 
             return sl;
         }
+
+        private bool ExistingReservationsAlready(Reservation reservation)
+        {
+            if (reservation == null || reservation.User == null)
+            {
+                return false;
+            }
+
+            var userReservations = _context.Reservations
+                .Where(r => r.User.Id == reservation.User.Id
+                            && r.ReservationStatus != ReservationStatus.Cancelled
+                            && r.ReservationStatus != ReservationStatus.Pending)
+                .ToList();
+
+            foreach (var existingReservation in userReservations)
+            {
+                if (reservation.CheckIn < existingReservation.CheckOut && reservation.CheckOut > existingReservation.CheckIn)
+                {
+                    if (reservation.CheckOut == existingReservation.CheckIn || reservation.CheckIn == existingReservation.CheckOut)
+                    {
+                        continue;
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
     }
 }

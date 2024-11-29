@@ -4,8 +4,47 @@
     ViewData["Title"] = "Profiles";
 }
 
-<h1>List of Users</h1>
+<h1>Profiles</h1>
 
+<!-- Button to open off-canvas search -->
+<div class="d-flex mb-4">
+    <a class="btn btn-secondary me-2" asp-action="Profiles" asp-controller="Account">All Profiles</a>
+    <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSearch" aria-controls="offcanvasSearch">
+        Search Profiles
+    </button>
+</div>
+
+
+<!-- Offcanvas for Search -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSearch" aria-labelledby="offcanvasSearchLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasSearchLabel">Search Profiles</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form asp-action="Profiles" method="get">
+            <div class="mb-3">
+                <label for="Email" class="form-label">Email Address</label>
+                <input type="text" class="form-control" id="Email" name="svm.Email" />
+            </div>
+            <div class="mb-3">
+                <label for="FirstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="FirstName" name="svm.FirstName" />
+            </div>
+            <div class="mb-3">
+                <label for="LastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="LastName" name="svm.LastName" />
+            </div>
+            <div class="mb-3">
+                <label for="PhoneNumber" class="form-label">Phone Number</label>
+                <input type="number" class="form-control" id="PhoneNumber" name="svm.PhoneNumber" />
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+</div>
+
+<!-- Profiles Table -->
 <table class="table">
     <thead>
         <tr>
@@ -25,7 +64,6 @@
                 <td>@user.FirstName</td>
                 <td>@user.LastName</td>
                 <td>
-                    <!-- Offcanvas Trigger -->
                     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasUserInfo-@user.Id" aria-controls="offcanvasUserInfo-@user.Id">
                         View Information
                     </button>
@@ -68,7 +106,6 @@
                             <a class="btn btn-primary" asp-action="Index" asp-route-id="@user.Id">View Profile</a>
                             <a class="btn btn-primary" asp-action="Edit" asp-route-id="@user.Id">Edit Profile</a>
                         </div>
-                        
                     </dl>
                 </div>
             </div>
