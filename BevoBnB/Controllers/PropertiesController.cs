@@ -464,6 +464,7 @@ public async Task<IActionResult> DisplaySearchResults(PropertySearchViewModel se
         // POST: Properties/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Host")]
         public async Task<IActionResult> Create(Property property)
         {
             // Restrict access to hosts
@@ -484,6 +485,21 @@ public async Task<IActionResult> DisplaySearchResults(PropertySearchViewModel se
             await _context.SaveChangesAsync();
 
             return View("Details", property);
+        }
+
+        [Authorize(Roles = "Host")]
+        public async Task<IActionResult> MyProperties()
+        {
+            List<Property> myProperties;
+
+            AppUser user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+            myProperties = _context.Properties
+                .Include(p => p.User)
+                .Where(p => p.User.Email == user.Email)
+                .ToList();
+
+            return View("Index", myProperties);
         }
 
         [Authorize(Roles = "Admin, Host")]
@@ -528,6 +544,7 @@ public async Task<IActionResult> DisplaySearchResults(PropertySearchViewModel se
 
             return RedirectToAction("Details", new { id = property.PropertyID });
         }
+
 
         [Authorize(Roles = "Host")]
         public async Task<IActionResult> DeactiveProperty(int propertyID)
