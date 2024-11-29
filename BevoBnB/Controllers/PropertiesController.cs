@@ -347,7 +347,7 @@ namespace BevoBnB.Controllers
             return RedirectToAction("Details", new { id = property.PropertyID });
         }
 
-
+        //deactivate property
         [Authorize(Roles = "Host")]
         public async Task<IActionResult> DeactiveProperty(int propertyID)
         {
@@ -380,6 +380,58 @@ namespace BevoBnB.Controllers
             return RedirectToAction("Details", new { id = property.PropertyID });
         }
 
+
+        //edit
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var @property = await _context.Properties.FindAsync(id);
+        //    if (@property == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(@property);
+        //}
+
+        //// POST: Properties/Edit/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("PropertyID,PropertyNumber,StreetAddress,City,State,ZipCode,Bedrooms,Bathrooms,GuestsAllowed,PetsAllowed,FreeParking,WeekdayPricing,WeekendPricing,CleaningFee,DiscountRate,MinNightsforDiscount,UnavailableDates,PropertyStatus")] Property @property)
+        //{
+        //    if (id != @property.PropertyID)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(@property);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!PropertyExists(@property.PropertyID))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(@property);
+        //}
+
+        [HttpGet]
+        [Authorize(Roles = "Host")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -387,46 +439,75 @@ namespace BevoBnB.Controllers
                 return NotFound();
             }
 
-            var @property = await _context.Properties.FindAsync(id);
-            if (@property == null)
+            // Include the property owner information
+            var property = await _context.Properties
+                .Include(p => p.User) // Include the User navigation property
+                .FirstOrDefaultAsync(p => p.PropertyID == id);
+
+            if (property == null)
             {
                 return NotFound();
             }
-            return View(@property);
+
+            // Ensure the logged-in user is the owner of the property
+            var loggedInUserId = _userManager.GetUserId(User);
+            if (property.User.Id != loggedInUserId)
+            {
+                return Forbid(); // Return 403 Forbidden if they don't own the property
+            }
+
+            return View(property);
         }
 
-        // POST: Properties/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PropertyID,PropertyNumber,StreetAddress,City,State,ZipCode,Bedrooms,Bathrooms,GuestsAllowed,PetsAllowed,FreeParking,WeekdayPricing,WeekendPricing,CleaningFee,DiscountRate,MinNightsforDiscount,UnavailableDates,PropertyStatus")] Property @property)
+        [Authorize(Roles = "Host")]
+        public async Task<IActionResult> Edit(int id, [Bind("WeekdayPricing,WeekendPricing,CleaningFee,DiscountRate,MinNightsforDiscount")] Property updatedProperty)
         {
-            if (id != @property.PropertyID)
+            // Fetch the original property from the database
+            var property = await _context.Properties
+                .Include(p => p.User) // Include the User navigation property
+                .FirstOrDefaultAsync(p => p.PropertyID == id);
+
+            if (property == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            // Ensure the logged-in user is the owner of the property
+            var loggedInUserId = _userManager.GetUserId(User);
+            if (property.User.Id != loggedInUserId)
             {
-                try
-                {
-                    _context.Update(@property);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PropertyExists(@property.PropertyID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return Forbid(); // Return 403 Forbidden if they don't own the property
             }
-            return View(@property);
+
+            // Update only the pricing and discount-related fields
+            property.WeekdayPricing = updatedProperty.WeekdayPricing;
+            property.WeekendPricing = updatedProperty.WeekendPricing;
+            property.CleaningFee = updatedProperty.CleaningFee;
+            property.DiscountRate = updatedProperty.DiscountRate;
+            property.MinNightsforDiscount = updatedProperty.MinNightsforDiscount;
+
+            try
+            {
+                _context.Update(property);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PropertyExists(property.PropertyID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
         }
+
 
         // GET: Properties/Delete/5
         public async Task<IActionResult> Delete(int? id)
