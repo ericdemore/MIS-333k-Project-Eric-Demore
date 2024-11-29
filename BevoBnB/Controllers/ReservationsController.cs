@@ -857,30 +857,6 @@ namespace BevoBnB.Controllers
             return false;
         }
 
-        // Checks if the reservation falls on any unavailable dates for the property
-        /*
-        private bool IsReservationOnUnavailableDates(Reservation reservation)
-        {
-            // Ensure the property exists and has unavailable dates
-            if (reservation.Property == null || reservation.Property.UnavailableDates == null || !reservation.Property.UnavailableDates.Any())
-            {
-                return false;
-            }
-
-            // Check if any unavailable date conflicts with the reservation period
-            foreach (var unavailableDate in reservation.Property.UnavailableDates)
-            {
-                // Check if the unavailable date equals the CheckIn, CheckOut, or falls in between
-                if (unavailableDate >= reservation.CheckIn && unavailableDate < reservation.CheckOut)
-                {
-                    return true;
-                }
-            }
-
-            // No conflicts found
-            return false;
-        }
-        */
 
         // Checks if the reservation falls on any unavailable dates for the property
         private bool IsReservationOnUnavailableDates(Reservation reservation)

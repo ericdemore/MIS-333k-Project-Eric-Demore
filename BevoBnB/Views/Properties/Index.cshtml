@@ -19,10 +19,150 @@
         <div class="col-12 mt-3">
             <button type="submit" class="btn btn-primary me-2">Search</button>
             <a asp-action="Index" class="btn btn-danger me-2">Clear Search</a>
-            <a asp-action="DetailedSearch" class="btn btn-secondary">Detailed Search</a>
+            <!-- Offcanvas Trigger for Detailed Search -->
+            <a class="btn btn-light" data-bs-toggle="offcanvas" href="#propertySearchOffcanvas" role="button" aria-controls="propertySearchOffcanvas">
+                Detailed Search
+            </a>
         </div>
     </div>
+    <strong>Showing @ViewBag.SelectedProperties of @ViewBag.AllProperties Properties</strong>
+
 </form>
+
+<!-- Offcanvas for Detailed Search -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="propertySearchOffcanvas" aria-labelledby="propertySearchLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="propertySearchLabel">Property Search</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form asp-action="DisplaySearchResults" method="get">
+            <div class="row g-3">
+                <!-- City -->
+                <div class="col-md-6">
+                    <label for="City" class="form-label">City</label>
+                    <input type="text" name="City" id="City" class="form-control" />
+                </div>
+
+                <!-- State -->
+                <div class="col-md-6">
+                    <label for="State" class="form-label">State</label>
+                    <select name="State" id="State" class="form-select">
+                        <option value="">Select State</option>
+                        @foreach (var state in Enum.GetValues(typeof(BevoBnB.Models.States)))
+                        {
+                            <option value="@state">@state</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Guest Rating -->
+                <div class="col-md-6">
+                    <label for="GuestRating" class="form-label">Guest Rating</label>
+                    <input type="number" step="0.1" name="GuestRating" id="GuestRating" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label for="GuestRatingRange" class="form-label">Guest Rating Range</label>
+                    <select name="GuestRatingRange" id="GuestRatingRange" class="form-select">
+                        <option value="">Select Range</option>
+                        <option value="GreaterThan">Greater Than</option>
+                        <option value="LessThan">Less Than</option>
+                    </select>
+                </div>
+
+                <!-- Max Guests -->
+                <div class="col-md-6">
+                    <label for="MaxGuests" class="form-label">Max Guests</label>
+                    <input type="number" name="MaxGuests" id="MaxGuests" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label for="MaxGuestsRange" class="form-label">Max Guests Range</label>
+                    <select name="MaxGuestsRange" id="MaxGuestsRange" class="form-select">
+                        <option value="">Select Range</option>
+                        <option value="GreaterThan">Greater Than</option>
+                        <option value="LessThan">Less Than</option>
+                    </select>
+                </div>
+
+                <!-- Bedrooms -->
+                <div class="col-md-6">
+                    <label for="Bedrooms" class="form-label">Bedrooms</label>
+                    <input type="number" name="Bedrooms" id="Bedrooms" class="form-control" />
+                </div>
+
+                <!-- Bathrooms -->
+                <div class="col-md-6">
+                    <label for="Bathrooms" class="form-label">Bathrooms</label>
+                    <input type="number" name="Bathrooms" id="Bathrooms" class="form-control" />
+                </div>
+
+                <!-- Pets Allowed -->
+                <div class="col-md-6">
+                    <label for="PetsAllowed" class="form-label">Pets Allowed</label>
+                    <select name="PetsAllowed" id="PetsAllowed" class="form-select">
+                        <option value="">Select</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+
+                <!-- Free Parking -->
+                <div class="col-md-6">
+                    <label for="FreeParking" class="form-label">Free Parking</label>
+                    <select name="FreeParking" id="FreeParking" class="form-select">
+                        <option value="">Select</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="MinWeekdayPricing" class="form-label">Min Weekday Pricing</label>
+                    <input type="number" step="0.01" name="MinWeekdayPricing" id="MinWeekdayPricing" class="form-control" />
+                </div>
+
+                <!-- Max Weekday Pricing -->
+                <div class="col-md-6">
+                    <label for="MaxWeekdayPricing" class="form-label">Max Weekday Pricing</label>
+                    <input type="number" step="0.01" name="MaxWeekdayPricing" id="MaxWeekdayPricing" class="form-control" />
+                </div>
+
+                <!-- Min Weekend Pricing -->
+                <div class="col-md-6">
+                    <label for="MinWeekendPricing" class="form-label">Min Weekend Pricing</label>
+                    <input type="number" step="0.01" name="MinWeekendPricing" id="MinWeekendPricing" class="form-control" />
+                </div>
+
+                <!-- Max Weekend Pricing -->
+                <div class="col-md-6">
+                    <label for="MaxWeekendPricing" class="form-label">Max Weekend Pricing</label>
+                    <input type="number" step="0.01" name="MaxWeekendPricing" id="MaxWeekendPricing" class="form-control" />
+                </div>
+
+                <!-- Check-In and Check-Out -->
+                <div class="col-md-6">
+                    <label for="CheckIn" class="form-label">Check-In Date</label>
+                    <input type="date" name="CheckIn" id="CheckIn" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label for="CheckOut" class="form-label">Check-Out Date</label>
+                    <input type="date" name="CheckOut" id="CheckOut" class="form-control" />
+                </div>
+
+                <!-- Category -->
+                <div class="col-md-12">
+                    <label for="Category" class="form-label">Category</label>
+                    @Html.DropDownList("Category", (SelectList)ViewBag.AllCategories, "Select a Category", new { @class = "form-control" })
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary mt-3">Search</button>
+        </form>
+    </div>
+</div>
+
+
 
 <!-- Results Count -->
 @if (!string.IsNullOrEmpty(ViewBag.Message))

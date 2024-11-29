@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BevoBnB.Controllers
 {
+    [Authorize]
     public class PropertiesController : Controller
     {
         private readonly AppDbContext _context;
@@ -25,213 +26,182 @@ namespace BevoBnB.Controllers
             _userManager = userManager;
         }
 
-        //// GET: Properties
-        //public async Task<IActionResult> Index(string? searchString)
-        //{
-        //    List<Property> propertiesToDisplay;
-
-        //    // Base query for fetching properties
-        //    IQueryable<Property> query;
-
-        //    // Check the user's role
-        //    if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-        //    {
-        //        // Admins can see all properties
-        //        query = _context.Properties
-        //            .Include(p => p.Category)
-        //            .Include(p => p.Reviews)
-        //            .Include(p => p.User)
-        //            .OrderBy(p => p.City)
-        //            .ThenBy(p => p.State)
-        //            .ThenBy(p => p.PropertyID);
-
-        //        ViewBag.TotalItems = await _context.Properties.CountAsync(); // Admins see total count
-        //    }
-        //    else
-        //    {
-        //        // Non-admins (customers or not logged in) can only see approved properties
-        //        query = _context.Properties
-        //            .Include(p => p.Category)
-        //            .Include(p => p.Reviews)
-        //            .Include(p => p.User)
-        //            .Where(p => p.PropertyStatus == PropertyStatus.Approved) // Only approved
-        //            .OrderBy(p => p.City)
-        //            .ThenBy(p => p.State)
-        //            .ThenBy(p => p.PropertyID);
-
-        //        ViewBag.TotalItems = await _context.Properties.CountAsync(); // Total includes all properties
-        //    }
-
-        //    // Apply search filter if a search string is provided
-        //    if (!string.IsNullOrEmpty(searchString))
-        //    {
-        //        query = query.Where(p => p.City.Contains(searchString) ||
-        //                                 p.State.ToString().Contains(searchString) ||
-        //                                 p.StreetAddress.Contains(searchString) ||
-        //                                 p.ZipCode.Contains(searchString));
-        //    }
-
-        //    // Execute the query and retrieve the results
-        //    propertiesToDisplay = await query.ToListAsync();
-
-        //    // Reflect the count of displayed properties
-        //    ViewBag.SelectedProperties = propertiesToDisplay.Count;
-
-        //    // Set the ViewBag message for the results
-        //    ViewBag.Message = $"Showing {ViewBag.SelectedProperties} out of {ViewBag.TotalItems} properties.";
-
-        //    return View(propertiesToDisplay);
-        //}
 
         // GET: Properties
-        public async Task<IActionResult> Index(
-            string? searchString, // Combine general search into one parameter
-            int? categoryId,
-            int? bedrooms,
-            int? bathrooms,
-            decimal? minPrice,
-            decimal? maxPrice,
-            int? guestsAllowed,
-            bool? petsAllowed,
-            bool? freeParking)
+        [AllowAnonymous]
+        public IActionResult Index()
         {
-            IQueryable<Property> query;
-
-            // Check if user is an Admin
-            if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-            {
-                query = _context.Properties
-                    .Include(p => p.Category)
-                    .Include(p => p.Reviews)
-                    .Include(p => p.User);
-            }
-            else
-            {
-                query = _context.Properties
-                    .Include(p => p.Category)
-                    .Include(p => p.Reviews)
-                    .Include(p => p.User)
-                    .Where(p => p.PropertyStatus == PropertyStatus.Approved); // Non-admins only see approved properties
-            }
-
-            // Apply general search logic (combined city and state)
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                query = query.Where(p =>
-                    (p.City != null && EF.Functions.Like(p.City, $"%{searchString}%")) || // Match city
-                    (p.State != null && EF.Functions.Like(p.State.ToString(), $"%{searchString.ToUpper()}%")) // Match state
-                );
-            }
-
-            // Apply detailed search filters
-            if (categoryId.HasValue)
-            {
-                query = query.Where(p => p.Category.CategoryID == categoryId.Value);
-            }
-
-            if (bedrooms.HasValue)
-            {
-                query = query.Where(p => p.Bedrooms >= bedrooms.Value);
-            }
-
-            if (bathrooms.HasValue)
-            {
-                query = query.Where(p => p.Bathrooms >= bathrooms.Value);
-            }
-
-            if (minPrice.HasValue)
-            {
-                query = query.Where(p => p.WeekdayPricing >= minPrice.Value || p.WeekendPricing >= minPrice.Value);
-            }
-
-            if (maxPrice.HasValue)
-            {
-                query = query.Where(p => p.WeekdayPricing <= maxPrice.Value || p.WeekendPricing <= maxPrice.Value);
-            }
-
-            if (guestsAllowed.HasValue)
-            {
-                query = query.Where(p => p.GuestsAllowed >= guestsAllowed.Value);
-            }
-
-            if (petsAllowed.HasValue)
-            {
-                query = query.Where(p => p.PetsAllowed == true);
-            }
-
-            if (freeParking.HasValue)
-            {
-                query = query.Where(p => p.FreeParking == true);
-            }
-
-            // Execute query and load results
-            var propertiesToDisplay = await query
+            var approvedPropertiesQuery = _context.Properties
                 .Include(p => p.User)
-                .OrderBy(p => p.City)
-                .ThenBy(p => p.State)
-                .ThenBy(p => p.PropertyID)
-                .ToListAsync();
+                .Include(p => p.Reviews)
+                .Include(p => p.Category)
+                .Include(p => p.Reservations)
+                .Where(p => p.PropertyStatus == PropertyStatus.Approved &&
+                            p.PropertyStatus != PropertyStatus.Inactive &&
+                            p.PropertyStatus != PropertyStatus.Unapproved);
 
-            // Set ViewBag values
-            ViewBag.TotalItems = await _context.Properties.CountAsync();
-            ViewBag.SelectedProperties = propertiesToDisplay.Count;
-            ViewBag.Message = propertiesToDisplay.Any()
-                ? $"Showing {ViewBag.SelectedProperties} out of {ViewBag.TotalItems} properties."
-                : "No properties match your search criteria.";
+            List<Property> properties = approvedPropertiesQuery.ToList();
 
-            return View(propertiesToDisplay);
+            ViewBag.AllCategories = GetAllCategories();
+            ViewBag.AllProperties = approvedPropertiesQuery.Count();
+            ViewBag.SelectedProperties = properties.Count;
+
+            return View(properties);
         }
 
+        [AllowAnonymous]
+        public IActionResult DisplaySearchResults(PropertySearchViewModel psvm)
+        {
+            var query = _context.Properties
+                .Include(p => p.User)
+                .Include(p => p.Reviews)
+                .Include(p => p.Category)
+                .Include(p => p.Reservations)
+                .Where(p => p.PropertyStatus == PropertyStatus.Approved &&
+                            p.PropertyStatus != PropertyStatus.Inactive &&
+                            p.PropertyStatus != PropertyStatus.Unapproved);
 
+            var copyQuery = query;
+
+            if (!string.IsNullOrEmpty(psvm.City))
+            {
+                query = query.Where(p => p.City.Contains(psvm.City));
+            }
+
+            if (psvm.State != null)
+            {
+                query = query.Where(p => p.State == psvm.State);
+            }
+
+            if (psvm.GuestRating != null)
+            {
+                if (psvm.GuestRatingRange == null || psvm.GuestRatingRange == PSVMRange.GreaterThan)
+                {
+                    query = query.Where(p => p.AverageRating >= psvm.GuestRating);
+                }
+                else if (psvm.GuestRatingRange == PSVMRange.LessThan)
+                {
+                    query = query.Where(p => p.AverageRating <= psvm.GuestRating);
+                }
+            }
+
+            if (psvm.MaxGuests != null)
+            {
+                if (psvm.MaxGuestsRange == null || psvm.MaxGuestsRange == PSVMRange.GreaterThan)
+                {
+                    query = query.Where(p => p.GuestsAllowed >= psvm.MaxGuests);
+                }
+                else if (psvm.MaxGuestsRange == PSVMRange.LessThan)
+                {
+                    query = query.Where(p => p.GuestsAllowed <= psvm.MaxGuests);
+                }
+            }
+
+            if (psvm.Bedrooms != null)
+            {
+                query = query.Where(p => p.Bedrooms == psvm.Bedrooms);
+            }
+
+            if (psvm.Bathrooms != null)
+            {
+                query = query.Where(p => p.Bathrooms == psvm.Bathrooms);
+            }
+
+            if (psvm.PetsAllowed != null)
+            {
+                query = query.Where(p => p.PetsAllowed == psvm.PetsAllowed);
+            }
+
+            if (psvm.FreeParking != null)
+            {
+                query = query.Where(p => p.FreeParking == psvm.FreeParking);
+            }
+
+            if (psvm.CheckIn != null && psvm.CheckOut != null)
+            {
+                query = query.Where(p => !_context.Reservations.Any(r =>
+                    r.Property.PropertyID == p.PropertyID &&
+                    r.ReservationStatus != ReservationStatus.Cancelled && // Ignore cancelled reservations
+                    r.CheckIn < psvm.CheckOut && // Overlapping reservation logic
+                    r.CheckOut > psvm.CheckIn));
+            }
+
+            if (psvm.Category != null)
+            {
+                query = query.Where(p => p.CategoryId == psvm.Category);
+            }
+
+            if (psvm.MinWeekdayPricing != null)
+            {
+                query = query.Where(p => p.WeekdayPricing >= psvm.MinWeekdayPricing);
+            }
+
+            if (psvm.MaxWeekdayPricing != null)
+            {
+                query = query.Where(p => p.WeekdayPricing <= psvm.MaxWeekdayPricing);
+            }
+
+            if (psvm.MinWeekendPricing != null)
+            {
+                query = query.Where(p => p.WeekendPricing >= psvm.MinWeekendPricing);
+            }
+
+            if (psvm.MaxWeekendPricing != null)
+            {
+                query = query.Where(p => p.WeekendPricing <= psvm.MaxWeekendPricing);
+            }
+
+            List<Property> SelectedProperties = query.ToList();
+
+            ViewBag.AllProperties = copyQuery.Count();
+            ViewBag.SelectedProperties = SelectedProperties.Count;
+            ViewBag.AllCategories = GetAllCategories();
+
+            return View("Index", SelectedProperties);
+        }
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Unapproved()
         {
-            List<Property> unapprovedProperties;
-
-            unapprovedProperties = await _context.Properties
+            var unapprovedPropertiesQuery = _context.Properties
                 .Include(p => p.Category)
                 .Include(p => p.Reviews)
                 .Include(p => p.User)
                 .Where(p => p.PropertyStatus == PropertyStatus.Unapproved)
                 .OrderBy(p => p.City)
                 .ThenBy(p => p.State)
-                .ThenBy(p => p.PropertyID)
-                .ToListAsync();
+                .ThenBy(p => p.PropertyID);
 
-            // Set ViewBag for total properties and current results
-            ViewBag.TotalItems = _context.Properties.Count(); // Total properties
+            List<Property> unapprovedProperties = await unapprovedPropertiesQuery.ToListAsync();
+
+            ViewBag.AllCategories = GetAllCategories();
+            ViewBag.TotalItems = _context.Properties.Count();
             ViewBag.CurrentItems = unapprovedProperties.Count;
-            ViewBag.Message = $"Showing {ViewBag.CurrentItems} out of {ViewBag.TotalItems} properties.";
 
             return View("Index", unapprovedProperties);
         }
 
         public async Task<IActionResult> Inactive()
         {
-            List<Property> inactiveProperties;
-
-            inactiveProperties = await _context.Properties
+            var inactivePropertiesQuery = _context.Properties
                 .Include(p => p.Category)
                 .Include(p => p.Reviews)
                 .Include(p => p.User)
                 .Where(p => p.PropertyStatus == PropertyStatus.Inactive)
                 .OrderBy(p => p.City)
                 .ThenBy(p => p.State)
-                .ThenBy(p => p.PropertyID)
-                .ToListAsync();
+                .ThenBy(p => p.PropertyID);
 
-            // Set ViewBag for total properties and current results
-            ViewBag.TotalItems = _context.Properties.Count(); // Total properties
+            List<Property> inactiveProperties = await inactivePropertiesQuery.ToListAsync();
+
+            ViewBag.AllCategories = GetAllCategories();
+            ViewBag.TotalItems = _context.Properties.Count();
             ViewBag.CurrentItems = inactiveProperties.Count;
-            ViewBag.Message = $"Showing {ViewBag.CurrentItems} out of {ViewBag.TotalItems} properties.";
 
             return View("Index", inactiveProperties);
         }
 
         // GET: Properties/Details/5
-        //TODO: this needs to return error views, not status 404 not found. 
-        //TODO: it should also return the avg rating, this should be an easy linq query that returns the avg for the property
-        //TODO: the view should not be viewable by the customer if it's unapproved
-        //TODO: only a host and admin may see the view if it's unapproved
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -268,170 +238,6 @@ namespace BevoBnB.Controllers
             // Return the property details view
             return View(property);
         }
-
-
-        //// GET: Properties/DetailedSearch
-        //public IActionResult DetailedSearch()
-        //{
-        //    var categories = _context.Categories.Select(c => new SelectListItem
-        //    {
-        //        Value = c.CategoryID.ToString(),
-        //        Text = c.CategoryName
-        //    }).ToList();
-
-        //    var states = Enum.GetValues(typeof(States)).Cast<States>().Select(s => new SelectListItem
-        //    {
-        //        Value = s.ToString(),
-        //        Text = s.ToString()
-        //    }).ToList();
-
-        //    // Debugging
-        //    Console.WriteLine($"Categories Count: {categories.Count}"); // Ensure categories are being loaded
-        //    Console.WriteLine($"States Count: {states.Count}"); // Ensure states enum is being loaded
-
-        //    var viewModel = new PropertySearchViewModel
-        //    {
-        //        Categories = categories,
-        //        States = states
-        //    };
-
-        //    return View(viewModel);
-        //}
-
-        //[HttpGet]
-        //public IActionResult DisplaySearchResults(PropertySearchViewModel searchModel)
-        //{
-        //    // Redirect to Index with search criteria
-        //    return RedirectToAction("Index", new
-        //    {
-        //        city = searchModel.City,
-        //        state = searchModel.State,
-        //        categoryId = searchModel.CategoryId,
-        //        bedrooms = searchModel.Bedrooms,
-        //        bathrooms = searchModel.Bathrooms,
-        //        minPrice = searchModel.MinPrice,
-        //        maxPrice = searchModel.MaxPrice,
-        //        guestsAllowed = searchModel.GuestsAllowed,
-        //        petsAllowed = searchModel.PetsAllowed,
-        //        freeParking = searchModel.FreeParking
-        //    });
-        //}
-
-        // GET: Properties/DetailedSearch
-public IActionResult DetailedSearch()
-{
-    // Load categories and states for dropdowns
-    var categories = _context.Categories.Select(c => new SelectListItem
-    {
-        Value = c.CategoryID.ToString(),
-        Text = c.CategoryName
-    }).ToList();
-
-    var states = Enum.GetValues(typeof(States)).Cast<States>().Select(s => new SelectListItem
-    {
-        Value = s.ToString(),
-        Text = s.ToString()
-    }).ToList();
-
-    // Debugging
-    Console.WriteLine($"Categories Count: {categories.Count}"); // Ensure categories are being loaded
-    Console.WriteLine($"States Count: {states.Count}"); // Ensure states enum is being loaded
-
-    var viewModel = new PropertySearchViewModel
-    {
-        Categories = categories,
-        States = states
-    };
-
-    return View(viewModel);
-}
-
-        // POST: Properties/DisplaySearchResults
-        [HttpPost]
-        public async Task<IActionResult> DisplaySearchResults(PropertySearchViewModel searchModel)
-        {
-            // Start with all properties
-            IQueryable<Property> query = _context.Properties
-                .Include(p => p.Category)
-                .Include(p => p.Reviews)
-                .Include(p => p.User);
-
-            // Apply filters based on search model inputs
-            if (!string.IsNullOrEmpty(searchModel.City))
-            {
-                query = query.Where(p => p.City.ToLower().Contains(searchModel.City.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(searchModel.State) && searchModel.State != "All States")
-            {
-                query = query.Where(p => p.State.ToString() == searchModel.State);
-            }
-
-            if (searchModel.CategoryId.HasValue)
-            {
-                query = query.Where(p => p.Category.CategoryID == searchModel.CategoryId.Value);
-            }
-
-            if (searchModel.Bedrooms.HasValue)
-            {
-                query = query.Where(p => p.Bedrooms >= searchModel.Bedrooms.Value);
-            }
-
-            if (searchModel.Bathrooms.HasValue)
-            {
-                query = query.Where(p => p.Bathrooms >= searchModel.Bathrooms.Value);
-            }
-
-            if (searchModel.MinPrice.HasValue)
-            {
-                query = query.Where(p => p.WeekdayPricing >= searchModel.MinPrice.Value || p.WeekendPricing >= searchModel.MinPrice.Value);
-            }
-
-            if (searchModel.MaxPrice.HasValue)
-            {
-                query = query.Where(p => p.WeekdayPricing <= searchModel.MaxPrice.Value || p.WeekendPricing <= searchModel.MaxPrice.Value);
-            }
-
-            if (searchModel.GuestsAllowed.HasValue)
-            {
-                query = query.Where(p => p.GuestsAllowed >= searchModel.GuestsAllowed.Value);
-            }
-
-            if (searchModel.PetsAllowed)
-            {
-                query = query.Where(p => p.PetsAllowed == true);
-            }
-
-            if (searchModel.FreeParking)
-            {
-                query = query.Where(p => p.FreeParking == true);
-            }
-
-            // Restrict results based on user role
-            if (!User.Identity.IsAuthenticated || User.IsInRole("Customer"))
-            {
-                query = query.Where(p => p.PropertyStatus == PropertyStatus.Approved); // Only approved properties
-            }
-
-            // Execute the query
-            var filteredProperties = await query
-                .OrderBy(p => p.City)
-                .ThenBy(p => p.State)
-                .ThenBy(p => p.PropertyID)
-                .ToListAsync();
-
-            // Set ViewBag messages for search results
-            ViewBag.TotalItems = await _context.Properties.CountAsync();
-            ViewBag.SelectedProperties = filteredProperties.Count;
-            ViewBag.Message = filteredProperties.Any()
-                ? $"Showing {ViewBag.SelectedProperties} out of {ViewBag.TotalItems} properties."
-                : "No properties match your search criteria.";
-
-            // Return the Index view with filtered properties
-            return View("Index", filteredProperties);
-        }
-
-
 
 
         // GET: Properties/Create
@@ -676,6 +482,58 @@ public IActionResult DetailedSearch()
             // Return the SelectList
             return categorySelectList;
         }
+
+        private bool IsReservationConflict(Reservation reservation)
+        {
+            if (reservation.Property == null)
+            {
+                return false;
+            }
+
+            // Check for date conflicts with existing reservations
+            var existingReservations = _context.Reservations
+                .Where(r => r.Property.PropertyID == reservation.Property.PropertyID &&
+                            r.ReservationStatus != ReservationStatus.Cancelled &&
+                            r.ReservationStatus != ReservationStatus.Pending)
+                .ToList();
+
+            foreach (var existingReservation in existingReservations)
+            {
+                if (reservation.CheckIn < existingReservation.CheckOut && reservation.CheckOut > existingReservation.CheckIn)
+                {
+                    if (reservation.CheckOut == existingReservation.CheckIn || reservation.CheckIn == existingReservation.CheckOut)
+                    {
+                        continue;
+                    }
+
+                    return true;
+                }
+            }
+
+            // Check if any unavailable dates fall within the reservation period
+            if (reservation.Property.UnavailableDates != null && reservation.Property.UnavailableDates.Any())
+            {
+                foreach (var unavailableDate in reservation.Property.UnavailableDates)
+                {
+                    if (unavailableDate >= reservation.CheckIn && unavailableDate <= reservation.CheckOut)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private SelectList GetAllCategories()
+        {
+            var categories = _context.Categories
+                .Select(c => new { c.CategoryID, c.CategoryName })
+                .ToList();
+
+            return new SelectList(categories, "CategoryID", "CategoryName");
+        }
+
 
     }
 }
