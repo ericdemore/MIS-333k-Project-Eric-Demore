@@ -61,6 +61,7 @@ namespace BevoBnB.Controllers
                             p.PropertyStatus != PropertyStatus.Inactive &&
                             p.PropertyStatus != PropertyStatus.Unapproved);
 
+
             var copyQuery = query;
 
             if (!string.IsNullOrEmpty(psvm.City))
@@ -300,6 +301,8 @@ namespace BevoBnB.Controllers
                 .Include(p => p.User)
                 .Where(p => p.User.Email == user.Email)
                 .ToList();
+
+            ViewBag.AllCategories = GetAllCategories();
 
             return View("Index", myProperties);
         }
