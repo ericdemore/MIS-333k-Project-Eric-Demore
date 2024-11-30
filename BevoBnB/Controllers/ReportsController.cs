@@ -1,14 +1,13 @@
-﻿using BevoBnB.DAL;
+using BevoBnB.DAL;
 using BevoBnB.Models;
 using BevoBnB.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using System.Security.Claims;
 
 namespace BevoBnB.Controllers
 {
-    [Authorize(Roles = "Admin")] // Restrict access to Admin role
     public class ReportsController : Controller
     {
         private readonly AppDbContext _context;
@@ -18,47 +17,42 @@ namespace BevoBnB.Controllers
             _context = context;
         }
 
-        // Display the form to generate a report
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // Generate the report based on the provided date range
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(DateTime startDate, DateTime endDate)
         {
-            // Ensure the date range is valid
             if (endDate < startDate)
             {
                 ModelState.AddModelError("", "End date must be after the start date.");
                 return View();
             }
 
-            // Query reservations within the date range
             var reservations = _context.Reservations
-                .Include(r => r.Property) // Ensure Property is loaded
+                .Include(r => r.Property)
                 .Where(r => r.ReservationStatus == ReservationStatus.Valid &&
                             r.CheckIn <= endDate && r.CheckOut >= startDate)
                 .ToList();
 
-            // Calculate metrics
             var totalRevenue = reservations.Sum(r => r.StayTotal);
-            var totalCommission = totalRevenue * 0.10m; // BevoBnB earns 10% commission
+            var totalCommission = totalRevenue * 0.10m;
             var totalReservations = reservations.Count;
             var averageCommissionPerReservation = totalReservations > 0
                 ? totalCommission / totalReservations
                 : 0;
 
-            // Count distinct properties, ensuring Property is not null
             var totalProperties = reservations
-                .Where(r => r.Property != null) // Exclude null Properties
+                .Where(r => r.Property != null)
                 .Select(r => r.Property.PropertyNumber)
                 .Distinct()
                 .Count();
 
-            // Populate the ViewModel
             var reportViewModel = new ReportViewModel
             {
                 TotalRevenue = totalRevenue,
@@ -71,6 +65,61 @@ namespace BevoBnB.Controllers
             };
 
             return View("Details", reportViewModel);
+        }
+
+        [Authorize(Roles = "Host")]
+        public IActionResult HostReport()
+        {
+            return View(new HostReportViewModel());
+        }
+
+        [Authorize(Roles = "Host")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult HostReport(DateTime? startDate, DateTime? endDate)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // First, fetch all the relevant reservations
+            var reservations = _context.Reservations
+                .Include(r => r.Property)
+                .ThenInclude(p => p.User)
+                .Where(r => r.Property.User.Id == userId &&
+                           r.ReservationStatus == ReservationStatus.Valid)
+                .AsNoTracking();  // Add this for better performance since we're just reading
+
+            if (startDate.HasValue)
+            {
+                reservations = reservations.Where(r => r.CheckOut >= startDate.Value);
+            }
+            if (endDate.HasValue)
+            {
+                reservations = reservations.Where(r => r.CheckIn <= endDate.Value);
+            }
+
+            // Materialize the query and perform grouping in memory
+            var reservationsList = reservations.ToList();
+
+            var propertyDetails = reservationsList
+                .GroupBy(r => new { r.Property.PropertyID, r.Property.StreetAddress })
+                .Select(g => new PropertyReportDetail
+                {
+                    PropertyID = g.Key.PropertyID,
+                    PropertyName = g.Key.StreetAddress,
+                    TotalStayRevenue = g.Sum(r => r.StayTotal),
+                    TotalCleaningFees = g.Sum(r => r.CleaningFee),
+                    CompletedReservations = g.Count()
+                })
+                .ToList();
+
+            var viewModel = new HostReportViewModel
+            {
+                StartDate = startDate,
+                EndDate = endDate,
+                PropertyDetails = propertyDetails
+            };
+
+            return View(viewModel);
         }
     }
 }

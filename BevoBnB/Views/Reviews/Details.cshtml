@@ -10,32 +10,86 @@
     <h4>Review</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <!-- Rating -->
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Rating)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Rating)
         </dd>
-        <dt class = "col-sm-2">
+
+        <!-- Review Text -->
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ReviewText)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ReviewText)
         </dd>
-        <dt class = "col-sm-2">
+
+        <!-- Host Comments -->
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.HostComments)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.HostComments)
         </dd>
-        <dt class = "col-sm-2">
+
+        <!-- Dispute Status -->
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DisputeStatus)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DisputeStatus)
         </dd>
     </dl>
 </div>
+
+<div>
+    <h4>Property Details</h4>
+    <hr />
+    <dl class="row">
+        <!-- Property Number -->
+        <dt class="col-sm-2">
+            Property Number
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Property.PropertyNumber
+        </dd>
+
+        <!-- Address -->
+        <dt class="col-sm-2">
+            Address
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Property.StreetAddress
+        </dd>
+
+        <!-- City -->
+        <dt class="col-sm-2">
+            City
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Property.City
+        </dd>
+
+        <!-- State -->
+        <dt class="col-sm-2">
+            State
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Property.State
+        </dd>
+
+        <!-- Zip Code -->
+        <dt class="col-sm-2">
+            Zip Code
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Property.ZipCode
+        </dd>
+    </dl>
+</div>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.ReviewID">Edit</a> |
     <a asp-action="Index">Back to List</a>

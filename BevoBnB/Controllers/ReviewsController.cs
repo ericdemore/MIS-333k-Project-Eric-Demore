@@ -1,160 +1,177 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BevoBnB.DAL;
 using BevoBnB.Models;
+using BevoBnB.ViewModels;
 
 namespace BevoBnB.Controllers
 {
+    [Authorize]
     public class ReviewsController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ReviewsController(AppDbContext context)
+        public ReviewsController(AppDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        // GET: Reviews
+        // GET: Reviews/Index
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> Index()
         {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return RedirectToAction("AccessDenied", "Account");
+            }
+
+            // Fetch the user's reviews
             var reviews = await _context.Reviews
-                .Include(r => r.Property) // Ensure Property is loaded
+                .Include(r => r.Property)
+                .Where(r => r.User.Id == user.Id)
                 .ToListAsync();
-            return View(reviews);
+
+            return View(reviews); // Ensure this points to Views/Reviews/Index.cshtml
         }
 
-        // GET: Reviews/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var review = await _context.Reviews
-                .FirstOrDefaultAsync(m => m.ReviewID == id);
-            if (review == null)
-            {
-                return NotFound();
-            }
-
-            return View(review);
-        }
 
         // GET: Reviews/Create
-        public IActionResult Create()
+        [Authorize(Roles = "Customer")]
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return RedirectToAction("AccessDenied", "Account");
+            }
+
+            // Fetch properties the customer has reserved and not reviewed
+            var reservedProperties = await _context.Reservations
+                .Include(r => r.Property)
+                .Where(r => r.User.Id == user.Id &&
+                            !_context.Reviews.Any(review => review.Property.PropertyID == r.Property.PropertyID && review.User.Id == user.Id))
+                .Select(r => new SelectListItem
+                {
+                    Value = r.Property.PropertyID.ToString(),
+                    Text = $"Property #{r.Property.PropertyNumber} - {r.Property.StreetAddress}, {r.Property.City}"
+                })
+                .Distinct()
+                .ToListAsync();
+
+            if (!reservedProperties.Any())
+            {
+                TempData["Message"] = "You have no eligible properties to review.";
+                return RedirectToAction("Index");
+            }
+
+            // Prepare the ViewModel
+            var viewModel = new ReviewCreateViewModel
+            {
+                PropertyOptions = reservedProperties
+            };
+
+            return View(viewModel); // Ensure this points to Views/Reviews/Create.cshtml
         }
 
-        // POST: Reviews/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReviewID,Rating,ReviewText,HostComments,DisputeStatus")] Review review)
+        [Authorize(Roles = "Customer")]
+        public async Task<IActionResult> Create(ReviewCreateViewModel model)
         {
-            if (ModelState.IsValid)
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
             {
-                _context.Add(review);
+                return RedirectToAction("AccessDenied", "Account");
+            }
+
+            // Validate the property and ensure eligibility for review
+            var property = await _context.Properties
+                .FirstOrDefaultAsync(p => p.PropertyID == model.PropertyID &&
+                                          _context.Reservations.Any(r => r.Property.PropertyID == p.PropertyID && r.User.Id == user.Id) &&
+                                          !_context.Reviews.Any(review => review.Property.PropertyID == p.PropertyID && review.User.Id == user.Id));
+
+            if (property == null)
+            {
+                ModelState.AddModelError("", "Invalid property selection. You cannot review this property.");
+                model.PropertyOptions = await _context.Reservations
+                    .Include(r => r.Property)
+                    .Where(r => r.User.Id == user.Id &&
+                                !_context.Reviews.Any(review => review.Property.PropertyID == r.Property.PropertyID && review.User.Id == user.Id))
+                    .Select(r => new SelectListItem
+                    {
+                        Value = r.Property.PropertyID.ToString(),
+                        Text = $"Property #{r.Property.PropertyNumber} - {r.Property.StreetAddress}, {r.Property.City}"
+                    })
+                    .Distinct()
+                    .ToListAsync();
+
+                return View("~/Views/Reviews/Create.cshtml", model);
+            }
+
+            // Create and save the review
+            var review = new Review
+            {
+                Property = property,
+                User = user,
+                Rating = model.Rating,
+                ReviewText = model.ReviewText
+            };
+
+            if (!ModelState.IsValid)
+            {
+                _context.Reviews.Add(review);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(review);
-        }
 
-        // GET: Reviews/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
+                // Redirect to the Details page with the ReviewID
+                return RedirectToAction("Details", new { id = review.ReviewID });
             }
 
-            var review = await _context.Reviews.FindAsync(id);
-            if (review == null)
-            {
-                return NotFound();
-            }
-            return View(review);
-        }
-
-        // POST: Reviews/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ReviewID,Rating,ReviewText,HostComments,DisputeStatus")] Review review)
-        {
-            if (id != review.ReviewID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+            // Re-populate ViewModel if ModelState is invalid
+            model.PropertyOptions = await _context.Reservations
+                .Include(r => r.Property)
+                .Where(r => r.User.Id == user.Id &&
+                            !_context.Reviews.Any(review => review.Property.PropertyID == r.Property.PropertyID && review.User.Id == user.Id))
+                .Select(r => new SelectListItem
                 {
-                    _context.Update(review);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ReviewExists(review.ReviewID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(review);
+                    Value = r.Property.PropertyID.ToString(),
+                    Text = $"Property #{r.Property.PropertyNumber} - {r.Property.StreetAddress}, {r.Property.City}"
+                })
+                .Distinct()
+                .ToListAsync();
+
+            return View("~/Views/Reviews/Create.cshtml", model);
         }
 
-        // GET: Reviews/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
+        [Authorize]
+        public async Task<IActionResult> Details(int id)
+        {
+            // Fetch the review with the associated property
             var review = await _context.Reviews
-                .FirstOrDefaultAsync(m => m.ReviewID == id);
+                .Include(r => r.Property)
+                .FirstOrDefaultAsync(r => r.ReviewID == id);
+
             if (review == null)
             {
                 return NotFound();
             }
 
-            return View(review);
+            return View(review); // Ensure this view is located at Views/Reviews/Details.cshtml
         }
 
-        // POST: Reviews/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var review = await _context.Reviews.FindAsync(id);
-            if (review != null)
-            {
-                _context.Reviews.Remove(review);
-            }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
-        private bool ReviewExists(int id)
-        {
-            return _context.Reviews.Any(e => e.ReviewID == id);
-        }
     }
 }
