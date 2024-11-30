@@ -121,8 +121,8 @@ namespace BevoBnB.Controllers
             {
                 query = query.Where(p => !_context.Reservations.Any(r =>
                     r.Property.PropertyID == p.PropertyID &&
-                    r.ReservationStatus != ReservationStatus.Cancelled && // Ignore cancelled reservations
-                    r.CheckIn < psvm.CheckOut && // Overlapping reservation logic
+                    r.ReservationStatus != ReservationStatus.Cancelled && 
+                    r.CheckIn < psvm.CheckOut && 
                     r.CheckOut > psvm.CheckIn));
             }
 
