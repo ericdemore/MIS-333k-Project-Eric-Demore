@@ -54,15 +54,12 @@ namespace BevoBnB.Controllers
         {
             var query = _context.Properties
                 .Include(p => p.User)
-                .Include(p => p.Reviews)
+                .Include(p => p.Reviews) // Ensure Reviews are loaded
                 .Include(p => p.Category)
                 .Include(p => p.Reservations)
                 .Where(p => p.PropertyStatus == PropertyStatus.Approved &&
                             p.PropertyStatus != PropertyStatus.Inactive &&
                             p.PropertyStatus != PropertyStatus.Unapproved);
-
-
-            var copyQuery = query;
 
             if (!string.IsNullOrEmpty(psvm.City))
             {
@@ -72,18 +69,6 @@ namespace BevoBnB.Controllers
             if (psvm.State != null)
             {
                 query = query.Where(p => p.State == psvm.State);
-            }
-
-            if (psvm.GuestRating != null)
-            {
-                if (psvm.GuestRatingRange == null || psvm.GuestRatingRange == PSVMRange.GreaterThan)
-                {
-                    query = query.Where(p => p.AverageRating >= psvm.GuestRating);
-                }
-                else if (psvm.GuestRatingRange == PSVMRange.LessThan)
-                {
-                    query = query.Where(p => p.AverageRating <= psvm.GuestRating);
-                }
             }
 
             if (psvm.MaxGuests != null)
@@ -122,8 +107,8 @@ namespace BevoBnB.Controllers
             {
                 query = query.Where(p => !_context.Reservations.Any(r =>
                     r.Property.PropertyID == p.PropertyID &&
-                    r.ReservationStatus != ReservationStatus.Cancelled && 
-                    r.CheckIn < psvm.CheckOut && 
+                    r.ReservationStatus != ReservationStatus.Cancelled &&
+                    r.CheckIn < psvm.CheckOut &&
                     r.CheckOut > psvm.CheckIn));
             }
 
@@ -152,13 +137,27 @@ namespace BevoBnB.Controllers
                 query = query.Where(p => p.WeekendPricing <= psvm.MaxWeekendPricing);
             }
 
-            List<Property> SelectedProperties = query.ToList();
+            // Load data into memory
+            var properties = query.ToList();
 
-            ViewBag.AllProperties = copyQuery.Count();
-            ViewBag.SelectedProperties = SelectedProperties.Count;
+            // Filter by AverageRating in memory
+            if (psvm.GuestRating != null)
+            {
+                if (psvm.GuestRatingRange == null || psvm.GuestRatingRange == PSVMRange.GreaterThan)
+                {
+                    properties = properties.Where(p => p.AverageRating >= psvm.GuestRating).ToList();
+                }
+                else if (psvm.GuestRatingRange == PSVMRange.LessThan)
+                {
+                    properties = properties.Where(p => p.AverageRating <= psvm.GuestRating).ToList();
+                }
+            }
+
+            ViewBag.AllProperties = query.Count();
+            ViewBag.SelectedProperties = properties.Count;
             ViewBag.AllCategories = GetAllCategories();
 
-            return View("Index", SelectedProperties);
+            return View("Index", properties);
         }
 
         [Authorize(Roles = "Admin")]

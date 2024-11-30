@@ -47,7 +47,7 @@
                             </div>
                         </li>
                     }
-                    else
+                    else if (!User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
                             <a asp-controller="Properties" asp-action="Index" class="nav-link">Properties</a>
