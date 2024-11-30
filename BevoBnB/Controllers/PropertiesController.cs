@@ -29,25 +29,41 @@ namespace BevoBnB.Controllers
 
         // GET: Properties
         [AllowAnonymous]
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string? searchString)
         {
+            // Base query for approved properties
             var approvedPropertiesQuery = _context.Properties
                 .Include(p => p.User)
                 .Include(p => p.Reviews)
                 .Include(p => p.Category)
                 .Include(p => p.Reservations)
-                .Where(p => p.PropertyStatus == PropertyStatus.Approved &&
-                            p.PropertyStatus != PropertyStatus.Inactive &&
-                            p.PropertyStatus != PropertyStatus.Unapproved);
+                .Where(p => p.PropertyStatus == PropertyStatus.Approved);
 
-            List<Property> properties = approvedPropertiesQuery.ToList();
+            // Count all approved properties before applying the filter
+            int totalPropertiesCount = await approvedPropertiesQuery.CountAsync();
 
+            // Apply the search filter if searchString is provided
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                approvedPropertiesQuery = approvedPropertiesQuery.Where(p =>
+                    (p.City != null && EF.Functions.Like(p.City, $"%{searchString}%")) || // Match city names
+                    (p.State.ToString() != null && EF.Functions.Like(p.State.ToString(), $"%{searchString.ToUpper()}%")) // Match state abbreviations
+                );
+            }
+
+            // Execute the filtered query and load results
+            List<Property> filteredProperties = await approvedPropertiesQuery.ToListAsync();
+
+            // Pass data to the view
             ViewBag.AllCategories = GetAllCategories();
-            ViewBag.AllProperties = approvedPropertiesQuery.Count();
-            ViewBag.SelectedProperties = properties.Count;
+            ViewBag.AllProperties = totalPropertiesCount; // Total count before filtering
+            ViewBag.SelectedProperties = filteredProperties.Count; // Count after filtering
+            ViewBag.SearchString = searchString; // Preserve the search string in the view
 
-            return View(properties);
+            return View(filteredProperties);
         }
+
+
 
         [AllowAnonymous]
         public IActionResult DisplaySearchResults(PropertySearchViewModel psvm)
@@ -202,6 +218,7 @@ namespace BevoBnB.Controllers
         }
 
         // GET: Properties/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

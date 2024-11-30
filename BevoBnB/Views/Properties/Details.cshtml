@@ -7,36 +7,49 @@
 <h1>Property Details</h1>
 
  <!-- Display the Average Rating -->
- <h3>
-     <!-- Display the numeric average rating -->
-     Average Rating: @if (ViewBag.AvgRating != null && ViewBag.AvgRating != "No Ratings Yet")
-     {
-         <span>@ViewBag.AvgRating</span>
-         <span>
-             <!-- Full stars based on the integer part of the average rating -->
-             @for (int i = 0; i < Math.Floor(Convert.ToDouble(ViewBag.AvgRating)); i++)
-             {
-                 <i class="fa fa-star text-primary"></i> <!-- Full star -->
-             }
+<h3>
+    <!-- Display the numeric average rating -->
+    Average Rating: @if (ViewBag.AvgRating != null && ViewBag.AvgRating != "No Ratings Yet")
+    {
+        <span>@ViewBag.AvgRating</span>
+        <span>
+            @* Declare avgRating for clarity *@
+            @{
+                double avgRating = Convert.ToDouble(ViewBag.AvgRating);
+            }
 
-             <!-- Half star if fractional part >= 0.5 -->
-             @if (Convert.ToDouble(ViewBag.AvgRating) % 1 >= 0.5)
-             {
-                 <i class="fa fa-star-half-alt text-primary"></i> <!-- Half star -->
-             }
+            <!-- Loop through 1 to 5 for a total of 5 stars -->
+            @for (int i = 1; i <= 5; i++)
+            {
+                if (i <= Math.Floor(avgRating))
+                {
+                    <!-- Fully filled star (dark blue) -->
+                    <i class="fas fa-star" style="color: #123456; margin-right: 2px;"></i> <!-- Tailwind's blue-800 -->
+                }
+                else if (i == Math.Ceiling(avgRating) && avgRating % 1 >= 0.5)
+                {
+                    <!-- Half-filled star (dark blue) -->
+                    <i class="fas fa-star-half-alt" style="color: #123456; margin-right: 2px;"></i>
+                }
+                else
+                {
+                    <!-- Empty star (gray) -->
+                    <i class="far fa-star" style="color: #6c757d; margin-right: 2px;"></i> <!-- Bootstrap's text-muted gray -->
+                }
+            }
+        </span>
+    }
+    else
+    {
+        <span>No Ratings Yet</span>
+    }
+</h3>
 
-             <!-- Empty stars for the remaining slots up to 5 -->
-             @for (int i = (int)Math.Ceiling(Convert.ToDouble(ViewBag.AvgRating)); i < 5; i++)
-             {
-                 <i class="fa fa-star-o text-muted"></i> <!-- Empty star -->
-             }
-         </span>
-     }
-     else
-     {
-         <span>No Ratings Yet</span>
-     }
- </h3>
+
+
+
+
+
 
 <div>
     <h4>Property</h4>
