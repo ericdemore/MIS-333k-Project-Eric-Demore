@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
 
 <!DOCTYPE html>
@@ -79,6 +79,9 @@
                                     <a class="dropdown-item" asp-controller="Reservations" asp-action="Index">Reservation History</a>
                                     <a class="dropdown-item" asp-controller="Reservations" asp-action="TransactionHistory">Transaction History</a>
                                 </div>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Reports" asp-action="HostReport" class="nav-link">Generate Report</a>
                             </li>
                         }
                         @if (User.IsInRole("Admin"))

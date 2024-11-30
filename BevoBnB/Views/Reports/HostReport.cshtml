@@ -1,0 +1,105 @@
+@model BevoBnB.ViewModels.HostReportViewModel
+
+@{
+    ViewData["Title"] = "Host Revenue Report";
+}
+
+<div class="container mt-4">
+    <h2>Host Revenue Report</h2>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <form asp-action="HostReport" method="post">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label asp-for="StartDate" class="control-label">Start Date</label>
+                            <input asp-for="StartDate" class="form-control" type="date" />
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label asp-for="EndDate" class="control-label">End Date</label>
+                            <input asp-for="EndDate" class="form-control" type="date" />
+                        </div>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Generate Report</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (Model.PropertyDetails.Any())
+    {
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Report Summary</h3>
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Host Revenue</h5>
+                                <p class="card-text">@Model.TotalHostRevenue.ToString("C")</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Cleaning Fees</h5>
+                                <p class="card-text">@Model.TotalCleaningFees.ToString("C")</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title">Grand Total</h5>
+                                <p class="card-text">@Model.GrandTotal.ToString("C")</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Reservations</h5>
+                                <p class="card-text">@Model.TotalCompletedReservations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Property Details</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Stay Revenue</th>
+                                <th>Host Revenue (90%)</th>
+                                <th>Cleaning Fees</th>
+                                <th>Total Revenue</th>
+                                <th>Reservations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var property in Model.PropertyDetails)
+                            {
+                                <tr>
+                                    <td>@property.PropertyName</td>
+                                    <td>@property.TotalStayRevenue.ToString("C")</td>
+                                    <td>@property.TotalHostRevenue.ToString("C")</td>
+                                    <td>@property.TotalCleaningFees.ToString("C")</td>
+                                    <td>@property.PropertyTotal.ToString("C")</td>
+                                    <td>@property.CompletedReservations</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
