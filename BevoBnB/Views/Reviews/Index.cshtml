@@ -1,70 +1,85 @@
 ﻿@model IEnumerable<BevoBnB.Models.Review>
 
 @{
-    ViewData["Title"] = "Index";
-    var isAdmin = User.IsInRole("Admin"); // Check if the user is an Admin
-    var isCustomer = User.IsInRole("Customer"); // Check if the user is a Customer
+    ViewData["Title"] = "Reviews";
+    var isHost = User.IsInRole("Host");
+    var isCustomer = User.IsInRole("Customer");
+    var isAdmin = User.IsInRole("Admin");
 }
 
 <h1>Reviews</h1>
+<hr />
 
-@if (isCustomer)
+@if (TempData["Message"] != null)
 {
-        <p>
-            <a asp-action="Create">Create New</a>
-        </p>
+    <div class="alert alert-success">@TempData["Message"]</div>
 }
 
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayName("Property Number")
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rating)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReviewText)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HostComments)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DisputeStatus)
-            </th>
-            <th></th>
+            <th>Property</th>
+            <th>Rating</th>
+            <th>Review Text</th>
+            <th>Dispute Status</th>
+            <th>Host Comments</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var review in Model)
         {
-                <tr>
-                    <td>
-                    @Html.DisplayFor(modelItem => item.Property.PropertyNumber)
-                    </td>
-                    <td>
-                    @Html.DisplayFor(modelItem => item.Rating)
-                    </td>
-                    <td>
-                    @Html.DisplayFor(modelItem => item.ReviewText)
-                    </td>
-                    <td>
-                    @Html.DisplayFor(modelItem => item.HostComments)
-                    </td>
-                    <td>
-                    @Html.DisplayFor(modelItem => item.DisputeStatus)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.ReviewID">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.ReviewID">Details</a>
+            <tr>
+                <!-- Property Details -->
+                <td>@review.Property.StreetAddress, @review.Property.City</td>
+
+                <!-- Rating -->
+                <td>@review.Rating</td>
+
+                <!-- Review Text -->
+                <td>@review.ReviewText</td>
+
+                <!-- Dispute Status -->
+                <td>
+                    <p class="form-control-static">@review.DisputeStatus</p>
+                </td>
+
+                <!-- Host Comments -->
+                <td>@review.HostComments</td>
+
+                <!-- Actions -->
+                <td>
                     @if (isAdmin)
                     {
-                                <span> | </span>
-                                <a asp-action="Delete" asp-route-id="@item.ReviewID">Delete</a>
+                        <form asp-action="ChangeDisputeStatus" method="post" style="display:inline;">
+                            <input type="hidden" name="reviewId" value="@review.ReviewID" />
+                            <select name="newStatus" class="form-control">
+                                <option value="Disputed">Disputed</option>
+                                <option value="ValidDispute">Valid Dispute</option>
+                                <option value="InvalidDispute">Invalid Dispute</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-sm mt-1">Update</button>
+                        </form>
                     }
-                    </td>
-                </tr>
+                    else if (isCustomer)
+                    {
+                        <!-- Customers can edit their reviews -->
+                        <a asp-action="Edit" asp-route-id="@review.ReviewID" class="btn btn-primary">Edit</a>
+                    }
+                    else if (isHost)
+                    {
+                        <!-- Hosts can dispute reviews -->
+                        <a asp-action="Edit" asp-route-id="@review.ReviewID" class="btn btn-warning">Dispute</a>
+                    }
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+
+@if (isCustomer)
+{
+    <div>
+        <a asp-action="Create" class="btn btn-primary">Write a Review</a>
+    </div>
+}
