@@ -164,60 +164,77 @@
 <h2>Reviews</h2>
 @if (Model.Reviews != null && Model.Reviews.Any())
 {
-            <!-- Sort reviews by Rating in descending order -->
-    var sortedReviews = Model.Reviews.OrderByDescending(r => r.Rating);
+    // Filter and sort reviews - only show non-disputed and invalid dispute reviews
+    var validReviews = Model.Reviews
+        .Where(r => r.DisputeStatus == DisputeStatus.NoDispute || r.DisputeStatus == DisputeStatus.InvalidDispute)
+        .OrderByDescending(r => r.Rating);
 
-            <table class="table" style="border-collapse: collapse; width: 100%;">
-                <thead>
-                    <tr style="border-bottom: 2px solid black;">
-                        <th style="border-right: 2px solid black;">Rating</th>
-                        <th style="border-right: 2px solid black;">Customer Comment</th>
-                        <th style="border-right: 2px solid black;">Host Comment</th>
-                        <th>Details</th>
+    if (validReviews.Any())
+    {
+        <table class="table" style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr style="border-bottom: 2px solid black;">
+                    <th style="border-right: 2px solid black;">Rating</th>
+                    <th style="border-right: 2px solid black;">Customer Comment</th>
+                    <th style="border-right: 2px solid black;">Host Comment</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var review in validReviews)
+                {
+                    <tr>
+                        <!-- Rating column with bold text and right border -->
+                        <td style="font-weight: bold; border-right: 2px solid black; text-align: center;">
+                            @Html.DisplayFor(modelItem => review.Rating)
+                        </td>
+                        <!-- Customer Comment with conditional check and right border -->
+                        <td style="white-space: normal; word-wrap: break-word; border-right: 2px solid black; padding: 10px;">
+                            @if (!string.IsNullOrEmpty(review.ReviewText))
+                            {
+                                @Html.DisplayFor(modelItem => review.ReviewText)
+                            }
+                            else
+                            {
+                                <span style="font-style: italic; color: gray;">No customer comments available.</span>
+                            }
+                        </td>
+                        <!-- Host Comment with conditional check and right border -->
+                        <td style="white-space: normal; word-wrap: break-word; border-right: 2px solid black; padding: 10px;">
+                            @if (!string.IsNullOrEmpty(review.HostComments))
+                            {
+                                @Html.DisplayFor(modelItem => review.HostComments)
+                            }
+                            else
+                            {
+                                <span style="font-style: italic; color: gray;">No host comments available.</span>
+                            }
+                        </td>
+                        <!-- Dispute Status -->
+                        <td style="text-align: center;">
+                            @if (review.DisputeStatus == DisputeStatus.InvalidDispute)
+                            {
+                                <span class="badge bg-warning">Dispute Rejected</span>
+                            }
+                        </td>
+                        <!-- Details column -->
+                        <td style="text-align: center;">
+                            <a asp-action="Details" asp-controller="Reviews" asp-route-id="@review.ReviewID">View Details</a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-            @foreach (var review in sortedReviews)
-            {
-                                <tr>
-                                    <!-- Rating column with bold text and right border -->
-                                    <td style="font-weight: bold; border-right: 2px solid black; text-align: center;">
-                        @Html.DisplayFor(modelItem => review.Rating)
-                                    </td>
-                                    <!-- Customer Comment with conditional check and right border -->
-                                    <td style="white-space: normal; word-wrap: break-word; border-right: 2px solid black; padding: 10px;">
-                        @if (!string.IsNullOrEmpty(review.ReviewText))
-                        {
-                            @Html.DisplayFor(modelItem => review.ReviewText)
-                        }
-                        else
-                        {
-                                                    <span style="font-style: italic; color: gray;">No customer comments available.</span>
-                        }
-                                    </td>
-                                    <!-- Host Comment with conditional check and right border -->
-                                    <td style="white-space: normal; word-wrap: break-word; border-right: 2px solid black; padding: 10px;">
-                        @if (!string.IsNullOrEmpty(review.HostComments))
-                        {
-                            @Html.DisplayFor(modelItem => review.HostComments)
-                        }
-                        else
-                        {
-                                                    <span style="font-style: italic; color: gray;">No host comments available.</span>
-                        }
-                                    </td>
-                                    <!-- Details column -->
-                                    <td style="text-align: center;">
-                                        <a asp-action="Details" asp-controller="Reviews" asp-route-id="@review.ReviewID">View Details</a>
-                                    </td>
-                                </tr>
-            }
-                </tbody>
-            </table>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No valid reviews available for this property.</p>
+    }
 }
 else
 {
-            <p>No reviews available for this property.</p>
+    <p>No reviews available for this property.</p>
 }
 
 @if (User.Identity.IsAuthenticated)

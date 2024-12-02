@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -248,8 +248,9 @@ namespace BevoBnB.Controllers
             }
 
             // Calculate average rating for the property
-            ViewBag.AvgRating = property.Reviews != null && property.Reviews.Any()
-                ? property.Reviews.Average(r => r.Rating).ToString("0.0")
+            var validReviews = property.Reviews?.Where(r => r.DisputeStatus == DisputeStatus.NoDispute || r.DisputeStatus == DisputeStatus.InvalidDispute);
+            ViewBag.AvgRating = validReviews != null && validReviews.Any()
+                ? validReviews.Average(r => r.Rating).ToString("0.0")
                 : "No Ratings Yet";
 
             // Return the property details view

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BevoBnB.Models
@@ -137,7 +137,17 @@ namespace BevoBnB.Models
                 return 0;
             }
 
-            return (int)Math.Round(Reviews.Average(p => p.Rating), 1);
+            // Only include reviews that are not disputed or have invalid disputes
+            var validReviews = Reviews.Where(r => r.DisputeStatus == DisputeStatus.NoDispute || r.DisputeStatus == DisputeStatus.InvalidDispute);
+            
+            if (!validReviews.Any())
+            {
+                return 0;
+            }
+
+            // Calculate average first (with explicit cast from double to decimal), then round to 1 decimal place
+            decimal average = (decimal)validReviews.Average(p => p.Rating);
+            return Math.Round(average, 1);
         }
     }
 }
