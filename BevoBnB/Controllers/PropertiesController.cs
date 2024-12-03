@@ -64,7 +64,6 @@ namespace BevoBnB.Controllers
         }
 
 
-
         [AllowAnonymous]
         public IActionResult DisplaySearchResults(PropertySearchViewModel psvm)
         {
@@ -76,6 +75,9 @@ namespace BevoBnB.Controllers
                 .Where(p => p.PropertyStatus == PropertyStatus.Approved &&
                             p.PropertyStatus != PropertyStatus.Inactive &&
                             p.PropertyStatus != PropertyStatus.Unapproved);
+
+            // Count all approved properties before applying any filters
+            int totalPropertiesCount = query.Count();
 
             if (!string.IsNullOrEmpty(psvm.City))
             {
@@ -169,12 +171,13 @@ namespace BevoBnB.Controllers
                 }
             }
 
-            ViewBag.AllProperties = query.Count();
-            ViewBag.SelectedProperties = properties.Count;
+            ViewBag.AllProperties = totalPropertiesCount; // Use total count before filtering
+            ViewBag.SelectedProperties = properties.Count; // Use count after filtering
             ViewBag.AllCategories = GetAllCategories();
 
             return View("Index", properties);
         }
+
 
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Unapproved()
