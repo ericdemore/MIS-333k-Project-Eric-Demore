@@ -9,23 +9,17 @@
 <!-- General Search Form -->
 <form asp-action="Index" method="get" class="mb-4">
     <div class="row g-3">
-        <!-- General Search -->
-        <div class="col-md-4">
-            <label for="searchString" class="form-label">Have a Destination in Mind?</label>
-            <input type="text" name="searchString" id="searchString" class="form-control" placeholder="Search a City (e.g., Erictown) or State (e.g., TX)" value="@ViewData["SearchString"]" />
-        </div>
-
-        <!-- Buttons (Placed in a new row below the input) -->
-        <div class="col-12 mt-3">
-            <button type="submit" class="btn btn-primary me-2">Search</button>
-            <a asp-action="Index" class="btn btn-danger me-2">Clear Search</a>
-            <!-- Offcanvas Trigger for Detailed Search -->
-            <a class="btn btn-light" data-bs-toggle="offcanvas" href="#propertySearchOffcanvas" role="button" aria-controls="propertySearchOffcanvas">
+        <!-- Property Search Call-to-Action -->
+        <div class="mt-4 text-center">
+            <p class="text-muted">
+                Find properties by <strong>features</strong> like <strong>city</strong>, <strong>price</strong>, or <strong>amenities</strong>. Use the <strong>Detailed Search</strong> for more options.
+            </p>
+            <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#propertySearchOffcanvas" role="button" aria-controls="propertySearchOffcanvas">
                 Detailed Search
             </a>
         </div>
-    </div>
-    <strong>Showing @ViewBag.SelectedProperties of @ViewBag.AllProperties Properties</strong>
+
+        <strong>Showing @ViewBag.SelectedProperties of @ViewBag.AllProperties Properties</strong>
 
 </form>
 
@@ -158,6 +152,7 @@
 
             <!-- Submit Button -->
             <button type="submit" class="btn btn-primary mt-3">Search</button>
+
         </form>
     </div>
 </div>
