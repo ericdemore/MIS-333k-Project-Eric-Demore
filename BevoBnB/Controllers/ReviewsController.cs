@@ -31,16 +31,17 @@ namespace BevoBnB.Controllers
 
             if (user == null)
             {
-                return RedirectToAction("AccessDenied", "Account");
+                return RedirectToAction("AccessDenied", "Account"); //QUESTION: this should probably lead to an error view with a detailed messaged?
             }
 
+            //NOTE: you could've used if (use.isinrole"")
             if (await _userManager.IsInRoleAsync(user, "Host"))
             {
                 // Host: Show reviews for properties owned by the host
                 var hostReviews = await _context.Reviews
                     .Include(r => r.Property)
                     .Where(r => r.Property.User.Id == user.Id)
-                    .OrderBy(r => r.DisputeStatus == DisputeStatus.NoDispute ? 0 : 1)
+                    .OrderBy(r => r.DisputeStatus == DisputeStatus.NoDispute ? 0 : 1) //QUESTION: what is this doing??
                     .ToListAsync();
 
                 return View(hostReviews);
@@ -66,6 +67,7 @@ namespace BevoBnB.Controllers
                 return View(allReviews);
             }
 
+            //QUESTION: what is forbid? return to an error view with a detailed message
             return Forbid(); // Deny access for unauthorized roles
         }
 
@@ -77,7 +79,7 @@ namespace BevoBnB.Controllers
 
             if (user == null)
             {
-                return RedirectToAction("AccessDenied", "Account");
+                return RedirectToAction("AccessDenied", "Account"); //again send them to an error view with a detailed error on why it failed
             }
 
             // Fetch properties the customer has reserved and not reviewed, and check reservation date

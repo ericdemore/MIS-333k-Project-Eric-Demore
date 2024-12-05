@@ -42,15 +42,6 @@ namespace BevoBnB.Controllers
             // Count all approved properties before applying the filter
             int totalPropertiesCount = await approvedPropertiesQuery.CountAsync();
 
-            // Apply the search filter if searchString is provided
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                approvedPropertiesQuery = approvedPropertiesQuery.Where(p =>
-                    (p.City != null && EF.Functions.Like(p.City, $"%{searchString}%")) || // Match city names
-                    (p.State.ToString() != null && EF.Functions.Like(p.State.ToString(), $"%{searchString.ToUpper()}%")) // Match state abbreviations
-                );
-            }
-
             // Execute the filtered query and load results
             List<Property> filteredProperties = await approvedPropertiesQuery.ToListAsync();
 
@@ -68,9 +59,10 @@ namespace BevoBnB.Controllers
         [AllowAnonymous]
         public IActionResult DisplaySearchResults(PropertySearchViewModel psvm)
         {
+
             var query = _context.Properties
                 .Include(p => p.User)
-                .Include(p => p.Reviews) // Ensure Reviews are loaded
+                .Include(p => p.Reviews)
                 .Include(p => p.Category)
                 .Include(p => p.Reservations)
                 .Where(p => p.PropertyStatus == PropertyStatus.Approved &&
@@ -101,12 +93,31 @@ namespace BevoBnB.Controllers
 
             if (psvm.Bedrooms != null)
             {
-                query = query.Where(p => p.Bedrooms == psvm.Bedrooms);
+                if (psvm.BedroomsRange == null || psvm.BedroomsRange == PSVMRange.GreaterThan)
+                {
+                    query = query.Where(p => p.Bedrooms >= psvm.Bedrooms);
+                }
+                else if (psvm.BedroomsRange == PSVMRange.LessThan)
+                {
+                    query = query.Where(p => p.Bedrooms <= psvm.Bedrooms);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(psvm.StreetAddress))
+            {
+                query = query.Where(p => p.StreetAddress.Contains(psvm.StreetAddress));
             }
 
             if (psvm.Bathrooms != null)
             {
-                query = query.Where(p => p.Bathrooms == psvm.Bathrooms);
+                if (psvm.BathroomsRange == null || psvm.BathroomsRange == PSVMRange.GreaterThan)
+                {
+                    query = query.Where(p => p.Bathrooms >= psvm.Bathrooms);
+                }
+                else if (psvm.BathroomsRange == PSVMRange.LessThan)
+                {
+                    query = query.Where(p => p.Bathrooms <= psvm.Bathrooms);
+                }
             }
 
             if (psvm.PetsAllowed != null)
@@ -169,7 +180,10 @@ namespace BevoBnB.Controllers
                 }
             }
 
-            ViewBag.AllProperties = query.Count();
+            int totalApprovedProperties = _context.Properties.Count(p => p.PropertyStatus == PropertyStatus.Approved);
+
+
+            ViewBag.AllProperties = totalApprovedProperties;
             ViewBag.SelectedProperties = properties.Count;
             ViewBag.AllCategories = GetAllCategories();
 
@@ -316,6 +330,7 @@ namespace BevoBnB.Controllers
 
             myProperties = _context.Properties
                 .Include(p => p.User)
+                .Include(p => p.Category)
                 .Where(p => p.User.Email == user.Email)
                 .ToList();
 
@@ -528,6 +543,98 @@ namespace BevoBnB.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        [Authorize]
+        public IActionResult AddUnavailableDate()
+        {
+            var userId = _userManager.GetUserId(User);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return View("Error", new string[] { "You must be logged in to manage properties." });
+            }
+
+            var properties = _context.Properties
+                .Where(p => p.User.Id == userId)
+                .Select(p => new
+                {
+                    p.PropertyID,
+                    DisplayText = p.StreetAddress
+                })
+                .OrderBy(p => p.DisplayText)
+                .ToList();
+
+            ViewBag.Properties = new SelectList(properties, "PropertyID", "DisplayText");
+
+            return View(new AddUnavailableDateViewModel());
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddUnavailableDate(AddUnavailableDateViewModel model)
+        {
+            // Get the logged-in user's ID
+            var userIdCheck = _userManager.GetUserId(User);
+
+            // Fetch the property with its reservations (exclude unavailable dates from Include)
+            var property = _context.Properties
+                .Include(p => p.Reservations)
+                .FirstOrDefault(p => p.PropertyID == model.PropertyID && p.User.Id == userIdCheck);
+
+            if (property == null)
+            {
+                ViewBag.Error = "You are not authorized to manage this property.";
+                ViewBag.Properties = GetAllPropertiesSelectList(userIdCheck);
+                return View(model);
+            }
+
+            // Check if the unavailable date is already in the list
+            if (property.UnavailableDates.Contains(model.UnavailableDate))
+            {
+                ViewBag.Error = "This date is already marked as unavailable.";
+                ViewBag.Properties = GetAllPropertiesSelectList(userIdCheck);
+                return View(model);
+            }
+
+            // Check if there are any valid reservations conflicting with the unavailable date
+            bool hasValidReservationConflict = property.Reservations.Any(reservation =>
+                reservation.ReservationStatus == ReservationStatus.Valid &&
+                (
+                    (reservation.CheckIn <= model.UnavailableDate && reservation.CheckOut > model.UnavailableDate) ||
+                    reservation.CheckIn == model.UnavailableDate ||
+                    reservation.CheckOut == model.UnavailableDate
+                ));
+
+            if (hasValidReservationConflict)
+            {
+                ViewBag.Error = "You cannot mark this date as unavailable because it conflicts with a valid reservation.";
+                ViewBag.Properties = GetAllPropertiesSelectList(userIdCheck);
+                return View(model);
+            }
+
+            // Add the new unavailable date to the list
+            property.UnavailableDates.Add(model.UnavailableDate);
+
+            // Save changes to the database
+            try
+            {
+                _context.SaveChanges();
+                ViewBag.Message = "Unavailable date added successfully.";
+                ViewBag.Properties = GetAllPropertiesSelectList(userIdCheck);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = $"An error occurred while adding the unavailable date: {ex.Message}";
+                ViewBag.Properties = GetAllPropertiesSelectList(userIdCheck);
+                return View(model);
+            }
+        }
+
+
+
+
 
         // GET: Properties/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -635,6 +742,28 @@ namespace BevoBnB.Controllers
             return new SelectList(categories, "CategoryID", "CategoryName");
         }
 
+        private SelectList GetAllPropertiesSelectList(string userId)
+        {
+            // Retrieve the list of properties for the specified user
+            var properties = _context.Properties
+                .Where(p => p.User.Id == userId)
+                .ToList();
+
+            // Add a default option to prompt property selection
+            var propertySelectList = properties
+                .Select(p => new
+                {
+                    p.PropertyID,
+                    DisplayText = p.StreetAddress // Only show the street address
+                })
+                .OrderBy(p => p.DisplayText)
+                .ToList();
+
+            // Insert a default "Select a Property" entry
+            propertySelectList.Insert(0, new { PropertyID = 0, DisplayText = "Select a Property" });
+
+            return new SelectList(propertySelectList, "PropertyID", "DisplayText");
+        }
 
     }
 }

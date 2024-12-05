@@ -1,0 +1,38 @@
+﻿@model AddUnavailableDateViewModel
+
+@{
+    ViewData["Title"] = "Add Unavailable Date";
+}
+
+<h2>Add Unavailable Date</h2>
+
+<!-- Display Success or Error Messages -->
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">@ViewBag.Message</div>
+}
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+<form asp-action="AddUnavailableDate" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- Dropdown for selecting a property -->
+    <div class="form-group mb-3">
+        <label asp-for="PropertyID" class="form-label font-weight-bold">Property Address</label>
+        @Html.DropDownListFor(model => model.PropertyID, (SelectList)ViewBag.Properties, new { @class = "form-control" })
+        <span asp-validation-for="PropertyID" class="text-danger"></span>
+    </div>
+
+    <!-- Input for selecting an unavailable date -->
+    <div class="form-group mb-3">
+        <label asp-for="UnavailableDate" class="form-label font-weight-bold">Unavailable Date</label>
+        <input asp-for="UnavailableDate" class="form-control" type="date" />
+        <span asp-validation-for="UnavailableDate" class="text-danger"></span>
+    </div>
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary">Add Date</button>
+</form>

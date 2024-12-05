@@ -50,6 +50,17 @@
                             </div>
                         </li>
                     }
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Customer"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Properties
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-controller="Properties" asp-action="Index">Properties</a>
+                            </div>
+                        </li>
+                    }
                     else if (!User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">

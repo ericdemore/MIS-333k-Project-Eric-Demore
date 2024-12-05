@@ -22,6 +22,8 @@ namespace BevoBnB.Models
 
     public class PropertySearchViewModel
     {
+        [Display(Name = "Street Address")]
+        public string? StreetAddress { get; set; }
 
         [Display(Name = "City")]
         public string? City { get; set; }
@@ -42,13 +44,13 @@ namespace BevoBnB.Models
         public PSVMRange? MaxGuestsRange { get; set; }
 
         [Display(Name = "Bedrooms")]
-        [Range(0, int.MaxValue, ErrorMessage = "Bedrooms must be a non-negative number.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Bedrooms must be a non-negative number.")]
         public int? Bedrooms { get; set; }
 
         public PSVMRange? BedroomsRange { get; set; }
 
         [Display(Name = "Bathrooms")]
-        [Range(0, int.MaxValue, ErrorMessage = "Bathrooms must be a non-negative number.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Bathrooms must be a non-negative number.")]
         public int? Bathrooms { get; set; }
 
         public PSVMRange? BathroomsRange { get; set; }

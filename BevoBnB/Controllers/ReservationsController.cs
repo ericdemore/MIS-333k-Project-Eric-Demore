@@ -31,7 +31,6 @@ namespace BevoBnB.Controllers
         public async Task<IActionResult> Index()
         {
             // query for all reservations 
-            // Set up a list of reservations to display
             List<Reservation> reservations;
 
             // Admin sees all reservations
@@ -489,9 +488,10 @@ namespace BevoBnB.Controllers
 
             // Find the reservation in the database, include related details
             Reservation reservation = _context.Reservations
-                                      .Include(r => r.Property)
-                                      .Include(r => r.User)
-                                      .FirstOrDefault(r => r.ReservationID == id);
+                              .Include(r => r.Property)
+                              .ThenInclude(p => p.User)
+                              .Include(r => r.User)
+                              .FirstOrDefault(r => r.ReservationID == id);
 
             // Reservation was not found
             if (reservation == null)
@@ -532,9 +532,10 @@ namespace BevoBnB.Controllers
 
             // Retrieve the reservation from the database
             var dbReservation = _context.Reservations
-                                         .Include(r => r.Property)
-                                         .Include(r => r.User)
-                                         .FirstOrDefault(r => r.ReservationID == id);
+                             .Include(r => r.Property)
+                             .ThenInclude(p => p.User)
+                             .Include(r => r.User)  
+                             .FirstOrDefault(r => r.ReservationID == id);
 
             if (dbReservation == null)
             {

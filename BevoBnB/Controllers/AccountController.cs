@@ -8,6 +8,7 @@ using BevoBnB.Models;
 using BevoBnB.Utilities;
 using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 
 namespace BevoBnB.Controllers
@@ -511,6 +512,84 @@ namespace BevoBnB.Controllers
 
             return View(filteredUsers);
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminChangePassword()
+        {
+            // Set the users list in the ViewBag
+            ViewBag.Users = GetAllUsersSelectList();
+
+            // Return the view
+            return View();
+        }
+
+
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AdminChangePassword(AdminChangePasswordViewModel model)
+        {
+
+            // Find the user by the provided UserID
+            var user = await _userManager.FindByIdAsync(model.UserID);
+
+            if (user == null)
+            {
+                // Handle case where the user is not found
+                ModelState.AddModelError(string.Empty, "The specified user was not found.");
+                ViewBag.Users = GetAllUsersSelectList();
+                return View(model);
+            }
+
+            // Remove the old password hash (optional, but ensures no leftover data)
+            user.PasswordHash = null;
+
+            // Set the new password
+            var passwordHasher = new PasswordHasher<AppUser>();
+            user.PasswordHash = passwordHasher.HashPassword(user, model.NewPassword);
+
+            // Update the user in the database
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                // Provide feedback and redirect
+                TempData["Message"] = "Password changed successfully.";
+                return RedirectToAction("Profiles", "Account"); // Redirect to a relevant page
+            }
+            else
+            {
+                // Add any errors to the model state
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                // Reload the user list in ViewBag and return the view
+                ViewBag.Users = GetAllUsersSelectList();
+                return View(model);
+            }
+        }
+
+
+
+        private SelectList GetAllUsersSelectList()
+        {
+            // Retrieve the list of users from the database
+            List<AppUser> userList = _context.Users.ToList();
+
+            // Add a dummy entry to prompt user selection
+            AppUser selectNone = new AppUser { Id = "0", Email = "Select a User" };
+            userList.Insert(0, selectNone); // Insert at the beginning of the list
+
+            // Convert the list to a SelectList, ordering by Email
+            SelectList userSelectList = new SelectList(userList.OrderBy(u => u.Email), "Id", "Email");
+
+            // Return the SelectList
+            return userSelectList;
+        }
+
 
         private bool Is18OrOlder(DateTime dob)
         {

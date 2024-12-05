@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace BevoBnB.ViewModels
+namespace BevoBnB.Models
 {
     public class PropertyDetailsViewModel
     {
@@ -18,5 +19,16 @@ namespace BevoBnB.ViewModels
         public string UserName { get; set; }
         public int Rating { get; set; }
         public string ReviewText { get; set; }
+    }
+
+    public class AddUnavailableDateViewModel
+    {
+        [Required]
+        public int PropertyID { get; set; }
+
+        [Required(ErrorMessage = "Please provide a valid date.")]
+        [DataType(DataType.Date)]
+        [Display(Name = "Unavailable Date")]
+        public DateTime UnavailableDate { get; set; }
     }
 }
