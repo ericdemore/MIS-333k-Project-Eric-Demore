@@ -298,6 +298,15 @@ namespace BevoBnB.Controllers
                 ivm.HireStatus = user.HireStatus == HireStatus.Employed ? "Employee" : "Terminated Employee";
             }
 
+            var reservations = _context.Reservations
+                                .Include(r => r.Property)
+                                .Where(r => r.User.Id == user.Id &&
+                                            (r.ReservationStatus == ReservationStatus.Valid || r.ReservationStatus == ReservationStatus.Cancelled))
+                                .ToList();
+
+            // reservations
+            ViewBag.Reservations = reservations;
+
             // Send data to the view
             return View(ivm);
         }

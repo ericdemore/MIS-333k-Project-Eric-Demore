@@ -489,7 +489,7 @@ namespace BevoBnB.Controllers
             // Find the reservation in the database, include related details
             Reservation reservation = _context.Reservations
                               .Include(r => r.Property)
-                              .ThenInclude(p => p.User)
+                                .ThenInclude(p => p.User)
                               .Include(r => r.User)
                               .FirstOrDefault(r => r.ReservationID == id);
 

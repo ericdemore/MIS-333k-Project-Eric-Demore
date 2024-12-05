@@ -59,3 +59,40 @@
         </p>
     </div>
 </div>
+
+
+<div class="container mt-4">
+    <h3>Reservation History</h3>
+    <table class="table table-bordered table-striped">
+        <thead class="table-primary">
+            <tr>
+                <th>Reservation ID</th>
+                <th>Property</th>
+                <th>Check-In</th>
+                <th>Check-Out</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.Reservations != null && ((List<Reservation>)ViewBag.Reservations).Any())
+            {
+                foreach (var reservation in (List<Reservation>)ViewBag.Reservations)
+                {
+                    <tr>
+                        <td>@reservation.ReservationID</td>
+                        <td>@reservation.Property.StreetAddress</td>
+                        <td>@reservation.CheckIn.ToString("MM/dd/yyyy")</td>
+                        <td>@reservation.CheckOut.ToString("MM/dd/yyyy")</td>
+                        <td>@reservation.ReservationStatus</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">No reservations found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
