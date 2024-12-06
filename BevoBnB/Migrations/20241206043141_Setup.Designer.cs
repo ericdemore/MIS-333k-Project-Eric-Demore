@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BevoBnB.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241127001954_Setup")]
+    [Migration("20241206043141_Setup")]
     partial class Setup
     {
         /// <inheritdoc />
@@ -141,7 +141,7 @@ namespace BevoBnB.Migrations
                     b.Property<int>("Bedrooms")
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryID")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("City")
@@ -198,7 +198,7 @@ namespace BevoBnB.Migrations
 
                     b.HasKey("PropertyID");
 
-                    b.HasIndex("CategoryID");
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("UserId");
 
@@ -435,7 +435,7 @@ namespace BevoBnB.Migrations
                 {
                     b.HasOne("BevoBnB.Models.Category", "Category")
                         .WithMany("Properties")
-                        .HasForeignKey("CategoryID")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

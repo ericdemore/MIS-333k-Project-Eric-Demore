@@ -200,8 +200,8 @@ namespace BevoBnB.Migrations
                     MinNightsforDiscount = table.Column<int>(type: "int", nullable: true),
                     UnavailableDates = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PropertyStatus = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CategoryID = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -212,8 +212,8 @@ namespace BevoBnB.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Properties_Categories_CategoryID",
-                        column: x => x.CategoryID,
+                        name: "FK_Properties_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "CategoryID",
                         onDelete: ReferentialAction.Cascade);
@@ -323,9 +323,9 @@ namespace BevoBnB.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Properties_CategoryID",
+                name: "IX_Properties_CategoryId",
                 table: "Properties",
-                column: "CategoryID");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Properties_UserId",
