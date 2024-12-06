@@ -391,6 +391,7 @@ namespace BevoBnB.Controllers
             var myPropertiesQuery = _context.Properties
                 .Include(p => p.User)
                 .Include(p => p.Category)
+                .Include(p => p.Reviews) // Include Reviews for rating calculation
                 .Where(p => p.User.Email == user.Email);
 
             List<Property> myProperties = await myPropertiesQuery.ToListAsync();
