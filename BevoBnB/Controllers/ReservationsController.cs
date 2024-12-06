@@ -622,19 +622,20 @@ namespace BevoBnB.Controllers
                     errorMessages.Add("The selected dates include one or more days that are unavailable for reservations.");
                 }
 
-                // Check for conflicts in the selected customer's shopping cart
+                // Check for conflicts in the user's shopping cart
                 var userShoppingCart = _context.Reservations
-                    .Include(r => r.User)
                     .Where(r => r.User.Id == dbReservation.User.Id && r.ReservationStatus == ReservationStatus.Pending)
                     .ToList();
 
-                AppUser user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
-
-                if (ShoppingCartDateConflict(dbReservation, userShoppingCart))
+                if (EditShoppingCartDateConflict(dbReservation, userShoppingCart))
                 {
-                    errorMessages.Add("The selected dates conflict with a pending reservation in the customer's shopping cart.");
+                    errorMessages.Add("The selected dates conflict with a pending reservation in your shopping cart.");
                 }
 
+                if (ExistingReservationsAlready(dbReservation))
+                {
+                    errorMessages.Add("You already have a reservation that overlaps with these dates for a different property.");
+                }
 
                 // If errors exist, show them
                 if (errorMessages.Any())
@@ -711,7 +712,7 @@ namespace BevoBnB.Controllers
             await _context.SaveChangesAsync();
 
             // Redirect to the Index page of the Properties controller
-            TempData["SuccessMessage"] = "Property successfully added to the cart!";
+            TempData["SuccessMessage"] = "Property successfully added to the cart! Make sure to choose what date you want to reserve it for.";
             return RedirectToAction("Index", "Properties");
         }
 
@@ -1021,6 +1022,44 @@ namespace BevoBnB.Controllers
 
             return false;
         }
+        private bool EditShoppingCartDateConflict(Reservation newReservation, List<Reservation> cartReservations)
+        {
+            if (newReservation == null || cartReservations == null || !cartReservations.Any())
+            {
+                return false;
+            }
 
+            foreach (var existingReservation in cartReservations)
+            {
+                // Skip the reservation being updated
+                if (existingReservation.ReservationID == newReservation.ReservationID)
+                {
+                    continue;
+                }
+
+                // Skip reservations with invalid or placeholder dates
+                if (existingReservation.CheckIn == DateTime.MinValue || existingReservation.CheckOut == DateTime.MinValue)
+                {
+                    continue;
+                }
+
+                // Check for overlapping dates
+                if (newReservation.CheckIn < existingReservation.CheckOut &&
+                    newReservation.CheckOut > existingReservation.CheckIn)
+                {
+                    // Allow back-to-back reservations
+                    if (newReservation.CheckOut == existingReservation.CheckIn ||
+                        newReservation.CheckIn == existingReservation.CheckOut)
+                    {
+                        continue;
+                    }
+
+                    // Conflict found
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
