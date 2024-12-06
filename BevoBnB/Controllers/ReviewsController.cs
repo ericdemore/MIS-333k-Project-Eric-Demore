@@ -219,6 +219,7 @@ namespace BevoBnB.Controllers
                 return NotFound();
             }
 
+            // Ensure that only the host or customer can edit the review
             if (await _userManager.IsInRoleAsync(user, "Host") && review.Property.User.Id != user.Id)
             {
                 return Forbid();
@@ -231,8 +232,14 @@ namespace BevoBnB.Controllers
 
             if (await _userManager.IsInRoleAsync(user, "Host"))
             {
-                // Host can only update HostComments
+                // Host can update HostComments
                 review.HostComments = model.HostComments;
+
+                // If host added comments and the dispute status is NoDispute, change it to Disputed
+                if (!string.IsNullOrEmpty(review.HostComments) && review.DisputeStatus == DisputeStatus.NoDispute)
+                {
+                    review.DisputeStatus = DisputeStatus.Disputed;
+                }
             }
             else if (await _userManager.IsInRoleAsync(user, "Customer"))
             {
@@ -241,6 +248,7 @@ namespace BevoBnB.Controllers
                 review.ReviewText = model.ReviewText;
             }
 
+            // Save changes to the review
             if (!ModelState.IsValid)
             {
                 _context.Reviews.Update(review);
@@ -254,6 +262,9 @@ namespace BevoBnB.Controllers
 
             return View(review);
         }
+
+
+
 
         //Change Dispute Status
         [HttpPost]
@@ -285,7 +296,7 @@ namespace BevoBnB.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //submite the dispute
+        //submit dispute
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Host")]
@@ -313,16 +324,26 @@ namespace BevoBnB.Controllers
                 return Forbid();
             }
 
-            // Mark the review as disputed and allow the host to add comments
-            review.DisputeStatus = DisputeStatus.Disputed;
+            // Update the HostComments and check if the dispute status is NoDispute
             review.HostComments = hostComments;
 
+            // If host added comments and the dispute status is NoDispute, change it to Disputed
+            if (!string.IsNullOrEmpty(review.HostComments) && review.DisputeStatus == DisputeStatus.NoDispute)
+            {
+                review.DisputeStatus = DisputeStatus.Disputed;
+            }
+
+            // Save the review with updated HostComments and DisputeStatus
             _context.Reviews.Update(review);
             await _context.SaveChangesAsync();
 
+            // After submitting the dispute, redirect back to the review index page
             TempData["Message"] = "The review has been disputed and is awaiting admin review.";
             return RedirectToAction("Index");
         }
+
+
+
 
         //Resolve Dispute
         [HttpPost]
