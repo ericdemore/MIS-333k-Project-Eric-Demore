@@ -20,34 +20,72 @@ namespace BevoBnB.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
-            return View();
+            var viewModel = new ReportViewModel
+            {
+                Categories = _context.Categories.OrderBy(c => c.CategoryName).ToList()
+            };
+            return View(viewModel);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(DateTime startDate, DateTime endDate)
+        public IActionResult Create(DateTime? startDate, DateTime? endDate, string? zipCode, int? categoryId, States? state, string? city, int? propertyNumber)
         {
-            if (endDate < startDate)
+            if (endDate.HasValue && startDate.HasValue && endDate < startDate)
             {
                 ModelState.AddModelError("", "End date must be after the start date.");
-                return View();
             }
 
             var reservations = _context.Reservations
                 .Include(r => r.Property)
-                .Where(r => r.ReservationStatus == ReservationStatus.Valid &&
-                            r.CheckIn <= endDate && r.CheckOut >= startDate)
-                .ToList();
+                .Where(r => r.ReservationStatus == ReservationStatus.Valid);
 
-            var totalRevenue = reservations.Sum(r => r.StayTotal);
+            if (startDate.HasValue)
+            {
+                reservations = reservations.Where(r => r.CheckOut >= startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                reservations = reservations.Where(r => r.CheckIn <= endDate.Value);
+            }
+
+            if (!string.IsNullOrWhiteSpace(zipCode))
+            {
+                reservations = reservations.Where(r => r.Property.ZipCode == zipCode);
+            }
+
+            if (categoryId.HasValue)
+            {
+                reservations = reservations.Where(r => r.Property.CategoryId == categoryId.Value);
+            }
+
+            if (state.HasValue)
+            {
+                reservations = reservations.Where(r => r.Property.State == state.Value);
+            }
+
+            if (!string.IsNullOrWhiteSpace(city))
+            {
+                reservations = reservations.Where(r => r.Property.City.ToLower() == city.ToLower());
+            }
+
+            if (propertyNumber.HasValue)
+            {
+                reservations = reservations.Where(r => r.Property.PropertyNumber == propertyNumber.Value);
+            }
+
+            var reservationsList = reservations.ToList();
+
+            var totalRevenue = reservationsList.Sum(r => r.StayTotal);
             var totalCommission = totalRevenue * 0.10m;
-            var totalReservations = reservations.Count;
+            var totalReservations = reservationsList.Count;
             var averageCommissionPerReservation = totalReservations > 0
                 ? totalCommission / totalReservations
                 : 0;
 
-            var totalProperties = reservations
+            var totalProperties = reservationsList
                 .Where(r => r.Property != null)
                 .Select(r => r.Property.PropertyNumber)
                 .Distinct()
@@ -61,22 +99,34 @@ namespace BevoBnB.Controllers
                 AverageCommissionPerReservation = averageCommissionPerReservation,
                 TotalProperties = totalProperties,
                 StartDate = startDate,
-                EndDate = endDate
+                EndDate = endDate,
+                ZipCode = zipCode,
+                CategoryId = categoryId,
+                State = state,
+                City = city,
+                PropertyNumber = propertyNumber,
+                Categories = _context.Categories.OrderBy(c => c.CategoryName).ToList()
             };
 
             return View("Details", reportViewModel);
         }
 
+
+
         [Authorize(Roles = "Host")]
         public IActionResult HostReport()
         {
-            return View(new HostReportViewModel());
+            var viewModel = new HostReportViewModel
+            {
+                Categories = _context.Categories.OrderBy(c => c.CategoryName).ToList()
+            };
+            return View(viewModel);
         }
 
         [Authorize(Roles = "Host")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult HostReport(DateTime? startDate, DateTime? endDate)
+        public IActionResult HostReport(DateTime? startDate, DateTime? endDate, string? zipCode, int? categoryId, States? state, string? city)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -96,6 +146,22 @@ namespace BevoBnB.Controllers
             {
                 reservations = reservations.Where(r => r.CheckIn <= endDate.Value);
             }
+            if (!string.IsNullOrWhiteSpace(zipCode))
+            {
+                reservations = reservations.Where(r => r.Property.ZipCode == zipCode);
+            }
+            if (categoryId.HasValue)
+            {
+                reservations = reservations.Where(r => r.Property.CategoryId == categoryId.Value);
+            }
+            if (state.HasValue)
+            {
+                reservations = reservations.Where(r => r.Property.State == state.Value);
+            }
+            if (!string.IsNullOrWhiteSpace(city))
+            {
+                reservations = reservations.Where(r => r.Property.City.ToLower() == city.ToLower());
+            }
 
             // Materialize the query and perform grouping in memory
             var reservationsList = reservations.ToList();
@@ -112,11 +178,23 @@ namespace BevoBnB.Controllers
                 })
                 .ToList();
 
+            // Calculate the total number of properties with reservations in the date range
+            var propertiesWithReservations = reservationsList
+                .Select(r => r.Property.PropertyID)
+                .Distinct()
+                .Count();
+
             var viewModel = new HostReportViewModel
             {
                 StartDate = startDate,
                 EndDate = endDate,
-                PropertyDetails = propertyDetails
+                ZipCode = zipCode,
+                CategoryId = categoryId,
+                State = state,
+                City = city,
+                Categories = _context.Categories.OrderBy(c => c.CategoryName).ToList(),
+                PropertyDetails = propertyDetails,
+                PropertiesWithReservations = propertiesWithReservations
             };
 
             return View(viewModel);

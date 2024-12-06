@@ -51,14 +51,22 @@
                 <td>
                     @if (isAdmin)
                     {
-                        <form asp-action="ChangeDisputeStatus" method="post" style="display:inline;">
-                            <input type="hidden" name="reviewId" value="@review.ReviewID" />
-                            <select name="newStatus" class="form-control">
-                                <option value="ValidDispute">Valid Dispute</option>
-                                <option value="InvalidDispute">Invalid Dispute</option>
-                            </select>
-                            <button type="submit" class="btn btn-primary btn-sm mt-1">Update</button>
-                        </form>
+                        <!-- Only show action buttons if DisputeStatus is Disputed -->
+                        @if (review.DisputeStatus == DisputeStatus.Disputed)
+                        {
+                            <form asp-action="ChangeDisputeStatus" method="post" style="display:inline;">
+                                <input type="hidden" name="reviewId" value="@review.ReviewID" />
+                                <select name="newStatus" class="form-control">
+                                    <option value="ValidDispute">Valid Dispute</option>
+                                    <option value="InvalidDispute">Invalid Dispute</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-sm mt-1">Update</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <p>No actions available</p> <!-- Show a message when status is not Disputed -->
+                        }
                     }
                     else if (isCustomer)
                     {

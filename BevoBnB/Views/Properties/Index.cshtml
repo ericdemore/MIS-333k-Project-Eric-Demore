@@ -250,7 +250,16 @@
                     <td>@(item.FreeParking ? "Yes" : "No")</td>
                     <td>@item.WeekdayPricing.ToString("C")</td>
                     <td>@item.WeekendPricing.ToString("C")</td>
-                    <td>@Html.DisplayFor(modelItem => item.AverageRating)</td>
+                    <td>
+                        @if (item.AverageRating == 0 || item.AverageRating == null)
+                        {
+                            <span>No Ratings</span>
+                        }
+                        else
+                        {
+                            @item.AverageRating.ToString("0.00")
+                        }
+                    </td>
                     <td>
                         <a asp-action="Details" asp-route-id="@item.PropertyID">Details</a>
                         @if (item.PropertyStatus == PropertyStatus.Approved && User.IsInRole("Customer"))
@@ -264,7 +273,7 @@
                         @if (User.Identity.IsAuthenticated && (User.IsInRole("Host") || User.IsInRole("Admin")))
                         {
                             <a asp-action="Edit" asp-route-id="@item.PropertyID" style="margin-left: 10px;">Edit</a>
-                           
+
                             @if (item.PropertyStatus == PropertyStatus.Approved && User.IsInRole("Host") && item.User != null && item.User.Email != null && item.User.Email == User.Identity.Name)
                             {
                                 <a asp-action="DeactiveProperty" asp-route-propertyID="@item.PropertyID" class="btn btn-danger" style="margin-top: 10px; display: inline-block;">

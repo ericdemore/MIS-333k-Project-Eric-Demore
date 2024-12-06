@@ -1,17 +1,69 @@
-﻿@{
-    ViewBag.Title = "Create Admin Report";
-}
-
-<h2>Create Admin Report</h2>
-
 <form asp-action="Create" method="post">
-    <div class="form-group">
-        <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" name="startDate" class="form-control" required />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" name="startDate" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" name="endDate" class="form-control" />
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="endDate">End Date:</label>
-        <input type="date" id="endDate" name="endDate" class="form-control" required />
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="zipCode">Zip Code:</label>
+                <input type="text" id="zipCode" name="zipCode" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" class="form-control" />
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Generate Report</button>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="state">State:</label>
+                <select id="state" name="state" class="form-select">
+                    <option value="">Select a State</option>
+                    @foreach (var state in Enum.GetValues(typeof(BevoBnB.Models.States)))
+                    {
+                        <option value="@state">@state</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="categoryId">Category:</label>
+                <select id="categoryId" name="categoryId" class="form-select">
+                    <option value="">Select a Category</option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.CategoryID">@category.CategoryName</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="propertyNumber">Property Number:</label>
+                <input type="number" id="propertyNumber" name="propertyNumber" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Generate Report</button>
 </form>
