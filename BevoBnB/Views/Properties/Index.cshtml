@@ -281,9 +281,6 @@
                                 <a asp-action="DeactiveProperty" asp-route-propertyID="@item.PropertyID" class="btn btn-danger" style="margin-top: 10px; display: inline-block;">
                                     Deactivate Property
                                 </a>
-                                <a asp-action="AddUnavailableDate" asp-route-propertyID="@item.PropertyID" class="btn btn-secondary" style="margin-top: 10px; display: inline-block;">
-                                    Add Unavailable Dates
-                                </a>
                             }
                             @if (item.PropertyStatus == PropertyStatus.Inactive && User.IsInRole("Host") && item.User.Email == User.Identity.Name)
                             {
