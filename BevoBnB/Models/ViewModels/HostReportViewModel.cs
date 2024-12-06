@@ -11,6 +11,7 @@ namespace BevoBnB.ViewModels
         public decimal TotalCleaningFees => PropertyDetails.Sum(p => p.TotalCleaningFees);
         public decimal GrandTotal => TotalHostRevenue + TotalCleaningFees;
         public int TotalCompletedReservations => PropertyDetails.Sum(p => p.CompletedReservations);
+        public int PropertiesWithReservations { get; set; }
     }
 
     public class PropertyReportDetail

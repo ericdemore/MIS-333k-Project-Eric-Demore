@@ -112,11 +112,18 @@ namespace BevoBnB.Controllers
                 })
                 .ToList();
 
+            // Calculate the total number of properties with reservations in the date range
+            var propertiesWithReservations = reservationsList
+                .Select(r => r.Property.PropertyID)
+                .Distinct()
+                .Count();
+
             var viewModel = new HostReportViewModel
             {
                 StartDate = startDate,
                 EndDate = endDate,
-                PropertyDetails = propertyDetails
+                PropertyDetails = propertyDetails,
+                PropertiesWithReservations = propertiesWithReservations
             };
 
             return View(viewModel);
