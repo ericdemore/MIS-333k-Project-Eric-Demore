@@ -622,6 +622,20 @@ namespace BevoBnB.Controllers
                     errorMessages.Add("The selected dates include one or more days that are unavailable for reservations.");
                 }
 
+                // Check for conflicts in the selected customer's shopping cart
+                var userShoppingCart = _context.Reservations
+                    .Include(r => r.User)
+                    .Where(r => r.User.Id == dbReservation.User.Id && r.ReservationStatus == ReservationStatus.Pending)
+                    .ToList();
+
+                AppUser user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+                if (ShoppingCartDateConflict(dbReservation, userShoppingCart))
+                {
+                    errorMessages.Add("The selected dates conflict with a pending reservation in the customer's shopping cart.");
+                }
+
+
                 // If errors exist, show them
                 if (errorMessages.Any())
                 {
@@ -653,8 +667,7 @@ namespace BevoBnB.Controllers
         public async Task<IActionResult> AddToCart(int propertyID)
         {
             // Fetch the currently logged-in user
-            AppUser user = await _userManager.Users
-                .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+            AppUser user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
             if (propertyID == null)
             {

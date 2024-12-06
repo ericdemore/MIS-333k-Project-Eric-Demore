@@ -100,6 +100,11 @@ namespace BevoBnB.Models
             get { return WeekdayTotals + WeekendTotals; }
         }
 
+        public decimal StayPrice
+        {
+            get { return CalculateStayPrice(); }
+        }
+
         [Display(Name = "Subtotal")]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal Subtotal
@@ -162,9 +167,23 @@ namespace BevoBnB.Models
                 return 0.00m;
             }
 
-            totalSubtotal = WeekdayTotals + WeekendTotals + CleaningFee;
+            totalSubtotal = StayPrice + CleaningFee;
 
             return totalSubtotal;
+        }
+
+        private decimal CalculateStayPrice()
+        {
+            decimal stayPrice = 0.00m;
+
+            if (ReservationStatus == ReservationStatus.Cancelled)
+            {
+                return 0.00m;
+            }
+
+            stayPrice = (WeekdayTotals + WeekendTotals) + DiscountAmount;
+
+            return stayPrice;
         }
 
         private decimal CalculateDiscount()
@@ -191,7 +210,7 @@ namespace BevoBnB.Models
                 return 0.00m;
             }
 
-            salesTax = (WeekdayTotals + WeekendTotals) * TAX_RATE;
+            salesTax = Subtotal * TAX_RATE;
 
             return salesTax;
         }
@@ -205,7 +224,7 @@ namespace BevoBnB.Models
                 return 0.00m;
             }
 
-            totalAmount = WeekdayTotals + WeekendTotals + CleaningFee + SalesTax + DiscountAmount;
+            totalAmount = Subtotal + SalesTax;
 
             return totalAmount;
         }
