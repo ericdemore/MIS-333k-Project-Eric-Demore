@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -258,6 +258,39 @@ namespace BevoBnB.Controllers
                     ? "Dispute submitted."
                     : "Review updated.";
                 return RedirectToAction("Index");
+            }
+
+            return View(review);
+        }
+
+
+        // GET: Reviews/Details/{id}
+        [Authorize(Roles = "Admin,Host")]
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var review = await _context.Reviews
+                .Include(r => r.Property)
+                .Include(r => r.User)
+                .FirstOrDefaultAsync(r => r.ReviewID == id);
+
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            // For hosts, ensure they can only view details of reviews for their properties
+            if (User.IsInRole("Host"))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null || review.Property.User.Id != user.Id)
+                {
+                    return Forbid();
+                }
             }
 
             return View(review);
