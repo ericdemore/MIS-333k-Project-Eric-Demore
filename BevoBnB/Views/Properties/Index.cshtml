@@ -10,14 +10,10 @@
 <form asp-action="Index" method="get" class="mb-4">
     <div class="row g-3">
         <!-- General Search -->
-        <div class="col-md-4">
-            <label for="searchString" class="form-label">Have a Destination in Mind?</label>
-            <input type="text" name="searchString" id="searchString" class="form-control" placeholder="Search a City (e.g., Austin) or State (e.g., TX)" value="@ViewData["SearchString"]" />
-        </div>
+        
 
         <!-- Buttons (Placed in a new row below the input) -->
         <div class="col-12 mt-3">
-            <button type="submit" class="btn btn-primary me-2">Search</button>
             <a asp-action="Index" class="btn btn-danger me-2">Clear Search</a>
             <!-- Offcanvas Trigger for Detailed Search -->
             <a class="btn btn-light" data-bs-toggle="offcanvas" href="#propertySearchOffcanvas" role="button" aria-controls="propertySearchOffcanvas">
