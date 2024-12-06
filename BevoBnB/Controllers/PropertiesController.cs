@@ -190,6 +190,26 @@ namespace BevoBnB.Controllers
             return View("Index", properties);
         }
 
+        //[Authorize(Roles = "Admin")]
+        //public async Task<IActionResult> Unapproved()
+        //{
+        //    var unapprovedPropertiesQuery = _context.Properties
+        //        .Include(p => p.Category)
+        //        .Include(p => p.Reviews)
+        //        .Include(p => p.User)
+        //        .Where(p => p.PropertyStatus == PropertyStatus.Unapproved)
+        //        .OrderBy(p => p.City)
+        //        .ThenBy(p => p.State)
+        //        .ThenBy(p => p.PropertyID);
+
+        //    List<Property> unapprovedProperties = await unapprovedPropertiesQuery.ToListAsync();
+
+        //    ViewBag.AllCategories = GetAllCategories();
+        //    ViewBag.TotalItems = _context.Properties.Count();
+        //    ViewBag.CurrentItems = unapprovedProperties.Count;
+
+        //    return View("Index", unapprovedProperties);
+        //}
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Unapproved()
         {
@@ -204,12 +224,34 @@ namespace BevoBnB.Controllers
 
             List<Property> unapprovedProperties = await unapprovedPropertiesQuery.ToListAsync();
 
+            // Update ViewBag to reflect the count of unapproved properties
+            ViewBag.AllProperties = unapprovedProperties.Count; // Total unapproved properties
+            ViewBag.SelectedProperties = unapprovedProperties.Count; // Count of filtered properties (same in this case)
+
             ViewBag.AllCategories = GetAllCategories();
-            ViewBag.TotalItems = _context.Properties.Count();
-            ViewBag.CurrentItems = unapprovedProperties.Count;
 
             return View("Index", unapprovedProperties);
         }
+
+        //public async Task<IActionResult> Inactive()
+        //{
+        //    var inactivePropertiesQuery = _context.Properties
+        //        .Include(p => p.Category)
+        //        .Include(p => p.Reviews)
+        //        .Include(p => p.User)
+        //        .Where(p => p.PropertyStatus == PropertyStatus.Inactive)
+        //        .OrderBy(p => p.City)
+        //        .ThenBy(p => p.State)
+        //        .ThenBy(p => p.PropertyID);
+
+        //    List<Property> inactiveProperties = await inactivePropertiesQuery.ToListAsync();
+
+        //    ViewBag.AllCategories = GetAllCategories();
+        //    ViewBag.TotalItems = _context.Properties.Count();
+        //    ViewBag.CurrentItems = inactiveProperties.Count;
+
+        //    return View("Index", inactiveProperties);
+        //}
 
         public async Task<IActionResult> Inactive()
         {
@@ -224,9 +266,11 @@ namespace BevoBnB.Controllers
 
             List<Property> inactiveProperties = await inactivePropertiesQuery.ToListAsync();
 
+            // Update ViewBag to reflect the count of inactive properties
+            ViewBag.AllProperties = inactiveProperties.Count; // Total inactive properties
+            ViewBag.SelectedProperties = inactiveProperties.Count; // Count of filtered properties (same in this case)
+
             ViewBag.AllCategories = GetAllCategories();
-            ViewBag.TotalItems = _context.Properties.Count();
-            ViewBag.CurrentItems = inactiveProperties.Count;
 
             return View("Index", inactiveProperties);
         }
@@ -321,23 +365,45 @@ namespace BevoBnB.Controllers
             return View("Details", property);
         }
 
+        //[Authorize(Roles = "Host")]
+        //public async Task<IActionResult> MyProperties()
+        //{
+        //    List<Property> myProperties;
+
+        //    AppUser user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+        //    myProperties = _context.Properties
+        //        .Include(p => p.User)
+        //        .Include(p => p.Category)
+        //        .Where(p => p.User.Email == user.Email)
+        //        .ToList();
+
+        //    ViewBag.AllCategories = GetAllCategories();
+
+        //    return View("Index", myProperties);
+        //}
+
         [Authorize(Roles = "Host")]
         public async Task<IActionResult> MyProperties()
         {
-            List<Property> myProperties;
-
             AppUser user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
-            myProperties = _context.Properties
+            var myPropertiesQuery = _context.Properties
                 .Include(p => p.User)
                 .Include(p => p.Category)
-                .Where(p => p.User.Email == user.Email)
-                .ToList();
+                .Where(p => p.User.Email == user.Email);
+
+            List<Property> myProperties = await myPropertiesQuery.ToListAsync();
+
+            // Update ViewBag to show the total and selected properties for the host
+            ViewBag.AllProperties = myProperties.Count; // Total number of properties owned by the host
+            ViewBag.SelectedProperties = myProperties.Count; // Count of filtered properties, which in this case is the same
 
             ViewBag.AllCategories = GetAllCategories();
 
             return View("Index", myProperties);
         }
+
 
         [Authorize(Roles = "Admin, Host")]
         public async Task<IActionResult> ApproveProperty(int propertyID)
