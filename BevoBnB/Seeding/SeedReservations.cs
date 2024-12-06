@@ -50,7 +50,7 @@ namespace BevoBnB.Seeding
                 },
                 new Reservation
                 {
-                    CheckIn = new DateTime(2024, 11, 5),
+                    CheckIn = new DateTime(2024, 11, 6),
                     CheckOut = new DateTime(2024, 11, 10),
                     NumOfGuests = 14,
                     WeekdayPrice = 163.30m,
@@ -89,7 +89,7 @@ namespace BevoBnB.Seeding
                     CleaningFee = 25.57m,
                     Tax = 173.68m,
                     ConfirmationNumber = 21903,
-                    ReservationStatus = ReservationStatus.Cancelled,
+                    ReservationStatus = ReservationStatus.Valid,
                     User = context.Users.FirstOrDefault(u => u.Email == "tuck33@puppy.com"),
                     Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3067)
                 },
@@ -186,7 +186,7 @@ namespace BevoBnB.Seeding
                 new Reservation
                 {
                     CheckIn = new DateTime(2024, 11, 28),
-                    CheckOut = new DateTime(2024, 12, 7),
+                    CheckOut = new DateTime(2024, 12, 1),
                     NumOfGuests = 13,
                     WeekdayPrice = 155.03m,
                     WeekendPrice = 139.83m,
@@ -201,7 +201,7 @@ namespace BevoBnB.Seeding
                 new Reservation
                 {
                     CheckIn = new DateTime(2024, 11, 1),
-                    CheckOut = new DateTime(2024, 11, 29),
+                    CheckOut = new DateTime(2024, 11, 5),
                     NumOfGuests = 9,
                     WeekdayPrice = 163.68m,
                     WeekendPrice = 286.53m,
@@ -246,7 +246,7 @@ namespace BevoBnB.Seeding
                 new Reservation
                 {
                     CheckIn = new DateTime(2024, 11, 1),
-                    CheckOut = new DateTime(2024, 11, 22),
+                    CheckOut = new DateTime(2024, 11, 16),
                     NumOfGuests = 12,
                     WeekdayPrice = 224.98m,
                     WeekendPrice = 180.86m,
@@ -290,7 +290,7 @@ namespace BevoBnB.Seeding
                 },
                 new Reservation
                 {
-                    CheckIn = new DateTime(2024, 12, 1),
+                    CheckIn = new DateTime(2024, 12, 2),
                     CheckOut = new DateTime(2024, 12, 5),
                     NumOfGuests = 10,
                     WeekdayPrice = 126.25m,
@@ -299,7 +299,7 @@ namespace BevoBnB.Seeding
                     CleaningFee = 8.27m,
                     Tax = 45.97m,
                     ConfirmationNumber = 21917,
-                    ReservationStatus = ReservationStatus.Cancelled,
+                    ReservationStatus = ReservationStatus.Valid,
                     User = context.Users.FirstOrDefault(u => u.Email == "orielly@foxnets.com"),
                     Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3161)
                 },
@@ -335,7 +335,7 @@ namespace BevoBnB.Seeding
                 },
                 new Reservation
                 {
-                    CheckIn = new DateTime(2024, 12, 8),
+                    CheckIn = new DateTime(2024, 12, 10),
                     CheckOut = new DateTime(2024, 12, 11),
                     NumOfGuests = 10,
                     WeekdayPrice = 205.01m,
@@ -350,7 +350,7 @@ namespace BevoBnB.Seeding
                 },
                 new Reservation
                 {
-                    CheckIn = new DateTime(2024, 12, 8),
+                    CheckIn = new DateTime(2024, 12, 9),
                     CheckOut = new DateTime(2024, 12, 10),
                     NumOfGuests = 12,
                     WeekdayPrice = 170.25m,
@@ -366,7 +366,7 @@ namespace BevoBnB.Seeding
                 new Reservation
                 {
                     CheckIn = new DateTime(2024, 11, 22),
-                    CheckOut = new DateTime(2024, 12, 5),
+                    CheckOut = new DateTime(2024, 12, 1),
                     NumOfGuests = 10,
                     WeekdayPrice = 126.25m,
                     WeekendPrice = 269.63m,
@@ -374,7 +374,7 @@ namespace BevoBnB.Seeding
                     CleaningFee = 8.27m,
                     Tax = 155.61m,
                     ConfirmationNumber = 21919,
-                    ReservationStatus = ReservationStatus.Cancelled,
+                    ReservationStatus = ReservationStatus.Valid,
                     User = context.Users.FirstOrDefault(u => u.Email == "father.Ingram@aool.com"),
                     Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3161)
                 },
@@ -410,7 +410,7 @@ namespace BevoBnB.Seeding
                 },
                 new Reservation
                 {
-                    CheckIn = new DateTime(2024, 12, 6),
+                    CheckIn = new DateTime(2024, 12, 12),
                     CheckOut = new DateTime(2024, 12, 15),
                     NumOfGuests = 10,
                     WeekdayPrice = 204.04m,
@@ -471,7 +471,7 @@ namespace BevoBnB.Seeding
                 new Reservation
                 {
                     CheckIn = new DateTime(2024, 12, 16),
-                    CheckOut = new DateTime(2024, 12, 31),
+                    CheckOut = new DateTime(2024, 12, 22),
                     NumOfGuests = 5,
                     WeekdayPrice = 104.05m,
                     WeekendPrice = 158.42m,
@@ -486,7 +486,7 @@ namespace BevoBnB.Seeding
                 new Reservation
                 {
                     CheckIn = new DateTime(2024, 11, 20),
-                    CheckOut = new DateTime(2024, 12, 22),
+                    CheckOut = new DateTime(2024, 12, 1),
                     NumOfGuests = 8,
                     WeekdayPrice = 83.34m,
                     WeekendPrice = 128.05m,
@@ -515,7 +515,7 @@ namespace BevoBnB.Seeding
                 },
                 new Reservation
                 {
-                    CheckIn = new DateTime(2024, 12, 24),
+                    CheckIn = new DateTime(2024, 12, 28),
                     CheckOut = new DateTime(2024, 12, 31),
                     NumOfGuests = 6,
                     WeekdayPrice = 199.68m,
@@ -545,7 +545,7 @@ namespace BevoBnB.Seeding
                 },
                 new Reservation
                 {
-                    CheckIn = new DateTime(2024, 12, 1),
+                    CheckIn = new DateTime(2024, 12, 2),
                     CheckOut = new DateTime(2024, 12, 6),
                     NumOfGuests = 13,
                     WeekdayPrice = 155.03m,
@@ -554,7 +554,7 @@ namespace BevoBnB.Seeding
                     CleaningFee = 21.05m,
                     Tax = 54.67m,
                     ConfirmationNumber = 21926,
-                    ReservationStatus = ReservationStatus.Cancelled,
+                    ReservationStatus = ReservationStatus.Valid,
                     User = context.Users.FirstOrDefault(u => u.Email == "tfreeley@puppy.com"),
                     Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3065)
                 },
@@ -605,7 +605,7 @@ namespace BevoBnB.Seeding
                 },
                 new Reservation
                 {
-                    CheckIn = new DateTime(2024, 12, 23),
+                    CheckIn = new DateTime(2024, 12, 28),
                     CheckOut = new DateTime(2025, 1, 3),
                     NumOfGuests = 14,
                     WeekdayPrice = 172.83m,
@@ -680,7 +680,7 @@ namespace BevoBnB.Seeding
                 },
                 new Reservation
                 {
-                    CheckIn = new DateTime(2024, 12, 15),
+                    CheckIn = new DateTime(2024, 12, 26),
                     CheckOut = new DateTime(2024, 12, 31),
                     NumOfGuests = 1,
                     WeekdayPrice = 189.98m,
@@ -695,7 +695,7 @@ namespace BevoBnB.Seeding
                 },
                 new Reservation
                 {
-                    CheckIn = new DateTime(2024, 12, 2),
+                    CheckIn = new DateTime(2024, 12, 4),
                     CheckOut = new DateTime(2024, 12, 6),
                     NumOfGuests = 8,
                     WeekdayPrice = 83.34m,
@@ -704,13 +704,13 @@ namespace BevoBnB.Seeding
                     CleaningFee = 11.29m,
                     Tax = 24.13m,
                     ConfirmationNumber = 21932,
-                    ReservationStatus = ReservationStatus.Cancelled,
+                    ReservationStatus = ReservationStatus.Valid,
                     User = context.Users.FirstOrDefault(u => u.Email == "fd@puppy.com"),
                     Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3107)
                 },
                 new Reservation
                 {
-                    CheckIn = new DateTime(2024, 12, 5),
+                    CheckIn = new DateTime(2024, 12, 6),
                     CheckOut = new DateTime(2024, 12, 10),
                     NumOfGuests = 13,
                     WeekdayPrice = 155.03m,
