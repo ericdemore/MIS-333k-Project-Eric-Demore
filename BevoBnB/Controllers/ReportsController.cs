@@ -70,13 +70,17 @@ namespace BevoBnB.Controllers
         [Authorize(Roles = "Host")]
         public IActionResult HostReport()
         {
-            return View(new HostReportViewModel());
+            var viewModel = new HostReportViewModel
+            {
+                Categories = _context.Categories.OrderBy(c => c.CategoryName).ToList()
+            };
+            return View(viewModel);
         }
 
         [Authorize(Roles = "Host")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult HostReport(DateTime? startDate, DateTime? endDate)
+        public IActionResult HostReport(DateTime? startDate, DateTime? endDate, string? zipCode, int? categoryId, States? state, string? city)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -95,6 +99,22 @@ namespace BevoBnB.Controllers
             if (endDate.HasValue)
             {
                 reservations = reservations.Where(r => r.CheckIn <= endDate.Value);
+            }
+            if (!string.IsNullOrWhiteSpace(zipCode))
+            {
+                reservations = reservations.Where(r => r.Property.ZipCode == zipCode);
+            }
+            if (categoryId.HasValue)
+            {
+                reservations = reservations.Where(r => r.Property.CategoryId == categoryId.Value);
+            }
+            if (state.HasValue)
+            {
+                reservations = reservations.Where(r => r.Property.State == state.Value);
+            }
+            if (!string.IsNullOrWhiteSpace(city))
+            {
+                reservations = reservations.Where(r => r.Property.City.ToLower() == city.ToLower());
             }
 
             // Materialize the query and perform grouping in memory
@@ -122,6 +142,11 @@ namespace BevoBnB.Controllers
             {
                 StartDate = startDate,
                 EndDate = endDate,
+                ZipCode = zipCode,
+                CategoryId = categoryId,
+                State = state,
+                City = city,
+                Categories = _context.Categories.OrderBy(c => c.CategoryName).ToList(),
                 PropertyDetails = propertyDetails,
                 PropertiesWithReservations = propertiesWithReservations
             };

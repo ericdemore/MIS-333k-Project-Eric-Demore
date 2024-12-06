@@ -6,6 +6,11 @@ namespace BevoBnB.ViewModels
     {
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public string? ZipCode { get; set; }
+        public int? CategoryId { get; set; }
+        public States? State { get; set; }
+        public string? City { get; set; }
+        public List<Category> Categories { get; set; } = new();
         public List<PropertyReportDetail> PropertyDetails { get; set; } = new();
         public decimal TotalHostRevenue => PropertyDetails.Sum(p => p.TotalHostRevenue);
         public decimal TotalCleaningFees => PropertyDetails.Sum(p => p.TotalCleaningFees);

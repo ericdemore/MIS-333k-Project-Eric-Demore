@@ -11,20 +11,50 @@
         <div class="card-body">
             <form asp-action="HostReport" method="post">
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label asp-for="StartDate" class="control-label">Start Date</label>
                             <input asp-for="StartDate" class="form-control" type="date" />
                         </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label asp-for="EndDate" class="control-label">End Date</label>
                             <input asp-for="EndDate" class="form-control" type="date" />
                         </div>
                     </div>
-                    <div class="col-md-2 d-flex align-items-end">
-                        <button type="submit" class="btn btn-primary w-100">Generate Report</button>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label asp-for="CategoryId" class="control-label">Category</label>
+                            <select asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(Model.Categories, "CategoryID", "CategoryName"))">
+                                <option value="">All Categories</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label asp-for="State" class="control-label">State</label>
+                            <select asp-for="State" class="form-control" asp-items="@(Html.GetEnumSelectList<States>())">
+                                <option value="">All States</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label asp-for="City" class="control-label">City</label>
+                            <input asp-for="City" class="form-control" placeholder="Optional" />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label asp-for="ZipCode" class="control-label">Zip Code</label>
+                            <input asp-for="ZipCode" class="form-control" placeholder="Optional" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Generate Report</button>
                     </div>
                 </div>
             </form>
