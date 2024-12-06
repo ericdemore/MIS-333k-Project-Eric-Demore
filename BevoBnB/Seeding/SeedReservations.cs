@@ -134,7 +134,7 @@ namespace BevoBnB.Seeding
                     CleaningFee = 19.19m,
                     Tax = 83.41m,
                     ConfirmationNumber = 21906,
-                    ReservationStatus = ReservationStatus.Cancelled,
+                    ReservationStatus = ReservationStatus.Valid,
                     User = context.Users.FirstOrDefault(u => u.Email == "orielly@foxnets.com"),
                     Property = context.Properties.FirstOrDefault(p => p.PropertyNumber == 3133)
                 },
