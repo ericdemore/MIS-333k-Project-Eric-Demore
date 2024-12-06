@@ -50,7 +50,6 @@ namespace BevoBnB.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [AllowAnonymous]
         public async Task<ActionResult> Register(RegisterViewModel rvm)
         {
@@ -109,7 +108,7 @@ namespace BevoBnB.Controllers
                 if (adminResult.Succeeded)
                 {
                     // Admin stays logged in, no redirection to login
-                    return RedirectToAction("Profiles", "Admin");
+                    return RedirectToAction("Profiles", "Account");
                 }
                 else
                 {
@@ -166,7 +165,7 @@ namespace BevoBnB.Controllers
                     await _signInManager.PasswordSignInAsync(rvm.Email, rvm.Password, isPersistent: false, lockoutOnFailure: false);
 
                     // Redirect to the home page
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Properties");
                 }
                 else
                 {
