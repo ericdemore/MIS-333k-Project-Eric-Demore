@@ -264,8 +264,6 @@ namespace BevoBnB.Controllers
         }
 
 
-
-
         //Change Dispute Status
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -277,6 +275,13 @@ namespace BevoBnB.Controllers
             if (review == null)
             {
                 return NotFound();
+            }
+
+            // Check if the current DisputeStatus is NoDispute before allowing the admin to update
+            if (review.DisputeStatus == DisputeStatus.NoDispute)
+            {
+                TempData["Message"] = "You cannot update the dispute status as it is currently 'No Dispute'. Please ensure the review is disputed first.";
+                return RedirectToAction(nameof(Index));  // Redirect back to the review index page
             }
 
             // Update the DisputeStatus based on the string value
@@ -293,8 +298,9 @@ namespace BevoBnB.Controllers
                 TempData["Message"] = "Invalid dispute status.";
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));  // Redirect back to the review index page
         }
+
 
         //submit dispute
         [HttpPost]
