@@ -652,6 +652,8 @@ namespace BevoBnB.Controllers
         }
 
 
+
+
         private bool PropertyExists(int id)
         {
             return _context.Properties.Any(e => e.PropertyID == id);

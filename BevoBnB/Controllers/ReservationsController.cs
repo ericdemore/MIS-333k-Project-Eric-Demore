@@ -650,6 +650,58 @@ namespace BevoBnB.Controllers
             return View("Error", new string[] { "Invalid action on reservation." });
         }
 
+        public async Task<IActionResult> AddToCart(int propertyID)
+        {
+            // Fetch the currently logged-in user
+            AppUser user = await _userManager.Users
+                .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+
+            if (propertyID == null)
+            {
+                return View("Error", new String[] { "No ID was supplied" });
+            }
+
+            if (user == null)
+            {
+                return View("Error", new string[] { "User not found." });
+            }
+
+            // Fetch the property from the database
+            Property dbProperty = _context.Properties.Find(propertyID);
+
+            if (dbProperty == null)
+            {
+                return View("Error", new string[] { "No property was found." });
+            }
+
+
+            // Create a new reservation
+            Reservation reservation = new Reservation
+            {
+                Property = dbProperty,
+                User = user,
+                WeekdayPrice = dbProperty.WeekdayPricing,
+                WeekendPrice = dbProperty.WeekendPricing,
+                CleaningFee = dbProperty.CleaningFee,
+                CheckIn = new DateTime(1, 1, 1), // Placeholder date
+                CheckOut = new DateTime(1, 1, 1), // Placeholder date
+                ReservationStatus = ReservationStatus.Pending
+            };
+
+            // Apply discount rate if applicable
+            reservation.DiscountRate = reservation.TotalNights >= dbProperty.MinNightsforDiscount
+                ? dbProperty.DiscountRate
+                : null;
+
+            // Add the reservation to the database and save changes
+            _context.Add(reservation);
+            await _context.SaveChangesAsync();
+
+            // Redirect to the Index page of the Properties controller
+            TempData["SuccessMessage"] = "Property successfully added to the cart!";
+            return RedirectToAction("Index", "Properties");
+        }
+
 
         // GET: Reservations/Delete/5
         [Authorize(Roles = "Customer")]

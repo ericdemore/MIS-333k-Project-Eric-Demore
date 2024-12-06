@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BevoBnB.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241206043141_Setup")]
+    [Migration("20241206052828_Setup")]
     partial class Setup
     {
         /// <inheritdoc />
