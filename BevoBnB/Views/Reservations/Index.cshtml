@@ -5,6 +5,12 @@
 }
 <br />
 <h1>Reservation History</h1>
+<p>
+    You are currently viewing @ViewBag.CurrentReservations out of @ViewBag.TotalReservations reservations. <br/>
+    Active Reservations: <strong>@ViewBag.ActiveReservations</strong><br />
+    Cancelled Reservations: <strong>@ViewBag.CancelledReservations</strong>
+</p>
+
 
 @if (User.Identity.IsAuthenticated && User.IsInRole("Customer"))
 {

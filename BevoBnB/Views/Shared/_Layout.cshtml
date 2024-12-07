@@ -147,6 +147,10 @@
             </div>
             @if (User.Identity.IsAuthenticated)
             {
+                if (User.IsInRole("Host"))
+                {
+                    <span class="badge bg-light">Host View</span>
+                }
                 if (User.IsInRole("Admin"))
                 {
                     <span class="badge bg-danger">Admin View</span>

@@ -45,6 +45,9 @@ namespace BevoBnB.Controllers
 
                 totalReservations = reservations.Count;
                 ViewBag.TotalReservations = totalReservations;
+
+                ViewBag.ActiveReservations = reservations.Count(r => r.ReservationStatus == ReservationStatus.Valid);
+                ViewBag.CancelledReservations = reservations.Count(r => r.ReservationStatus == ReservationStatus.Cancelled);
             }
 
             // host should see all reservations associated with their property
@@ -59,6 +62,9 @@ namespace BevoBnB.Controllers
 
                 totalReservations = reservations.Count;
                 ViewBag.TotalReservations = totalReservations;
+
+                ViewBag.ActiveReservations = reservations.Count(r => r.ReservationStatus == ReservationStatus.Valid);
+                ViewBag.CancelledReservations = reservations.Count(r => r.ReservationStatus == ReservationStatus.Cancelled);
             }
 
             // customer should see all reservations that they've made
@@ -73,7 +79,12 @@ namespace BevoBnB.Controllers
 
                 totalReservations = reservations.Count;
                 ViewBag.TotalReservations = totalReservations;
+
+                ViewBag.ActiveReservations = reservations.Count(r => r.ReservationStatus == ReservationStatus.Valid);
+                ViewBag.CancelledReservations = reservations.Count(r => r.ReservationStatus == ReservationStatus.Cancelled);
             }
+
+            ViewBag.CurrentReservations = reservations.Count;
 
             return View(reservations);
         }
@@ -1085,6 +1096,11 @@ namespace BevoBnB.Controllers
             }
 
             return false;
+        }
+
+        public IActionResult EmptyCart()
+        {
+            return View("Error", new String[] { "You need to make at least one valid capable reservation." });
         }
     }
 }

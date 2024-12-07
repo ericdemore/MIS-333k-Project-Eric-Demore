@@ -10,6 +10,7 @@
 {
     <!-- Message when no reservations are found -->
     <p class="text-center text-muted">@ViewBag.EmptyCart</p>
+    <a class="btn btn-primary" asp-action="EmptyCart">View Grand Totals & Check Out</a>
 }
 else
 {
@@ -75,7 +76,7 @@ else
 
     <!-- Offcanvas Button -->
     <button class="btn btn-primary mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#totalsOffcanvas" aria-controls="totalsOffcanvas">
-        View Grand Totals
+        View Grand Totals and Checkout
     </button>
 
     <!-- Offcanvas Section -->
