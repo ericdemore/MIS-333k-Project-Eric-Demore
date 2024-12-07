@@ -28,10 +28,10 @@ namespace BevoBnB.Controllers
 
 
         // GET: Properties
+        // this allows a user to view all active properties. will return a clean active properties query and viewbags for the counts.
         [AllowAnonymous]
-        public async Task<IActionResult> Index(string? searchString)
+        public async Task<IActionResult> Index()
         {
-            // Base query for approved properties
             var approvedPropertiesQuery = _context.Properties
                 .Include(p => p.User)
                 .Include(p => p.Reviews)
@@ -45,17 +45,15 @@ namespace BevoBnB.Controllers
             // Execute the filtered query and load results
             List<Property> filteredProperties = await approvedPropertiesQuery.ToListAsync();
 
-            // Pass data to the view
+
             ViewBag.AllCategories = GetAllCategories();
-            ViewBag.AllProperties = totalPropertiesCount; // Total count before filtering
-            ViewBag.SelectedProperties = filteredProperties.Count; // Count after filtering
-            ViewBag.SearchString = searchString; // Preserve the search string in the view
+            ViewBag.AllProperties = totalPropertiesCount;
+            ViewBag.SelectedProperties = filteredProperties.Count;
 
             return View(filteredProperties);
         }
 
-
-
+        // this will allow a user to search for properties in the db
         [AllowAnonymous]
         public IActionResult DisplaySearchResults(PropertySearchViewModel psvm)
         {
@@ -190,26 +188,8 @@ namespace BevoBnB.Controllers
             return View("Index", properties);
         }
 
-        //[Authorize(Roles = "Admin")]
-        //public async Task<IActionResult> Unapproved()
-        //{
-        //    var unapprovedPropertiesQuery = _context.Properties
-        //        .Include(p => p.Category)
-        //        .Include(p => p.Reviews)
-        //        .Include(p => p.User)
-        //        .Where(p => p.PropertyStatus == PropertyStatus.Unapproved)
-        //        .OrderBy(p => p.City)
-        //        .ThenBy(p => p.State)
-        //        .ThenBy(p => p.PropertyID);
-
-        //    List<Property> unapprovedProperties = await unapprovedPropertiesQuery.ToListAsync();
-
-        //    ViewBag.AllCategories = GetAllCategories();
-        //    ViewBag.TotalItems = _context.Properties.Count();
-        //    ViewBag.CurrentItems = unapprovedProperties.Count;
-
-        //    return View("Index", unapprovedProperties);
-        //}
+        
+        // this queries all the unapproved properties in the db, so the admin can approve them
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Unapproved()
         {
@@ -224,35 +204,17 @@ namespace BevoBnB.Controllers
 
             List<Property> unapprovedProperties = await unapprovedPropertiesQuery.ToListAsync();
 
-            // Update ViewBag to reflect the count of unapproved properties
-            ViewBag.AllProperties = unapprovedProperties.Count; // Total unapproved properties
-            ViewBag.SelectedProperties = unapprovedProperties.Count; // Count of filtered properties (same in this case)
+            ViewBag.AllProperties = unapprovedProperties.Count;
+            ViewBag.SelectedProperties = unapprovedProperties.Count;
 
             ViewBag.AllCategories = GetAllCategories();
 
             return View("Index", unapprovedProperties);
         }
 
-        //public async Task<IActionResult> Inactive()
-        //{
-        //    var inactivePropertiesQuery = _context.Properties
-        //        .Include(p => p.Category)
-        //        .Include(p => p.Reviews)
-        //        .Include(p => p.User)
-        //        .Where(p => p.PropertyStatus == PropertyStatus.Inactive)
-        //        .OrderBy(p => p.City)
-        //        .ThenBy(p => p.State)
-        //        .ThenBy(p => p.PropertyID);
 
-        //    List<Property> inactiveProperties = await inactivePropertiesQuery.ToListAsync();
-
-        //    ViewBag.AllCategories = GetAllCategories();
-        //    ViewBag.TotalItems = _context.Properties.Count();
-        //    ViewBag.CurrentItems = inactiveProperties.Count;
-
-        //    return View("Index", inactiveProperties);
-        //}
-
+        // this allows the admin to see all the properties that are inactive
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Inactive()
         {
             var inactivePropertiesQuery = _context.Properties
@@ -267,8 +229,8 @@ namespace BevoBnB.Controllers
             List<Property> inactiveProperties = await inactivePropertiesQuery.ToListAsync();
 
             // Update ViewBag to reflect the count of inactive properties
-            ViewBag.AllProperties = inactiveProperties.Count; // Total inactive properties
-            ViewBag.SelectedProperties = inactiveProperties.Count; // Count of filtered properties (same in this case)
+            ViewBag.AllProperties = inactiveProperties.Count;
+            ViewBag.SelectedProperties = inactiveProperties.Count;
 
             ViewBag.AllCategories = GetAllCategories();
 
@@ -281,28 +243,26 @@ namespace BevoBnB.Controllers
         {
             if (id == null)
             {
-                // Display a generic error message for missing property ID
-                ViewBag.ErrorMessage = "Property ID was not provided.";
-                return View("Error");
+                return View("Error", new String[] { "Hmm... you didn't provide an ID." });
             }
 
-            // Fetch property details, including reviews
             var property = await _context.Properties
-                .Include(p => p.Reviews) // Include the Reviews navigation property
+                .Include(p => p.Reservations)
+                .Include(p => p.Reviews)
+                .Include(P => P.Category)
+                .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.PropertyID == id);
 
             if (property == null)
             {
                 // Display a user-friendly error if the property doesn't exist
-                ViewBag.ErrorMessage = $"Property with ID {id} was not found.";
-                return View("Error");
+                return View("Error", new String[] { "Property was not found." });
             }
 
             // Restrict access to unapproved properties for customers
-            if (property.PropertyStatus != PropertyStatus.Approved && User.IsInRole("Customer"))
+            if (property.PropertyStatus != PropertyStatus.Approved && !User.IsInRole("Host, Admin"))
             {
-                ViewBag.ErrorMessage = "You are not authorized to view this property.";
-                return View("Error");
+                return View("Error", new String[] { "You are trying to view an unapproved property. You can't!" });
             }
 
             // Calculate average rating for the property
@@ -310,6 +270,16 @@ namespace BevoBnB.Controllers
             ViewBag.AvgRating = validReviews != null && validReviews.Any()
                 ? validReviews.Average(r => r.Rating).ToString("0.0")
                 : "No Ratings Yet";
+
+            // Query to get upcoming reservations for this property
+            var upcomingReservations = _context.Reservations
+                .Include(r => r.User) // Include the user who made the reservation
+                .Where(r => r.Property.PropertyID == id && r.CheckIn >= DateTime.Now && r.ReservationStatus == ReservationStatus.Valid)
+                .OrderBy(r => r.CheckIn)
+                .ToList();
+
+            // Pass the upcoming reservations to the view
+            ViewBag.UpcomingReservations = upcomingReservations;
 
             // Return the property details view
             return View(property);
@@ -397,8 +367,8 @@ namespace BevoBnB.Controllers
             List<Property> myProperties = await myPropertiesQuery.ToListAsync();
 
             // Update ViewBag to show the total and selected properties for the host
-            ViewBag.AllProperties = myProperties.Count; // Total number of properties owned by the host
-            ViewBag.SelectedProperties = myProperties.Count; // Count of filtered properties, which in this case is the same
+            ViewBag.AllProperties = myProperties.Count;
+            ViewBag.SelectedProperties = myProperties.Count;
 
             ViewBag.AllCategories = GetAllCategories();
 

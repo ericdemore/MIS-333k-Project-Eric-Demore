@@ -100,6 +100,7 @@ namespace BevoBnB.Models
             get { return WeekdayTotals + WeekendTotals; }
         }
 
+        [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal StayPrice
         {
             get { return CalculateStayPrice(); }

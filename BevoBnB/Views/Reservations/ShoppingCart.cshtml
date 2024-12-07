@@ -112,6 +112,7 @@ else
                 </li>
             </ul>
             <a class="btn btn-success mt-3 w-100" asp-action="CheckOut" asp-route-customerId="@ViewBag.CustomerId">Proceed to Checkout</a>
+            <p class="text-danger">Discount amount (if any) has already been applied to your transaction. The amount shown is only for your reference.</p>
         </div>
     </div>
 }

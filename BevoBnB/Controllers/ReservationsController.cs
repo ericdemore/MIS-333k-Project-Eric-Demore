@@ -364,7 +364,7 @@ namespace BevoBnB.Controllers
             else
             {
                 // Calculate totals for non-empty cart
-                ViewBag.StayTotal = reservations.Sum(r => r.StayTotal);
+                ViewBag.StayTotal = reservations.Sum(r => r.StayPrice);
                 ViewBag.CleaningFee = reservations.Sum(r => r.CleaningFee);
                 ViewBag.Subtotal = reservations.Sum(r => r.Subtotal);
                 ViewBag.SalesTax = reservations.Sum(r => r.SalesTax);
