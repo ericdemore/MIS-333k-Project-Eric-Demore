@@ -105,7 +105,8 @@ namespace BevoBnB.Controllers
                 State = state,
                 City = city,
                 PropertyNumber = propertyNumber,
-                Categories = _context.Categories.OrderBy(c => c.CategoryName).ToList()
+                Categories = _context.Categories.OrderBy(c => c.CategoryName).ToList(),
+                SearchPerformed = true
             };
 
             return View("Details", reportViewModel);
@@ -194,7 +195,8 @@ namespace BevoBnB.Controllers
                 City = city,
                 Categories = _context.Categories.OrderBy(c => c.CategoryName).ToList(),
                 PropertyDetails = propertyDetails,
-                PropertiesWithReservations = propertiesWithReservations
+                PropertiesWithReservations = propertiesWithReservations,
+                SearchPerformed = true
             };
 
             return View(viewModel);

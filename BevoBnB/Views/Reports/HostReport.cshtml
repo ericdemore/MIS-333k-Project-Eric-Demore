@@ -61,6 +61,13 @@
         </div>
     </div>
 
+    @if (!string.IsNullOrEmpty(Model.NoReservationsMessage))
+    {
+        <div class="alert alert-info" role="alert">
+            @Model.NoReservationsMessage
+        </div>
+    }
+
     @if (Model.PropertyDetails.Any())
     {
         <div class="card">
