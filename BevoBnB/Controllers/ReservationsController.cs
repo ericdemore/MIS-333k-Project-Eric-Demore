@@ -466,8 +466,23 @@ namespace BevoBnB.Controllers
 
             await _context.SaveChangesAsync();
 
+            decimal totalTransactionCost = _context.Reservations
+             .Where(r => r.ConfirmationNumber == transactionConfirmationNumber)
+             .AsEnumerable()
+             .Sum(r => r.Total);
+
             // Prepare success message
             string successMessage = $"Transaction completed. Enjoy your stay! Confirmation Number: {transactionConfirmationNumber}";
+
+            try
+            {
+                string emailBody = $"Hello!\n\nThank you for your business.\n\nTransaction Number: {transactionConfirmationNumber}\nTotal Cost: ${totalTransactionCost:F2}\n\nEnjoy your stay!";
+                Utilities.EmailMessaging.SendEmail("BevoBnB - Transaction Complete", emailBody);
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new String[] { "There was a problem sending the email", ex.Message });
+            }
 
             return View("Success", new[] { successMessage });
         }
