@@ -162,8 +162,6 @@ namespace BevoBnB.Controllers
             return RedirectToAction("Index");
         }
 
-
-
         // GET: Reviews/Edit/{id}
         [Authorize(Roles = "Customer,Host")]
         public async Task<IActionResult> Edit(int id)
@@ -177,25 +175,36 @@ namespace BevoBnB.Controllers
 
             var review = await _context.Reviews
                 .Include(r => r.Property)
+                .Include(r => r.User)
                 .FirstOrDefaultAsync(r => r.ReviewID == id);
 
             if (review == null)
             {
-                return NotFound();
+                return View("Error", new string[] { "Review Not Found" });
             }
 
-            if (await _userManager.IsInRoleAsync(user, "Host") && review.Property.User.Id != user.Id)
+            // Check if the review has already been disputed
+            if (review.DisputeStatus == DisputeStatus.Disputed ||
+                review.DisputeStatus == DisputeStatus.InvalidDispute ||
+                review.DisputeStatus == DisputeStatus.ValidDispute)
             {
-                return Forbid();
+                return View("Error", new string[] { "This review has already been disputed and cannot be edited." });
             }
 
-            if (await _userManager.IsInRoleAsync(user, "Customer") && review.User.Id != user.Id)
+            // Authorization checks
+            if (User.IsInRole("Host") && review.Property.User.Id != user.Id)
             {
-                return Forbid();
+                return View("Error", new string[] { "You are not authorized to edit this review." });
+            }
+
+            if (User.IsInRole("Customer") && review.User.Id != user.Id)
+            {
+                return View("Error", new string[] { "You are not the rightful owner of this review." });
             }
 
             return View(review);
         }
+
 
         // POST: Reviews/Edit/{id}
         [HttpPost]
@@ -205,6 +214,8 @@ namespace BevoBnB.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
 
+
+
             if (user == null)
             {
                 return RedirectToAction("AccessDenied", "Account");
@@ -212,22 +223,23 @@ namespace BevoBnB.Controllers
 
             var review = await _context.Reviews
                 .Include(r => r.Property)
+                .Include(r =>r.User)
                 .FirstOrDefaultAsync(r => r.ReviewID == id);
 
             if (review == null)
             {
-                return NotFound();
+                return View("Error", new string[] { "Review Not Found" });
             }
 
             // Ensure that only the host or customer can edit the review
-            if (await _userManager.IsInRoleAsync(user, "Host") && review.Property.User.Id != user.Id)
+            if (User.IsInRole("Host") && review.Property.User.Id != user.Id)
             {
-                return Forbid();
+                return View("Error", new string[] { "You are not authorize to edit reviews" });
             }
 
-            if (await _userManager.IsInRoleAsync(user, "Customer") && review.User.Id != user.Id)
+            if (User.IsInRole("Customer") && review.User.Id != user.Id)
             {
-                return Forbid();
+                return View("Error", new string[] { "You are not the right user" });
             }
 
             if (await _userManager.IsInRoleAsync(user, "Host"))
@@ -382,8 +394,6 @@ namespace BevoBnB.Controllers
         }
 
 
-
-
         //Resolve Dispute
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -418,5 +428,42 @@ namespace BevoBnB.Controllers
 
             return RedirectToAction("Index");
         }
+
+        //Dispute Review
+        [Authorize(Roles = "Host")]
+        public async Task<IActionResult> DisputeReview(int reviewId)
+        {
+            // Find the review by ID
+            var review = await _context.Reviews
+                .Include(r => r.Property)
+                .FirstOrDefaultAsync(r => r.ReviewID == reviewId);
+
+            // If the review is not found
+            if (review == null)
+            {
+                return View("Error", new string[] { "The review does not exist." });
+            }
+
+            // Check if the review has already been disputed
+            if (review.DisputeStatus == DisputeStatus.Disputed ||
+                review.DisputeStatus == DisputeStatus.InvalidDispute ||
+                review.DisputeStatus == DisputeStatus.ValidDispute)
+            {
+                // Send a clear error message to the error view
+                return View("Error", new string[] { "You have already disputed this review." });
+            }
+
+            // Mark the review as disputed
+            review.DisputeStatus = DisputeStatus.Disputed;
+
+            // Save the changes to the database
+            _context.Reviews.Update(review);
+            await _context.SaveChangesAsync();
+
+            // Redirect back to the property details page
+            return RedirectToAction("Details", new { id = review.Property.PropertyID });
+        }
+
+
     }
 }
