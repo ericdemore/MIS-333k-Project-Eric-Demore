@@ -32,6 +32,7 @@ namespace BevoBnB.Controllers
         {
             // query for all reservations 
             List<Reservation> reservations;
+            int totalReservations = 0;
 
             // Admin sees all reservations
             if (User.IsInRole("Admin"))
@@ -41,6 +42,9 @@ namespace BevoBnB.Controllers
                                 .Where(r => r.ReservationStatus == ReservationStatus.Valid || r.ReservationStatus == ReservationStatus.Cancelled || r.ReservationStatus == ReservationStatus.Pending)
                                 .OrderBy(r => r.ReservationID)
                                 .ToListAsync();
+
+                totalReservations = reservations.Count;
+                ViewBag.TotalReservations = totalReservations;
             }
 
             // host should see all reservations associated with their property
@@ -52,6 +56,9 @@ namespace BevoBnB.Controllers
                                     && (r.ReservationStatus == ReservationStatus.Valid || r.ReservationStatus == ReservationStatus.Cancelled))
                                 .OrderBy(r => r.ReservationID)
                                 .ToListAsync();
+
+                totalReservations = reservations.Count;
+                ViewBag.TotalReservations = totalReservations;
             }
 
             // customer should see all reservations that they've made
@@ -63,6 +70,9 @@ namespace BevoBnB.Controllers
                                     && (r.ReservationStatus == ReservationStatus.Valid || r.ReservationStatus == ReservationStatus.Cancelled))
                                 .OrderBy(r => r.ReservationID)
                                 .ToListAsync();
+
+                totalReservations = reservations.Count;
+                ViewBag.TotalReservations = totalReservations;
             }
 
             return View(reservations);
