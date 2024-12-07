@@ -183,18 +183,18 @@ namespace BevoBnB.Controllers
                 return View("Error", new string[] { "Review Not Found" });
             }
 
-            // Check if the review has already been disputed
-            if (review.DisputeStatus == DisputeStatus.Disputed ||
-                review.DisputeStatus == DisputeStatus.InvalidDispute ||
-                review.DisputeStatus == DisputeStatus.ValidDispute)
+            if (User.IsInRole("Host"))
             {
-                return View("Error", new string[] { "This review has already been disputed and cannot be edited." });
-            }
+                // Check if the host owns the property related to the review
+                var hostProperties = await _context.Properties
+                    .Where(p => p.User.Id == user.Id)
+                    .Select(p => p.PropertyID)
+                    .ToListAsync();
 
-            // Authorization checks
-            if (User.IsInRole("Host") && review.Property.User.Id != user.Id)
-            {
-                return View("Error", new string[] { "You are not authorized to edit this review." });
+                if (!hostProperties.Contains(review.Property.PropertyID))
+                {
+                    return View("Error", new string[] { "You don't have access to this review." });
+                }
             }
 
             if (User.IsInRole("Customer") && review.User.Id != user.Id)
@@ -202,8 +202,10 @@ namespace BevoBnB.Controllers
                 return View("Error", new string[] { "You are not the rightful owner of this review." });
             }
 
+            // Proceed to the edit view if all checks pass
             return View(review);
         }
+
 
 
         // POST: Reviews/Edit/{id}

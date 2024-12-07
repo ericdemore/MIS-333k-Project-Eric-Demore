@@ -17,6 +17,8 @@ namespace BevoBnB.ViewModels
         public decimal GrandTotal => TotalHostRevenue + TotalCleaningFees;
         public int TotalCompletedReservations => PropertyDetails.Sum(p => p.CompletedReservations);
         public int PropertiesWithReservations { get; set; }
+        public bool SearchPerformed { get; set; }
+        public string NoReservationsMessage => SearchPerformed && !PropertyDetails.Any() ? "No reservations found matching these criteria." : string.Empty;
     }
 
     public class PropertyReportDetail

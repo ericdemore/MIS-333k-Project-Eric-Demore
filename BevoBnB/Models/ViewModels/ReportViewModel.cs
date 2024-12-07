@@ -17,6 +17,8 @@ namespace BevoBnB.ViewModels
         public string? City { get; set; }
         public int? PropertyNumber { get; set; } // New property for PropertyNumber
         public List<Category>? Categories { get; set; }
+        public bool SearchPerformed { get; set; }
+        public string NoReservationsMessage => SearchPerformed && TotalReservations == 0 ? "No reservations found matching these criteria." : string.Empty;
     }
 
 }
