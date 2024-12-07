@@ -39,7 +39,7 @@ namespace BevoBnB.Controllers
             {
                 reservations = await _context.Reservations
                                 .Include(r => r.Property)
-                                .Where(r => r.ReservationStatus == ReservationStatus.Valid || r.ReservationStatus == ReservationStatus.Cancelled || r.ReservationStatus == ReservationStatus.Pending)
+                                .Where(r => r.ReservationStatus == ReservationStatus.Valid || r.ReservationStatus == ReservationStatus.Cancelled)
                                 .OrderBy(r => r.ReservationID)
                                 .ToListAsync();
 
@@ -1101,6 +1101,58 @@ namespace BevoBnB.Controllers
         public IActionResult EmptyCart()
         {
             return View("Error", new String[] { "You need to make at least one valid capable reservation." });
+        }
+
+        public async Task<IActionResult> CheckOutSummary(string? customerId = null)
+        {
+            List<Reservation> reservations = new List<Reservation>();
+            AppUser user;
+
+            if (!string.IsNullOrEmpty(customerId) && User.IsInRole("Admin"))
+            {
+                // Admin scenario: Fetch reservations for the specified customer
+                user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == customerId);
+                if (user == null)
+                {
+                    ViewBag.EmptyCart = "The selected customer does not exist.";
+                    return View(reservations);
+                }
+                ViewBag.CustomerId = customerId;
+            }
+            else
+            {
+                // Customer scenario: Fetch reservations for the logged-in user
+                user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+                if (user == null)
+                {
+                    ViewBag.EmptyCart = "Unable to identify your account. Please log in again.";
+                    return View(reservations);
+                }
+                ViewBag.CustomerId = user.Id;
+            }
+
+            reservations = await _context.Reservations
+                .Include(r => r.Property)
+                .Where(r => r.User.Id == user.Id && r.ReservationStatus == ReservationStatus.Pending)
+                .ToListAsync();
+
+            if (!reservations.Any())
+            {
+                // Message for an empty cart
+                ViewBag.EmptyCart = "Your shopping cart is empty. Add some reservations to check out.";
+            }
+            else
+            {
+                // Calculate totals for non-empty cart
+                ViewBag.StayTotal = reservations.Sum(r => r.StayPrice);
+                ViewBag.CleaningFee = reservations.Sum(r => r.CleaningFee);
+                ViewBag.Subtotal = reservations.Sum(r => r.Subtotal);
+                ViewBag.SalesTax = reservations.Sum(r => r.SalesTax);
+                ViewBag.DiscountAmount = reservations.Sum(r => r.DiscountAmount);
+                ViewBag.Total = reservations.Sum(r => r.Total);
+            }
+
+            return View(reservations);
         }
     }
 }

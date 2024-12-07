@@ -93,11 +93,6 @@
         <a class="btn btn-primary me-2" asp-action="Edit" asp-route-id="@Model?.ReservationID">Edit</a>
         @if (User.Identity.IsAuthenticated)
         {
-            if (User.IsInRole("Admin"))
-            {
-                <a asp-action="ShoppingCart" asp-route-customerId="customerIdValue">View Customer's Cart</a>
-
-            }
 
             if (User.IsInRole("Customer"))
             {

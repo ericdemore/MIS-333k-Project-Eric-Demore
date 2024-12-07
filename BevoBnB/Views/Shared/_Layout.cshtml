@@ -131,6 +131,7 @@
                                     <a class="dropdown-item" asp-controller="RoleAdmin" asp-action="Index">Manage Roles</a>
                                     <hr />
                                     <a class="dropdown-item" asp-controller="Account" asp-action="Register">Create Admin</a>
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="AdminChangePassword">Change User Password</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -159,6 +160,7 @@
             @await Html.PartialAsync("_LoginPartial")
         </nav>
     </div>
+
 
     <div class="container">
         @RenderBody()

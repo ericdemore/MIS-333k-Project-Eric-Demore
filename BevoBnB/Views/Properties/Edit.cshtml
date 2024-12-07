@@ -121,8 +121,10 @@
 
             <!-- Read-Only Unavailable Dates -->
             <div class="form-group">
-                <label asp-for="UnavailableDates" class="control-label"></label>
-                <input asp-for="UnavailableDates" class="form-control readonly-field" readonly />
+                <label for="UnavailableDates">Unavailable Dates</label>
+                <textarea id="UnavailableDates" class="form-control readonly-field" readonly>
+                    @string.Join(", ", Model.UnavailableDates?.Select(d => d.ToString("MM/dd/yyyy")) ?? new List<string>())
+    </textarea>
             </div>
 
             <!-- Read-Only Property Status -->
@@ -146,5 +148,5 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="MyProperties">Back to List</a>
 </div>

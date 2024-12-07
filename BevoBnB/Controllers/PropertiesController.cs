@@ -470,32 +470,39 @@ namespace BevoBnB.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Host")]
-        public async Task<IActionResult> Edit(int id, [Bind("WeekdayPricing,WeekendPricing,CleaningFee,DiscountRate,MinNightsforDiscount")] Property updatedProperty)
+        public async Task<IActionResult> Edit(int id, Property updatedProperty)
         {
-            // Fetch the original property from the database
+            // Fetch the original property from the database, including UnavailableDates
             var property = await _context.Properties
-                .Include(p => p.User) // Include the User navigation property
+                .Include(p => p.User)
                 .FirstOrDefaultAsync(p => p.PropertyID == id);
 
             if (property == null)
             {
-                return View("Error", new String[] { "The property was not found. " });
+                return View("Error", new String[] { "The property was not found." });
             }
 
             // Ensure the logged-in user is the owner of the property
             var loggedInUserId = _userManager.GetUserId(User);
             if (property.User.Id != loggedInUserId)
             {
-                return View("Error", new String[] { "You are not the owner of this property. " });
+                return View("Error", new String[] { "You are not the owner of this property." });
             }
 
-            // Update only the pricing and discount-related fields
+            // Preserve the existing UnavailableDates
+            var existingUnavailableDates = property.UnavailableDates;
+
+            // Update only the fields that are allowed to be edited
             property.WeekdayPricing = updatedProperty.WeekdayPricing;
             property.WeekendPricing = updatedProperty.WeekendPricing;
             property.CleaningFee = updatedProperty.CleaningFee;
             property.DiscountRate = updatedProperty.DiscountRate;
             property.MinNightsforDiscount = updatedProperty.MinNightsforDiscount;
 
+            // Reassign the preserved UnavailableDates
+            property.UnavailableDates = existingUnavailableDates;
+
+            // Save changes
             try
             {
                 _context.Update(property);
@@ -515,6 +522,7 @@ namespace BevoBnB.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
 
         [HttpGet]
         [Authorize]
