@@ -17,7 +17,7 @@ namespace BevoBnB.Models
         [Display(Name = "Rating")]
         public int Rating { get; set; }
 
-        [StringLength(280, ErrorMessage = "Review cannot exceed 180 characters.")]
+        [StringLength(280, ErrorMessage = "Review cannot exceed 280 characters.")]
         [Display(Name = "Review Text")]
         public string? ReviewText { get; set; }
 
