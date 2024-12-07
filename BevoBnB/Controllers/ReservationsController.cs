@@ -1139,7 +1139,7 @@ namespace BevoBnB.Controllers
             if (!reservations.Any())
             {
                 // Message for an empty cart
-                ViewBag.EmptyCart = "Your shopping cart is empty. Add some reservations to check out.";
+                return View("Error", new String[] { "You do not have anything to checkout!" });
             }
             else
             {

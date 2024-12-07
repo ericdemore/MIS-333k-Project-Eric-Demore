@@ -42,7 +42,6 @@ else
                     <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CleaningFee)</th>
                     <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Subtotal)</th>
                     <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Total)</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,33 +58,18 @@ else
                         <td>@Html.DisplayFor(modelItem => item.CleaningFee)</td>
                         <td>@Html.DisplayFor(modelItem => item.Subtotal)</td>
                         <td>@Html.DisplayFor(modelItem => item.Total)</td>
-                        <td>
-                            @if (User.Identity.IsAuthenticated && User.IsInRole("Customer"))
-                            {
-                                <a asp-action="Edit" asp-route-id="@item.ReservationID" class="btn btn-sm btn-warning">Edit</a>
-                            }
-
-                            <a asp-action="Details" asp-route-id="@item.ReservationID" class="btn btn-sm btn-info">Details</a>
-                            <a asp-action="Delete" asp-route-id="@item.ReservationID" class="btn btn-sm btn-danger">Delete</a>
-                        </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
 
-    <!-- Offcanvas Button -->
-    <button class="btn btn-primary mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#totalsOffcanvas" aria-controls="totalsOffcanvas">
-        View Grand Totals and Checkout
-    </button>
-
-    <!-- Offcanvas Section -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="totalsOffcanvas" aria-labelledby="totalsOffcanvasLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="totalsOffcanvasLabel">Grand Totals</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <!-- Grand Totals Section -->
+    <div class="card mt-4">
+        <div class="card-header bg-dark text-white">
+            <h5>Grand Totals</h5>
         </div>
-        <div class="offcanvas-body">
+        <div class="card-body">
             <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between">
                     <span>Total Stay Amount:</span>
@@ -113,7 +97,7 @@ else
                 </li>
             </ul>
             <a class="btn btn-success mt-3 w-100" asp-action="CheckOut" asp-route-customerId="@ViewBag.CustomerId">Proceed to Checkout</a>
-            <p class="text-danger">Discount amount (if any) has already been applied to your transaction. The amount shown is only for your reference.</p>
+            <p class="text-danger mt-2">Discount amount (if any) has already been applied to your transaction. The amount shown is only for your reference.</p>
         </div>
     </div>
 }

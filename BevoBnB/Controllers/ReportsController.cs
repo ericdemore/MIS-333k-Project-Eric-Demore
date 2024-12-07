@@ -16,8 +16,7 @@ namespace BevoBnB.Controllers
         {
             _context = context;
         }
-
-        [Authorize(Roles = "Admin")]
+        /*        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             var viewModel = new ReportViewModel
@@ -201,5 +200,6 @@ namespace BevoBnB.Controllers
 
             return View(viewModel);
         }
+        */
     }
 }
