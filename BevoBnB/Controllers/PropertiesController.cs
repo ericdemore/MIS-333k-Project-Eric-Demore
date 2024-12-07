@@ -335,23 +335,6 @@ namespace BevoBnB.Controllers
             return View("Details", property);
         }
 
-        //[Authorize(Roles = "Host")]
-        //public async Task<IActionResult> MyProperties()
-        //{
-        //    List<Property> myProperties;
-
-        //    AppUser user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
-
-        //    myProperties = _context.Properties
-        //        .Include(p => p.User)
-        //        .Include(p => p.Category)
-        //        .Where(p => p.User.Email == user.Email)
-        //        .ToList();
-
-        //    ViewBag.AllCategories = GetAllCategories();
-
-        //    return View("Index", myProperties);
-        //}
 
         [Authorize(Roles = "Host")]
         public async Task<IActionResult> MyProperties()
@@ -461,24 +444,24 @@ namespace BevoBnB.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error", new String[] { "You did not provide an ID." });
             }
 
             // Include the property owner information
             var property = await _context.Properties
-                .Include(p => p.User) // Include the User navigation property
+                .Include(p => p.User)
                 .FirstOrDefaultAsync(p => p.PropertyID == id);
 
             if (property == null)
             {
-                return NotFound();
+                return View("Error", new String[] { "The property was not found. " });
             }
 
             // Ensure the logged-in user is the owner of the property
             var loggedInUserId = _userManager.GetUserId(User);
             if (property.User.Id != loggedInUserId)
             {
-                return Forbid(); // Return 403 Forbidden if they don't own the property
+                return View("Error", new String[] { "This property does not belong to you. " });
             }
 
             return View(property);
@@ -496,14 +479,14 @@ namespace BevoBnB.Controllers
 
             if (property == null)
             {
-                return NotFound();
+                return View("Error", new String[] { "The property was not found. " });
             }
 
             // Ensure the logged-in user is the owner of the property
             var loggedInUserId = _userManager.GetUserId(User);
             if (property.User.Id != loggedInUserId)
             {
-                return Forbid(); // Return 403 Forbidden if they don't own the property
+                return View("Error", new String[] { "You are not the owner of this property. " });
             }
 
             // Update only the pricing and discount-related fields
