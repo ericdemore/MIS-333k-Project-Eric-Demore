@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Identity.UI;
 using BevoBnB.DAL;
 using BevoBnB.Models;
 
+using QuestPDF.Infrastructure;
+QuestPDF.Settings.License = LicenseType.Community;
+
 //create a web application builder
 var builder = WebApplication.CreateBuilder(args);
 

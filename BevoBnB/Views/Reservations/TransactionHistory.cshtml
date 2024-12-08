@@ -19,6 +19,7 @@
                     <th>Confirmation Number</th>
                     <th>Total Amount</th>
                     <th>Reservation Details</th>
+                    <th>Invoice</th>
                 </tr>
             </thead>
             <tbody>
@@ -51,6 +52,11 @@
                                     }
                                 </tbody>
                             </table>
+                        </td>
+                        <td>
+                            <a asp-action="DownloadInvoice" asp-route-confirmationNumber="@group.ConfirmationNumber" class="btn btn-primary">
+                                Download Invoice
+                            </a>
                         </td>
                     </tr>
                 }

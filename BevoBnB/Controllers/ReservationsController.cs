@@ -1161,5 +1161,28 @@ namespace BevoBnB.Controllers
 
             return View(reservations);
         }
+
+        [Authorize]
+        public async Task<IActionResult> DownloadInvoice(string confirmationNumber)
+        {
+            // Fetch reservations for the given confirmation number
+            var reservations = await _context.Reservations
+                .Include(r => r.Property)
+                .Where(r => r.ConfirmationNumber.ToString() == confirmationNumber)
+                .ToListAsync();
+
+            if (!reservations.Any())
+            {
+                return View("Error", new string[] { "No reservations found for the provided confirmation number." });
+            }
+
+            // Generate the PDF using the existing utility
+            var pdfGenerator = new PdfInvoiceGenerator();
+            var pdfBytes = pdfGenerator.GenerateInvoice(confirmationNumber, reservations);
+
+            // Return the PDF as a downloadable file
+            return File(pdfBytes, "application/pdf", $"Invoice_{confirmationNumber}.pdf");
+        }
+
     }
 }
