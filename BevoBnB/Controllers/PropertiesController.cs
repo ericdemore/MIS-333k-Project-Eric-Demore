@@ -526,6 +526,7 @@ namespace BevoBnB.Controllers
 
         [HttpGet]
         [Authorize]
+        [Authorize(Roles = "Host")]
         public IActionResult AddUnavailableDate()
         {
             var userId = _userManager.GetUserId(User);

@@ -225,7 +225,7 @@ namespace BevoBnB.Models
                 return 0.00m;
             }
 
-            if (CheckIn < DateTime.Now)
+            if (CheckIn < DateTime.Now && ReservationStatus == ReservationStatus.Pending)
             {
                 return 0.00m;
             }
