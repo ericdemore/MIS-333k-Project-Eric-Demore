@@ -701,6 +701,7 @@ namespace BevoBnB.Controllers
             return View("Error", new string[] { "Invalid action on reservation." });
         }
 
+        [Authorize(Roles = "Customer, Admin")]
         public async Task<IActionResult> AddToCart(int propertyID)
         {
             // Fetch the currently logged-in user
@@ -1103,6 +1104,7 @@ namespace BevoBnB.Controllers
             return View("Error", new String[] { "You need to make at least one valid capable reservation." });
         }
 
+        [Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> CheckOutSummary(string? customerId = null)
         {
             List<Reservation> reservations = new List<Reservation>();
@@ -1140,6 +1142,11 @@ namespace BevoBnB.Controllers
             {
                 // Message for an empty cart
                 return View("Error", new String[] { "You do not have anything to checkout!" });
+            }
+            DateTime currentDate = DateTime.Now;
+            if (reservations.Any(r => r.CheckIn < currentDate))
+            {
+                return View("Error", new string[] { "One or more reservations are past the check-in date and cannot be checked out." });
             }
             else
             {

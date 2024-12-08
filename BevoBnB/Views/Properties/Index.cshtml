@@ -262,12 +262,12 @@
                     </td>
                     <td>
                         <a asp-action="Details" asp-route-id="@item.PropertyID">Details</a>
-                        @if (item.PropertyStatus == PropertyStatus.Approved && User.IsInRole("Customer"))
-                        {
+                        
                             <a asp-action="AddToCart" asp-controller="Reservations" asp-route-propertyID="@item.PropertyID" class="btn btn-success">
                                 Add To Cart
                             </a>
-                        }
+                       
+
 
                         <!-- Edit/Delete for Hosts and Admins -->
                         @if (User.Identity.IsAuthenticated && (User.IsInRole("Host") || User.IsInRole("Admin")))

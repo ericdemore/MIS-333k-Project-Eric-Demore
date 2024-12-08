@@ -225,6 +225,11 @@ namespace BevoBnB.Models
                 return 0.00m;
             }
 
+            if (CheckIn < DateTime.Now)
+            {
+                return 0.00m;
+            }
+
             totalAmount = Subtotal + SalesTax;
 
             return totalAmount;
