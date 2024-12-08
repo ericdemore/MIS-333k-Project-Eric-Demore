@@ -488,7 +488,7 @@ namespace BevoBnB.Controllers
             return View(model);
         }
 
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Profiles(ProfileSearchViewModel? svm)
         {
             var query = _userManager.Users.AsQueryable();
