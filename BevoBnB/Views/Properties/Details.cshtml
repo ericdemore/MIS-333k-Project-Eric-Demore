@@ -202,6 +202,12 @@ else
         <a asp-action="SelectCustomerForRegistration" asp-controller="Reservations" asp-route-propertyID="@Model.PropertyID" class="btn btn-success">Reserve Property for Customer</a>
     </div>
 }
+else {
+<div class="text-center mt-4">
+    <a asp-action="Create" asp-controller="Reservations" asp-route-propertyID="@Model.PropertyID" class="btn btn-success">Reserve Property</a>
+</div>
+}
+
 
 <!-- Edit and Back Buttons -->
 <div class="mt-5 text-center">

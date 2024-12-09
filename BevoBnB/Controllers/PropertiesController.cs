@@ -39,6 +39,9 @@ namespace BevoBnB.Controllers
                 .Include(p => p.Reservations)
                 .Where(p => p.PropertyStatus == PropertyStatus.Approved);
 
+            var allProperties = _context.Properties;
+            ViewBag.CountOfProperties = allProperties.Count();
+
             // Count all approved properties before applying the filter
             int totalPropertiesCount = await approvedPropertiesQuery.CountAsync();
 

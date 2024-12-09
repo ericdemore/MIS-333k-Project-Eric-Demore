@@ -493,6 +493,8 @@ namespace BevoBnB.Controllers
         {
             var query = _userManager.Users.AsQueryable();
 
+            ViewBag.UserCount = query.Count();
+
             if (svm != null)
             {
                 if (svm.Email != null && svm.Email != " ")
@@ -517,6 +519,7 @@ namespace BevoBnB.Controllers
             }
 
             var filteredUsers = await query.ToListAsync();
+            ViewBag.filterCount = filteredUsers.Count();
 
             return View(filteredUsers);
         }
