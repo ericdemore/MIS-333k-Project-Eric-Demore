@@ -43,7 +43,7 @@ Our team worked collaboratively to bring this project to life by dividing respon
 
 1. Clone the repository:  
    ```bash  
-   git clone <repository-url>  
+   git clone https://github.com/ericdemore/MIS-333k-Project-Eric-Demore 
    cd bevobnb  
    ```  
 
