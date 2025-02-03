@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿//Group 3 BevoBnB Project
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace BevoBnB.Controllers
 {
