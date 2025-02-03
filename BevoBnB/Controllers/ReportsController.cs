@@ -1,3 +1,4 @@
+//Reports Controller
 using BevoBnB.DAL;
 using BevoBnB.Models;
 using BevoBnB.ViewModels;

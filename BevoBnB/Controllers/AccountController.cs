@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-
 using BevoBnB.DAL;
 using BevoBnB.Models;
 using BevoBnB.Utilities;
