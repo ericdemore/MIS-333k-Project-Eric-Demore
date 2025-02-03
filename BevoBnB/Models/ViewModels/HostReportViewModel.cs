@@ -1,3 +1,4 @@
+//Host Report View Model
 using BevoBnB.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
