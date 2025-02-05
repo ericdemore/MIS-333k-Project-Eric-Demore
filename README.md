@@ -1,4 +1,4 @@
-<img width="1014" alt="image" src="https://github.com/user-attachments/assets/f293ccb8-850e-4f14-9010-0eb0abaef374" />
+https://ericdemore1.azurewebsites.net/images/Bevobnb.png![image](https://github.com/user-attachments/assets/f1a5124d-c8c4-4de8-86c8-be72fba17679)
 
 # BevoBnB Website - Group 3  
 
