@@ -1,3 +1,4 @@
+<img width="1014" alt="image" src="https://github.com/user-attachments/assets/f293ccb8-850e-4f14-9010-0eb0abaef374" />
 
 # BevoBnB Website - Group 3  
 
