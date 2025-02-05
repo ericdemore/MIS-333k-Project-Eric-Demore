@@ -1,4 +1,5 @@
-https://ericdemore1.azurewebsites.net/images/Bevobnb.png![image](https://github.com/user-attachments/assets/f1a5124d-c8c4-4de8-86c8-be72fba17679)
+<img width="1373" alt="Screenshot 2025-02-05 at 4 07 00 PM" src="https://github.com/user-attachments/assets/7653bbb6-e3f7-4045-9cc8-70cb1410cc8e" />
+
 
 # BevoBnB Website - Group 3  
 
